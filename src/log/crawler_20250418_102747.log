@@ -1,0 +1,56 @@
+2025-04-18 10:27:47,885 - INFO - 开始获取所有时间段的Kaito数据...
+2025-04-18 10:27:47,885 - INFO - 开始获取24h时间段数据
+2025-04-18 10:27:47,886 - INFO - 开始从Kaito API获取24h时间段的数据...
+2025-04-18 10:27:47,890 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:48,122 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 200 None
+2025-04-18 10:27:48,125 - DEBUG - API状态码: 200
+2025-04-18 10:27:48,126 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:49 GMT', 'x-trace-id': 'Root=1-6801b8a5-06c244f7198ab95c74adbc66', 'vary': 'accept-encoding', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'content-encoding': 'gzip', 'ETag': 'W/"1c566-CdxYblqt7JUvTHWPR7ZhCY1YOog"', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 bae7cdeceafebd8f66c8873d23feae52.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'vqqO6o57LdbRkFKnUnTi_8zs7qcFUbyWnnSH_CPJuJhdX5x-zncuYQ=='}
+2025-04-18 10:27:48,130 - INFO - 成功获取24h时间段数据，共74条记录
+2025-04-18 10:27:48,131 - INFO - 成功添加24h时间段数据
+2025-04-18 10:27:49,132 - INFO - 开始获取48h时间段数据
+2025-04-18 10:27:49,133 - INFO - 开始从Kaito API获取48h时间段的数据...
+2025-04-18 10:27:49,143 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:49,882 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 161068
+2025-04-18 10:27:49,884 - DEBUG - API状态码: 201
+2025-04-18 10:27:49,885 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '161068', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:50 GMT', 'ETag': 'W/"2752c-H+p943KBREFhfUQCwh10Ffvtr/4"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801b8a6-3205cd195dae06f2453a6074', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 78813a27d9baa0f850754660a4708f04.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'gPNP3c2-sDBktUhuGbHHLZrXRc5NCJPXHTzBhbdxHpixVfo-rqJb2A=='}
+2025-04-18 10:27:49,888 - INFO - 成功获取48h时间段数据，共103条记录
+2025-04-18 10:27:49,889 - INFO - 成功添加48h时间段数据
+2025-04-18 10:27:50,890 - INFO - 开始获取7d时间段数据
+2025-04-18 10:27:50,890 - INFO - 开始从Kaito API获取7d时间段的数据...
+2025-04-18 10:27:50,892 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:52,026 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 186255
+2025-04-18 10:27:52,027 - DEBUG - API状态码: 201
+2025-04-18 10:27:52,028 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '186255', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:52 GMT', 'ETag': 'W/"2d78f-CycKy7Oi8yAOPSAeC3b4FMs4qPE"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801b8a8-191f009e1226210b10442779', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 deeb8d02c9d7ff7da5b56483ec0e799e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'fIXp-pYWBXSBhMYgkTUAdpBCAT6ydbjZcyrAeWrnE-ge5Us2dE1efw=='}
+2025-04-18 10:27:52,033 - INFO - 成功获取7d时间段数据，共121条记录
+2025-04-18 10:27:52,034 - INFO - 成功添加7d时间段数据
+2025-04-18 10:27:53,036 - INFO - 开始获取30d时间段数据
+2025-04-18 10:27:53,036 - INFO - 开始从Kaito API获取30d时间段的数据...
+2025-04-18 10:27:53,037 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:54,407 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 192930
+2025-04-18 10:27:54,409 - DEBUG - API状态码: 201
+2025-04-18 10:27:54,409 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '192930', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:55 GMT', 'ETag': 'W/"2f1a2-UzcErP44ix0JLnO5HO6ce3nAyX8"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801b8aa-33b61814337759754c7411d1', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 ace4c8256b46260ba046e6c6db141ee4.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'A2SQva5q6HwaA2LbLtkrxSeJsESAFuUOiDG7NlFV3o4xI5ivmw0tlQ=='}
+2025-04-18 10:27:54,412 - INFO - 成功获取30d时间段数据，共126条记录
+2025-04-18 10:27:54,412 - INFO - 成功添加30d时间段数据
+2025-04-18 10:27:55,414 - INFO - 开始获取3m时间段数据
+2025-04-18 10:27:55,414 - INFO - 开始从Kaito API获取3m时间段的数据...
+2025-04-18 10:27:55,415 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:55,765 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 195256
+2025-04-18 10:27:55,767 - DEBUG - API状态码: 201
+2025-04-18 10:27:55,768 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '195256', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:56 GMT', 'ETag': 'W/"2fab8-7qjJZ7Ci0EVBmLXkBQsjqJAaHqs"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801b8ac-729938772cd153eb65ee162f', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 fca3913c9b07b9ec946989e5025bc8d0.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'Bw4Lx87BcY5qfrdv4vk5QKZivmjNzkMBohMS62wgB4FQi_ho9sb3dQ=='}
+2025-04-18 10:27:55,771 - INFO - 成功获取3m时间段数据，共128条记录
+2025-04-18 10:27:55,772 - INFO - 成功添加3m时间段数据
+2025-04-18 10:27:56,772 - INFO - 开始获取6m时间段数据
+2025-04-18 10:27:56,772 - INFO - 开始从Kaito API获取6m时间段的数据...
+2025-04-18 10:27:56,773 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:56,807 - ERROR - 请求异常: HTTPSConnectionPool(host='hub.kaito.ai', port=443): Max retries exceeded with url: /api/v1/gateway/ai (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))
+2025-04-18 10:27:56,808 - ERROR - 未能获取6m时间段数据
+2025-04-18 10:27:57,808 - INFO - 开始获取12m时间段数据
+2025-04-18 10:27:57,808 - INFO - 开始从Kaito API获取12m时间段的数据...
+2025-04-18 10:27:57,809 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:27:58,956 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 195402
+2025-04-18 10:27:59,243 - DEBUG - API状态码: 201
+2025-04-18 10:27:59,244 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '195402', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:27:59 GMT', 'ETag': 'W/"2fb4a-KB6Qw+VHuuYz4ivr+8P9GkN4bkY"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801b8af-08d8af6907a4d15c3b3d430f', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 7f56a4e14fe5c341a576c14b865aa17c.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'RGKsPwKgCeYCNF-nnR8TdoEuqnm3BjAClqmNnlPuBYlLOA86N5FZ8A=='}
+2025-04-18 10:27:59,249 - INFO - 成功获取12m时间段数据，共128条记录
+2025-04-18 10:27:59,249 - INFO - 成功添加12m时间段数据
+2025-04-18 10:28:00,310 - INFO - 数据保存成功: C:\Users\190680\jh_c\airdrop\kaito\foresightnews-renderer\src\data\kaito_data_20250418.json
+2025-04-18 10:28:00,313 - INFO - 所有时间段数据获取完成并保存到: C:\Users\190680\jh_c\airdrop\kaito\foresightnews-renderer\src\data\kaito_data_20250418.json

@@ -1,0 +1,38 @@
+2025-04-18 10:20:32,416 - INFO - 开始获取所有时间段的Kaito数据...
+2025-04-18 10:20:32,418 - INFO - 开始从Kaito API获取24h时间段的数据...
+2025-04-18 10:20:32,418 - INFO - 开始从Kaito API获取48h时间段的数据...
+2025-04-18 10:20:32,418 - INFO - 开始从Kaito API获取7d时间段的数据...
+2025-04-18 10:20:32,419 - INFO - 开始从Kaito API获取30d时间段的数据...
+2025-04-18 10:20:32,419 - INFO - 开始从Kaito API获取3m时间段的数据...
+2025-04-18 10:20:32,420 - INFO - 开始从Kaito API获取6m时间段的数据...
+2025-04-18 10:20:32,420 - INFO - 开始从Kaito API获取12m时间段的数据...
+2025-04-18 10:20:32,426 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,428 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,428 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,429 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,429 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,430 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,430 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:20:32,750 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=30d HTTP/1.1" 201 192675
+2025-04-18 10:20:32,881 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=7d HTTP/1.1" 201 185976
+2025-04-18 10:20:32,902 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:32,905 - ERROR - 未能获取30d时间段数据
+2025-04-18 10:20:33,170 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,171 - ERROR - 未能获取7d时间段数据
+2025-04-18 10:20:33,186 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=48h HTTP/1.1" 201 160885
+2025-04-18 10:20:33,189 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=24h HTTP/1.1" 201 116070
+2025-04-18 10:20:33,203 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=12m HTTP/1.1" 201 195161
+2025-04-18 10:20:33,471 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,471 - ERROR - 未能获取48h时间段数据
+2025-04-18 10:20:33,490 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,491 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,491 - ERROR - 未能获取12m时间段数据
+2025-04-18 10:20:33,491 - ERROR - 未能获取24h时间段数据
+2025-04-18 10:20:33,542 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=3m HTTP/1.1" 201 195256
+2025-04-18 10:20:33,638 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai?nft=false&ex_official=false&weighted=false&sort_type=desc&type=heatmap&pre_tge=true&duration=6m HTTP/1.1" 201 195248
+2025-04-18 10:20:33,899 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,900 - ERROR - 未能获取3m时间段数据
+2025-04-18 10:20:33,929 - ERROR - API请求失败: HTTP状态码 201
+2025-04-18 10:20:33,930 - ERROR - 未能获取6m时间段数据
+2025-04-18 10:20:33,930 - ERROR - 未获取到任何时间段的数据
+2025-04-18 10:20:33,930 - ERROR - 数据获取失败

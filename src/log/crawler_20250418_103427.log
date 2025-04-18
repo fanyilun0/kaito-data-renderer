@@ -1,0 +1,59 @@
+2025-04-18 10:34:27,734 - INFO - 开始获取所有时间段的Kaito数据...
+2025-04-18 10:34:27,736 - INFO - 开始获取24h时间段数据
+2025-04-18 10:34:27,736 - INFO - 开始从Kaito API获取24h时间段的数据...
+2025-04-18 10:34:27,743 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:28,394 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 200 None
+2025-04-18 10:34:28,682 - DEBUG - API状态码: 200
+2025-04-18 10:34:28,683 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:29 GMT', 'x-trace-id': 'Root=1-6801ba35-52be3d4e096cf0272ec123fa', 'vary': 'accept-encoding', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'content-encoding': 'gzip', 'ETag': 'W/"1c5a0-KYl6MPAH6PPLZjshj+EdVI+moKw"', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 6ced23466b385bd8ce93a68092a780f2.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'HpoVAhbxNAwUB__4XVPNStiOAlg1jLlvynXbKMcnqZwqINI3qv_K7A=='}
+2025-04-18 10:34:28,686 - INFO - 成功获取24h时间段数据，共74条记录
+2025-04-18 10:34:28,687 - INFO - 成功添加24h时间段数据
+2025-04-18 10:34:29,688 - INFO - 开始获取48h时间段数据
+2025-04-18 10:34:29,688 - INFO - 开始从Kaito API获取48h时间段的数据...
+2025-04-18 10:34:29,690 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:30,019 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 161068
+2025-04-18 10:34:30,163 - DEBUG - API状态码: 201
+2025-04-18 10:34:30,163 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '161068', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:30 GMT', 'ETag': 'W/"2752c-H+p943KBREFhfUQCwh10Ffvtr/4"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801ba36-263d67643c9fc5481c7a9465', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 08841e57014ff938c3c4c19c93f2cb64.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'HqDms2c77p8hsHbjEcSyjwzKky_VmATB31qdksXNeRiXTu6176jiCQ=='}
+2025-04-18 10:34:30,168 - INFO - 成功获取48h时间段数据，共103条记录
+2025-04-18 10:34:30,169 - INFO - 成功添加48h时间段数据
+2025-04-18 10:34:31,171 - INFO - 开始获取7d时间段数据
+2025-04-18 10:34:31,171 - INFO - 开始从Kaito API获取7d时间段的数据...
+2025-04-18 10:34:31,172 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:31,651 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 186255
+2025-04-18 10:34:31,934 - DEBUG - API状态码: 201
+2025-04-18 10:34:31,935 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '186255', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:32 GMT', 'ETag': 'W/"2d78f-CycKy7Oi8yAOPSAeC3b4FMs4qPE"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801ba38-6d5066f744626ad96ffc6240', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 bf5d7528522cc10dba095976b34ceef2.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'ZieBFDpy4PlATp7H_mcIl-b9JdpDrPaSc0CGOZhmJqQXwl9h8PfgXg=='}
+2025-04-18 10:34:31,938 - INFO - 成功获取7d时间段数据，共121条记录
+2025-04-18 10:34:31,939 - INFO - 成功添加7d时间段数据
+2025-04-18 10:34:32,940 - INFO - 开始获取30d时间段数据
+2025-04-18 10:34:32,940 - INFO - 开始从Kaito API获取30d时间段的数据...
+2025-04-18 10:34:32,941 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:33,256 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 192930
+2025-04-18 10:34:33,397 - DEBUG - API状态码: 201
+2025-04-18 10:34:33,397 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '192930', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:34 GMT', 'ETag': 'W/"2f1a2-UzcErP44ix0JLnO5HO6ce3nAyX8"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801ba3a-7b5908396958f3ad3f524b84', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 6260bcfdf5dc47f14d0bd18847ad61b0.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'msHbEORIBvXdOugG64KFX448u2cHwwPcvmWMr-a8xpzLCok8545gyg=='}
+2025-04-18 10:34:33,401 - INFO - 成功获取30d时间段数据，共126条记录
+2025-04-18 10:34:33,402 - INFO - 成功添加30d时间段数据
+2025-04-18 10:34:34,404 - INFO - 开始获取3m时间段数据
+2025-04-18 10:34:34,404 - INFO - 开始从Kaito API获取3m时间段的数据...
+2025-04-18 10:34:34,406 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:34,624 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 200 None
+2025-04-18 10:34:34,633 - DEBUG - API状态码: 200
+2025-04-18 10:34:34,633 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:35 GMT', 'x-trace-id': 'Root=1-6801ba3b-4c5880ec7f8323aa04c6e569', 'vary': 'accept-encoding', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'content-encoding': 'gzip', 'ETag': 'W/"2face-xv9SnTGBUT5zmeuP1uxiaLSmnCY"', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 f9a5fa5e52d164963ff89d3e6c0df274.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': '9wn4x_NB6zjbImuaD5qySgQkG4k4xvlJiLIcQ64M4eT9Nz2NsBmVXQ=='}
+2025-04-18 10:34:34,638 - INFO - 成功获取3m时间段数据，共128条记录
+2025-04-18 10:34:34,638 - INFO - 成功添加3m时间段数据
+2025-04-18 10:34:35,639 - INFO - 开始获取6m时间段数据
+2025-04-18 10:34:35,639 - INFO - 开始从Kaito API获取6m时间段的数据...
+2025-04-18 10:34:35,641 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:35,954 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 195373
+2025-04-18 10:34:35,955 - DEBUG - API状态码: 201
+2025-04-18 10:34:35,955 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '195373', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:36 GMT', 'ETag': 'W/"2fb2d-82MfJm1JfW3mXOzKNdU+E957LiQ"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801ba3c-6450621b391658893e257118', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 444d1eec5cad04a842897bb69311b534.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'EZxOa96NSch0OVTTTziA2dDhaRQiBux4povGsVH2VvGJyZvu-tnJwQ=='}
+2025-04-18 10:34:35,959 - INFO - 成功获取6m时间段数据，共128条记录
+2025-04-18 10:34:35,960 - INFO - 成功添加6m时间段数据
+2025-04-18 10:34:36,961 - INFO - 开始获取12m时间段数据
+2025-04-18 10:34:36,962 - INFO - 开始从Kaito API获取12m时间段的数据...
+2025-04-18 10:34:36,963 - DEBUG - Starting new HTTPS connection (1): hub.kaito.ai:443
+2025-04-18 10:34:37,672 - DEBUG - https://hub.kaito.ai:443 "POST /api/v1/gateway/ai HTTP/1.1" 201 195402
+2025-04-18 10:34:37,964 - DEBUG - API状态码: 201
+2025-04-18 10:34:37,964 - DEBUG - API响应头: {'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '195402', 'Connection': 'keep-alive', 'Date': 'Fri, 18 Apr 2025 02:34:38 GMT', 'ETag': 'W/"2fb4a-KB6Qw+VHuuYz4ivr+8P9GkN4bkY"', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Expose-Headers': 'Encryption', 'x-trace-id': 'Root=1-6801ba3e-0f6f072361d42c7e498ba1d5', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 3def1e08c4718ad7d40d2cb5776dec1e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'HKG1-P2', 'X-Amz-Cf-Id': 'Cx7OiU6peHL52wiPX9eYqO-0B0e10EAjJy-KlwUGg3SApZDfVSnf6g=='}
+2025-04-18 10:34:37,969 - INFO - 成功获取12m时间段数据，共128条记录
+2025-04-18 10:34:37,969 - INFO - 成功添加12m时间段数据
+2025-04-18 10:34:39,045 - INFO - 数据保存成功: C:\Users\190680\jh_c\airdrop\kaito\foresightnews-renderer\src\data\kaito_data_20250418.json
+2025-04-18 10:34:39,046 - INFO - 所有时间段数据获取完成并保存到: C:\Users\190680\jh_c\airdrop\kaito\foresightnews-renderer\src\data\kaito_data_20250418.json
