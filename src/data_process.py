@@ -15,7 +15,7 @@ from typing import Optional, List, Dict
 
 class KaitoCrawler:
     def __init__(self):
-        self.base_url = "https://hub.kaito.ai/api/v1/gateway/ai"
+        self.base_url = "https://hub.kaito.ai/api/v1/gateway/ai/tickers/mindshare"
         self.durations = ["24h", "48h", "7d", "30d", "3m", "6m", "12m"]
 
         # 基础目录
@@ -68,33 +68,27 @@ class KaitoCrawler:
                 "pre_tge": "true"
             }
 
-            # 准备请求体
-            payload = {
-                "path": "/api/yapper/dashboard_ticker_mindshare",
-                "method": "GET",
-                "params": params,
-                "body": {}
-            }
-
             headers = {
-                "Content-Type": "application/json"
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
             }
 
-            # 直接发送请求到基础URL，不附加参数
-            response = requests.post(
+            # 使用 GET 请求
+            response = requests.get(
                 self.base_url,
                 headers=headers,
-                json=payload,
+                params=params,
                 timeout=30
             )
 
             # 调试输出
+            self.logger.debug(f"请求URL: {response.url}")
             self.logger.debug(f"API状态码: {response.status_code}")
             self.logger.debug(f"API响应头: {response.headers}")
 
-            # 接受200和201状态码
+            # 检查状态码
             if response.status_code not in [200, 201]:
                 self.logger.error(f"API请求失败: HTTP状态码 {response.status_code}")
+                self.logger.error(f"响应内容: {response.text}")
                 return None
 
             try:
