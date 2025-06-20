@@ -14,47 +14,41 @@ const selectedDataFile = ref('')
 const tickerData = ref([])
 const updateTime = ref(dayjs().format('YYYY-MM-DD'))
 const notification = ref({ show: false, message: '', type: 'info' })
-
-// 时间段选择
-const durations = [
-  { value: '24h', label: '24小时' },
-  { value: '48h', label: '48小时' },
-  { value: '7d', label: '7天' },
-  { value: '30d', label: '30天' },
-  { value: '3m', label: '3个月' },
-  { value: '6m', label: '6个月' },
-  { value: '12m', label: '12个月' },
-]
 const selectedDuration = ref('24h')
 
 // 加载数据文件列表
 async function loadDataFileList() {
   try {
-    const today = dayjs()
     const dataFileList = []
 
-    // 检查过去10天的数据文件
-    for (let i = 0; i <= 10; i++) {
-      const pastDate = today.subtract(i, 'day')
-      const dateStr = pastDate.format('YYYYMMDD')
-      // 使用相对于public目录的路径
-      const fileExists = await checkFileExists(`./data/kaito_data_${dateStr}.json`)
+    // 获取所有可用的数据文件（扫描目录中的所有文件）
+    const allDurations = ['24h', '48h', '7d', '30d', '3m', '6m', '12m']
 
-      if (fileExists) {
+    // 从project中的数据目录获取所有可能的日期
+    // 基于文件的命名模式：kaito_data_YYYYMMDD_duration.json
+    const possibleDates = generateDateRange()
+
+    for (const dateStr of possibleDates) {
+      const hasAnyFile = await checkAnyFileExistsForDate(dateStr, allDurations)
+      if (hasAnyFile) {
+        const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
         dataFileList.push({
-          name: `kaito_data_${dateStr}.json`,
-          label: pastDate.format('YYYY-MM-DD'),
-          path: `./data/kaito_data_${dateStr}.json`,
+          name: `kaito_data_${dateStr}`,
+          label: formattedDate,
           date: dateStr,
+          durations: await getAvailableDurationsForDate(dateStr, allDurations),
         })
       }
     }
+
+    // 按日期倒序排列（最新的在前面）
+    dataFileList.sort((a, b) => b.date.localeCompare(a.date))
 
     dataFiles.value = dataFileList
 
     // 默认选择最新的数据文件
     if (dataFileList.length > 0) {
-      selectedDataFile.value = dataFileList[0].path
+      selectedDataFile.value = dataFileList[0].date
       updateTime.value = dataFileList[0].label
     }
     else {
@@ -65,6 +59,44 @@ async function loadDataFileList() {
     console.error('加载数据文件列表失败:', error)
     showNotification('加载数据文件列表失败', 'error')
   }
+}
+
+// 生成可能的日期范围（从2025年4月到当前日期）
+function generateDateRange() {
+  const dates = []
+  const startDate = dayjs('2025-04-01')
+  const endDate = dayjs().add(1, 'day') // 包含今天
+
+  let currentDate = startDate
+  while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
+    dates.push(currentDate.format('YYYYMMDD'))
+    currentDate = currentDate.add(1, 'day')
+  }
+
+  return dates.reverse() // 返回倒序（最新的在前）
+}
+
+// 检查某个日期是否有任何duration的数据文件
+async function checkAnyFileExistsForDate(dateStr, durations) {
+  for (const duration of durations) {
+    const filePath = `./data/kaito_data_${dateStr}_${duration}.json`
+    if (await checkFileExists(filePath)) {
+      return true
+    }
+  }
+  return false
+}
+
+// 获取某个日期可用的所有duration
+async function getAvailableDurationsForDate(dateStr, allDurations) {
+  const availableDurations = []
+  for (const duration of allDurations) {
+    const filePath = `./data/kaito_data_${dateStr}_${duration}.json`
+    if (await checkFileExists(filePath)) {
+      availableDurations.push(duration)
+    }
+  }
+  return availableDurations
 }
 
 // 添加调试功能
@@ -149,19 +181,14 @@ async function loadDataForDateAndDuration(dateStr, duration) {
 }
 
 // 从本地数据文件加载数据
-async function loadDataFromFile(filePath) {
+async function loadDataFromFile(dateStr) {
   loading.value = true
   try {
-    // 从文件路径中提取日期信息
-    const fileName = filePath.split('/').pop() || ''
-    const dateMatch = fileName.match(/kaito_data_(\d{8})/)
-
-    if (!dateMatch || !dateMatch[1]) {
-      showNotification('文件名格式不正确', 'error')
+    if (!dateStr) {
+      showNotification('请选择日期', 'error')
       return
     }
 
-    const dateStr = dateMatch[1]
     const success = await loadDataForDateAndDuration(dateStr, selectedDuration.value)
 
     if (!success) {
@@ -180,9 +207,9 @@ async function loadDataFromFile(filePath) {
 }
 
 // 切换数据文件
-function changeDataFile(filePath) {
-  selectedDataFile.value = filePath
-  loadDataFromFile(filePath)
+function changeDataFile(dateStr) {
+  selectedDataFile.value = dateStr
+  loadDataFromFile(dateStr)
 }
 
 // 切换时间段
@@ -206,6 +233,19 @@ watch(selectedDataFile, (newValue) => {
 watch(selectedDuration, () => {
   if (selectedDataFile.value) {
     loadDataFromFile(selectedDataFile.value)
+  }
+})
+
+// 获取当前选择日期的可用时间段
+const availableDurations = computed(() => {
+  const selectedDate = dataFiles.value.find(file => file.date === selectedDataFile.value)
+  return selectedDate ? selectedDate.durations : []
+})
+
+// 当选择的时间段不在当前日期的可用时间段中时，自动选择第一个可用的
+watch(availableDurations, (newDurations) => {
+  if (newDurations.length > 0 && !newDurations.includes(selectedDuration.value)) {
+    selectedDuration.value = newDurations[0]
   }
 })
 
@@ -252,9 +292,18 @@ function formatChangeRatio(value) {
   return `${sign}${(value * 100).toFixed(2)}%`
 }
 
-// 处理项目链接
-function getProjectLink(ticker) {
-  return `https://hub.kaito.ai/assets/${ticker}`
+// 获取时间段的中文标签
+function getDurationLabel(duration) {
+  const durationMap = {
+    '24h': '24小时',
+    '48h': '48小时',
+    '7d': '7天',
+    '30d': '30天',
+    '3m': '3个月',
+    '6m': '6个月',
+    '12m': '12个月',
+  }
+  return durationMap[duration] || duration
 }
 </script>
 
@@ -314,8 +363,8 @@ function getProjectLink(ticker) {
             >
               <option
                 v-for="file in dataFiles"
-                :key="file.path"
-                :value="file.path"
+                :key="file.date"
+                :value="file.date"
               >
                 {{ file.label }}
               </option>
@@ -328,11 +377,11 @@ function getProjectLink(ticker) {
               @change="changeDuration($event.target.value)"
             >
               <option
-                v-for="duration in durations"
-                :key="duration.value"
-                :value="duration.value"
+                v-for="duration in availableDurations"
+                :key="duration"
+                :value="duration"
               >
-                {{ duration.label }}
+                {{ getDurationLabel(duration) }}
               </option>
             </select>
           </div>
