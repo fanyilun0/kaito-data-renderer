@@ -62,7 +62,7 @@ async function loadDataFileList() {
 function generateDateRange() {
   const dates = []
   const startDate = dayjs('2025-04-18') // 修改起始日期为2025-04-18
-  const endDate = dayjs().add(1, 'day') // 包含今天
+  const endDate = dayjs()
 
   let currentDate = startDate
   while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
