@@ -1,86 +1,146 @@
-<p align='center'>
-  <img src='https://user-images.githubusercontent.com/11247099/111864893-a457fd00-899e-11eb-9f05-f4b88987541d.png' alt='Vitesse - Opinionated Vite Starter Template' width='600'/>
-</p>
+<h1 align='center'>
+Kaito Data Renderer
+</h1>
 
-<h6 align='center'>
-<a href="https://vitesse-lite.netlify.app/">Live Demo</a>
-</h6>
+<h3 align='center'>
+<a href="https://kaito-data-renderer.vercel.app/">Kaito Pre-TGE 代币数据可视化平台</a>
+</h3>
 
-<h5 align='center'>
-<b>Lightweight version of <a href="https://github.com/antfu/vitesse">Vitesse</a></b>
-</h5>
+## ✨ 项目简介
 
-<br>
+📈 **Kaito Data Renderer** 是一个专门用于展示 Kaito Pre-TGE 热门代币提及度排行的数据可视化平台。通过直观的表格形式，实时展示不同时间段内各代币的社交媒体提及度、排名变化趋势，帮助用户快速了解市场热点。
 
-<p align='center'>
-<b>English</b> | <a href="https://github.com/antfu-collective/vitesse-lite/blob/main/README.zh-CN.md">简体中文</a>
-<!-- Contributors: Thanks for geting interested, however we DON'T accept new transitions to the README, thanks. -->
-</p>
+## 🎯 核心功能
 
-## Features
+### 📊 数据展示
 
-- ⚡️ [Vue 3](https://github.com/vuejs/core), [Vite](https://github.com/vitejs/vite), [pnpm](https://pnpm.io/), [ESBuild](https://github.com/evanw/esbuild) - born with fastness
+- 🏆 **实时排行榜** - 显示代币在不同时间段的提及度排名
+- 📅 **多时间维度** - 支持 24小时、48小时、7天、30天、3个月、6个月、12个月的数据查看
+- 🔍 **智能搜索** - 支持按代币名称或代号快速搜索
+- 📈 **趋势分析** - 显示代币提及度的变化趋势和百分比
 
-- 🗂 [File based routing](./src/pages)
+### 📡 数据处理
 
-- 📦 [Components auto importing](./src/components)
+- 📊 **JSON 数据源** - 结构化的代币提及度数据
+- 🔄 **动态加载** - 按需加载不同时间段的数据
+- 🔍 **实时过滤** - 客户端数据过滤和搜索
 
-- 🎨 [UnoCSS](https://github.com/antfu/unocss) - The instant on-demand atomic CSS engine.
+## 🚀 快速开始
 
-- 😃 Use icons from any icon sets in [Pure CSS](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
+### 📋 环境要求
 
-- 🔥 Use the [new `<script setup>` style](https://github.com/vuejs/rfcs/pull/227)
+- 💻 Node.js 16+
+- 📦 pnpm (推荐) 或 npm/yarn
 
-- ✅ Use [Vitest](http://vitest.dev/) for unit and components testing
-
-- 🦾 TypeScript, of course
-
-- ☁️ Deploy on Netlify, zero-config
-
-<br>
-
-See [Vitesse](https://github.com/antfu/vitesse) for full featureset.
-
-## Dropped Features from [Vitesse](https://github.com/antfu/vitesse)
-
-- ~~i18n~~
-- ~~Layouts~~
-- ~~SSG~~
-- ~~PWA~~
-- ~~Markdown~~
-
-## Pre-packed
-
-### UI Frameworks
-
-- [UnoCSS](https://github.com/antfu/unocss) - The instant on-demand atomic CSS engine.
-
-### Icons
-
-- [Iconify](https://iconify.design) - use icons from any icon sets [🔍Icônes](https://icones.netlify.app/)
-- [Pure CSS Icons via UnoCSS](https://github.com/antfu/unocss/tree/main/packages/preset-icons)
-
-### Plugins
-
-- [Vue Router](https://github.com/vuejs/vue-router)
-  - [`unplugin-vue-router`](https://github.com/posva/unplugin-vue-router) - file system based routing
-- [`unplugin-auto-import`](https://github.com/antfu/unplugin-auto-import) - Directly use Vue Composition API and others without importing
-- [`unplugin-vue-components`](https://github.com/antfu/unplugin-vue-components) - components auto import
-- [`unplugin-vue-macros`](https://github.com/sxzz/unplugin-vue-macros) - Explore and extend more macros and syntax sugar to Vue.
-- [VueUse](https://github.com/antfu/vueuse) - collection of useful composition APIs
-
-## Try it now!
-
-### GitHub Template
-
-[Create a repo from this template on GitHub](https://github.com/antfu-collective/vitesse-lite/generate).
-
-### Clone to local
-
-If you prefer to do it manually with the cleaner git history
+### ⚡ 本地开发
 
 ```bash
-npx degit antfu-collective/vitesse-lite my-vitesse-app
-cd my-vitesse-app
-pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
+# 📥 克隆项目
+git clone https://github.com/your-username/kaito-data-renderer.git
+cd kaito-data-renderer
+
+# 📦 安装依赖
+pnpm install
+
+# 🚀 启动开发服务器
+pnpm dev
 ```
+
+### 🏗️ 构建部署
+
+```bash
+# 🏗️ 构建生产版本
+pnpm build
+
+# 👀 预览构建结果
+pnpm preview
+```
+
+### 🧪 测试
+
+```bash
+# 🧪 运行单元测试
+pnpm test
+
+# 🔍 代码检查
+pnpm lint
+
+# 🔧 类型检查
+pnpm typecheck
+```
+
+## 📊 数据结构
+
+### 📁 数据文件格式
+
+```
+public/data/
+├── kaito_data_20250418_24h.json
+├── kaito_data_20250418_48h.json
+├── kaito_data_20250418_7d.json
+└── ...
+```
+
+### 🏷️ 数据字段说明
+
+- 🎯 `ticker` - 代币代号
+- 📛 `fullname` - 代币全名
+- 🏆 `rank` - 当前排名
+- 📊 `mindshare` - 提及度百分比
+- 📈 `change_*_ratio` - 不同时间段的变化率
+- 🖼️ `logo` - 代币图标链接
+
+## 🎨 界面功能
+
+### 🔍 搜索和筛选
+
+- 🔍 **智能搜索** - 支持代币名称和代号搜索
+- 📅 **日期选择** - 选择特定日期的数据
+- ⏱️ **时间段切换** - 动态切换不同时间维度
+
+### 📊 数据展示
+
+- 📋 **排行榜表格** - 清晰的数据表格展示
+- 🏆 **排名标识** - 直观的排名数字显示
+- 📈 **趋势指标** - 颜色编码的涨跌趋势
+- 🖼️ **代币图标** - 代币品牌形象展示
+
+### 🔔 用户反馈
+
+- 💡 **智能提示** - 数据加载状态提示
+- ⚠️ **错误处理** - 友好的错误信息展示
+- 🔄 **加载动画** - 平滑的加载体验
+
+## 🌐 部署平台
+
+- 🚀 [Vercel](https://vercel.com) - 边缘函数支持
+
+## 📈 数据更新
+
+### 📅 更新频率
+
+- 🔄 **每日更新** - 每天生成新的数据文件
+- ⏰ **多时段覆盖** - 涵盖从小时到年度的各个时间维度
+- 📊 **历史数据保留** - 完整保存历史数据用于趋势分析
+
+### 🔧 数据维护
+
+```bash
+# 📊 Python 数据处理脚本
+python src/data_process.py
+```
+
+## 📄 许可证
+
+📜 本项目采用 [MIT License](LICENSE) 许可证
+
+## 🙏 致谢
+
+- 🌟 感谢 [Anthony Fu](https://github.com/antfu) 提供的 Vitesse 模板
+- 📊 感谢 Kaito 提供的数据支持
+
+---
+
+<p align='center'>
+⭐ 如果这个项目对你有帮助，请给它一个 star！
+</p>
