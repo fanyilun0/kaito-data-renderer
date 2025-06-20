@@ -24,21 +24,18 @@ async function loadDataFileList() {
     // 获取所有可用的数据文件（扫描目录中的所有文件）
     const allDurations = ['24h', '48h', '7d', '30d', '3m', '6m', '12m']
 
-    // 从project中的数据目录获取所有可能的日期
-    // 基于文件的命名模式：kaito_data_YYYYMMDD_duration.json
+    // 生成日期范围（从2025-04-18到今天）
     const possibleDates = generateDateRange()
 
+    // 不再检查文件是否存在，直接生成所有可能的日期，默认支持所有duration
     for (const dateStr of possibleDates) {
-      const hasAnyFile = await checkAnyFileExistsForDate(dateStr, allDurations)
-      if (hasAnyFile) {
-        const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-        dataFileList.push({
-          name: `kaito_data_${dateStr}`,
-          label: formattedDate,
-          date: dateStr,
-          durations: await getAvailableDurationsForDate(dateStr, allDurations),
-        })
-      }
+      const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
+      dataFileList.push({
+        name: `kaito_data_${dateStr}`,
+        label: formattedDate,
+        date: dateStr,
+        durations: allDurations, // 默认支持所有duration
+      })
     }
 
     // 按日期倒序排列（最新的在前面）
@@ -61,10 +58,10 @@ async function loadDataFileList() {
   }
 }
 
-// 生成可能的日期范围（从2025年4月到当前日期）
+// 生成可能的日期范围（从2025年4月18日到当前日期）
 function generateDateRange() {
   const dates = []
-  const startDate = dayjs('2025-04-01')
+  const startDate = dayjs('2025-04-18') // 修改起始日期为2025-04-18
   const endDate = dayjs().add(1, 'day') // 包含今天
 
   let currentDate = startDate
@@ -74,29 +71,6 @@ function generateDateRange() {
   }
 
   return dates.reverse() // 返回倒序（最新的在前）
-}
-
-// 检查某个日期是否有任何duration的数据文件
-async function checkAnyFileExistsForDate(dateStr, durations) {
-  for (const duration of durations) {
-    const filePath = `./data/kaito_data_${dateStr}_${duration}.json`
-    if (await checkFileExists(filePath)) {
-      return true
-    }
-  }
-  return false
-}
-
-// 获取某个日期可用的所有duration
-async function getAvailableDurationsForDate(dateStr, allDurations) {
-  const availableDurations = []
-  for (const duration of allDurations) {
-    const filePath = `./data/kaito_data_${dateStr}_${duration}.json`
-    if (await checkFileExists(filePath)) {
-      availableDurations.push(duration)
-    }
-  }
-  return availableDurations
 }
 
 // 添加调试功能
@@ -111,63 +85,45 @@ function debugLog(message, data = null) {
   }
 }
 
-// 检查文件是否存在
-async function checkFileExists(filePath) {
-  try {
-    debugLog(`检查文件是否存在: ${filePath}`)
-    const response = await fetch(filePath, { method: 'HEAD' })
-    const exists = response.ok
-    debugLog(`文件${exists ? '存在' : '不存在'}: ${filePath}`)
-    return exists
-  }
-  catch (error) {
-    debugLog(`检查文件出错: ${filePath}`, error)
-    return false
-  }
-}
-
 // 加载特定日期和时间段的数据
 async function loadDataForDateAndDuration(dateStr, duration) {
   loading.value = true
   try {
-    // 先尝试加载特定duration的文件 (例如: kaito_data_20250418_24h.json)
+    // 尝试加载特定duration的文件 (例如: kaito_data_20250418_24h.json)
     const specificPath = `./data/kaito_data_${dateStr}_${duration}.json`
     debugLog(`尝试加载特定时间段文件: ${specificPath}`)
-    const specificFileExists = await checkFileExists(specificPath)
 
-    if (specificFileExists) {
-      // 如果特定duration的文件存在，直接从该文件加载数据
-      try {
-        const response = await fetch(specificPath)
-        if (response.ok) {
-          debugLog(`获取文件成功: ${specificPath}`)
-          try {
-            const data = await response.json()
-            debugLog(`解析JSON成功`)
-            if (data.resultWithTicker) {
-              tickerData.value = data.resultWithTicker
-              const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-              updateTime.value = `${formattedDate} (${duration})`
-              return true
-            }
-            else {
-              debugLog('文件中没有resultWithTicker字段', data)
-            }
+    try {
+      const response = await fetch(specificPath)
+      if (response.ok) {
+        debugLog(`获取文件成功: ${specificPath}`)
+        try {
+          const data = await response.json()
+          debugLog(`解析JSON成功`)
+          if (data.resultWithTicker) {
+            tickerData.value = data.resultWithTicker
+            const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
+            updateTime.value = `${formattedDate} (${duration})`
+            return true
           }
-          catch (parseError) {
-            debugLog(`解析JSON失败`, parseError)
-            console.error('解析JSON失败:', parseError)
+          else {
+            debugLog('文件中没有resultWithTicker字段', data)
           }
         }
-        else {
-          debugLog(`获取文件失败: ${response.status} ${response.statusText}`)
+        catch (parseError) {
+          debugLog(`解析JSON失败`, parseError)
+          console.error('解析JSON失败:', parseError)
         }
       }
-      catch (error) {
-        debugLog(`加载特定时间段文件出错`, error)
-        console.error('加载特定时间段文件失败:', error)
+      else {
+        debugLog(`文件不存在或无法访问: ${response.status} ${response.statusText}`)
       }
     }
+    catch (error) {
+      debugLog(`加载文件出错`, error)
+      console.error('加载文件失败:', error)
+    }
+
     return false
   }
   catch (error) {
@@ -192,7 +148,9 @@ async function loadDataFromFile(dateStr) {
     const success = await loadDataForDateAndDuration(dateStr, selectedDuration.value)
 
     if (!success) {
-      showNotification(`未能找到 ${selectedDuration.value} 时间段的数据`, 'error')
+      // 不显示错误通知，而是显示信息提示，因为可能只是文件不存在
+      const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
+      showNotification(`${formattedDate} 的 ${selectedDuration.value} 数据暂未找到，请尝试其他日期或时间段`, 'info')
       tickerData.value = []
     }
   }
