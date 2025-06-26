@@ -282,6 +282,10 @@ function getDurationLabel(duration) {
               </h1>
               <div class="flex items-center text-xs text-gray-500 space-x-4">
                 <span>fanyilun</span>
+                <span>|</span>
+                <a href="/chart24h" class="text-blue-500 transition-colors hover:text-blue-700">24H历史图表</a>
+                <span>|</span>
+                <a href="/chart24h-stack" class="text-green-500 transition-colors hover:text-green-700">24H Stack图表</a>
                 <div class="flex items-center space-x-2">
                   <a href="https://github.com/fanyilun0" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900">
                     <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
