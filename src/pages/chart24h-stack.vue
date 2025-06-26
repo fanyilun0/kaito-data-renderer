@@ -1,117 +1,37 @@
 <script setup lang="ts">
+import type { KaitoDataItem, TokenStats } from '../composables/kaitoDataProcessor'
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { getTopTokens, loadAll24hData, prepareChartData } from '../composables/kaitoDataProcessor'
 
 // 数据状态
 const loading = ref(true)
 const chartRef = ref<HTMLElement>()
-const allData = ref<Record<string, any[]>>({})
+const allData = ref<Record<string, KaitoDataItem[]>>({})
 const availableDates = ref<string[]>([])
+const allTokens = ref<string[]>([])
 const notification = ref({ show: false, message: '', type: 'info' })
 const chartInstance = ref<echarts.ECharts>()
 
-// 图表配置
-const topTokenCount = ref(0) // 默认为0表示显示所有代币
+// 图表配置 - 默认显示前50个代币
+const topTokenCount = ref(50)
 const selectedDateRange = ref(30) // 显示最近N天
-const allTokens = ref<any[]>([]) // 所有出现过的代币列表
 
-// 颜色配置 - 使用更丰富的颜色调色板
-const colorPalette = [
-  '#5470c6',
-  '#91cc75',
-  '#fac858',
-  '#ee6666',
-  '#73c0de',
-  '#3ba272',
-  '#fc8452',
-  '#9a60b4',
-  '#ea7ccc',
-  '#f39800',
-  '#d4b106',
-  '#c23531',
-  '#2f4554',
-  '#61a0a8',
-  '#d48265',
-  '#749f83',
-  '#ca8622',
-  '#bda29a',
-  '#6e7074',
-  '#546570',
-  '#c4ccd3',
-  '#b5d5f5',
-  '#d0d0d0',
-  '#e5e5e5',
-  '#f5f5f5',
-]
-
-// 生成可能的日期范围（从2025-04-18到当前日期）
-function generateDateRange() {
-  const dates = []
-  const startDate = dayjs('2025-04-18') // 数据起始日期
-  const endDate = dayjs()
-
-  let currentDate = startDate
-  while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
-    dates.push(currentDate.format('YYYYMMDD'))
-    currentDate = currentDate.add(1, 'day')
-  }
-
-  return dates
-}
-
-// 加载所有24H数据
-async function loadAll24hData() {
+// 加载数据
+async function loadData() {
   loading.value = true
-  const possibleDates = generateDateRange()
-  const loadedData: Record<string, any[]> = {}
-  const successfulDates: string[] = []
-
   try {
-    // 并行加载所有日期的数据
-    const loadPromises = possibleDates.map(async (dateStr) => {
-      try {
-        const response = await fetch(`/data/kaito_data_${dateStr}_24h.json`)
-        if (response.ok) {
-          const data = await response.json()
-          // 增强数据验证，确保数据结构完整
-          if (data && data.resultWithTicker && Array.isArray(data.resultWithTicker) && data.resultWithTicker.length > 0) {
-            // 验证每个数据项的必需字段
-            const validData = data.resultWithTicker.filter((item: any) =>
-              item
-              && typeof item.ticker === 'string'
-              && item.ticker.trim() !== ''
-              && typeof item.last_24h_mindshare === 'number'
-              && !Number.isNaN(item.last_24h_mindshare)
-              && item.last_24h_mindshare >= 0,
-            )
-            if (validData.length > 0) {
-              loadedData[dateStr] = validData
-              successfulDates.push(dateStr)
-            }
-          }
-        }
-      }
-      catch (error) {
-        console.warn(`Failed to load data for ${dateStr}:`, error)
-      }
-    })
+    const result = await loadAll24hData()
+    allData.value = result.allData
+    availableDates.value = result.availableDates
+    allTokens.value = result.allTokens
 
-    await Promise.all(loadPromises)
-
-    // 按日期排序
-    successfulDates.sort()
-
-    allData.value = loadedData
-    availableDates.value = successfulDates
-
-    if (successfulDates.length === 0) {
+    if (result.availableDates.length === 0) {
       showNotification('未找到任何24H数据文件', 'error')
     }
     else {
-      showNotification(`成功加载 ${successfulDates.length} 天的数据`, 'success')
-      // 计算所有出现过的代币并设置默认值
-      calculateAllTokens()
+      showNotification(`成功加载 ${result.availableDates.length} 天的数据`, 'success')
     }
   }
   catch (error) {
@@ -123,120 +43,23 @@ async function loadAll24hData() {
   }
 }
 
-// 计算所有出现过的代币
-function calculateAllTokens() {
-  const tokenSet = new Set<string>()
-  Object.values(allData.value).forEach((dayData) => {
-    dayData.forEach((item) => {
-      if (item && item.ticker) {
-        tokenSet.add(item.ticker)
-      }
-    })
-  })
-  allTokens.value = Array.from(tokenSet)
-
-  // 保持topTokenCount为0，让computed属性处理显示逻辑
-  // 这样下拉框可以正常工作
-}
-
 // 获取要显示的日期范围
 const displayDates = computed(() => {
-  const dates = availableDates.value.slice(-selectedDateRange.value)
-  return dates
-})
-
-// 获取所有出现过的代币列表并计算平均mindshare
-const topTokens = computed(() => {
-  if (displayDates.value.length === 0)
-    return []
-
-  const tokenStats: Record<string, {
-    ticker: string
-    fullname: string
-    logo: string
-    totalMindshare: number
-    appearances: number
-    avgMindshare: number
-  }> = {}
-
-  // 统计每个代币在所有日期中的mindshare
-  displayDates.value.forEach((dateStr) => {
-    const dayData = allData.value[dateStr] || []
-    dayData.forEach((item) => {
-      // 增强数据验证
-      if (!item || !item.ticker || typeof item.last_24h_mindshare !== 'number') {
-        return
-      }
-
-      if (!tokenStats[item.ticker]) {
-        tokenStats[item.ticker] = {
-          ticker: item.ticker,
-          fullname: item.fullname || item.ticker, // 如果fullname不存在，使用ticker
-          logo: item.logo || '', // 如果logo不存在，使用空字符串
-          totalMindshare: 0,
-          appearances: 0,
-          avgMindshare: 0,
-        }
-      }
-      tokenStats[item.ticker].totalMindshare += item.last_24h_mindshare || 0
-      tokenStats[item.ticker].appearances += 1
-    })
-  })
-
-  // 计算平均mindshare并排序
-  Object.values(tokenStats).forEach((token) => {
-    token.avgMindshare = token.totalMindshare / token.appearances
-  })
-
-  const sortedTokens = Object.values(tokenStats)
-    .sort((a, b) => b.avgMindshare - a.avgMindshare)
-
-  // 如果topTokenCount为0或大于等于总数量，返回所有代币
-  if (topTokenCount.value === 0 || topTokenCount.value >= sortedTokens.length) {
-    return sortedTokens
+  if (selectedDateRange.value === 0) {
+    // 选择0表示显示全部时间
+    return availableDates.value
   }
-
-  return sortedTokens.slice(0, topTokenCount.value)
+  return availableDates.value.slice(-selectedDateRange.value)
 })
 
-// 准备图表数据 - Stack柱状图模式
+// 获取前N个代币
+const topTokens = computed((): TokenStats[] => {
+  return getTopTokens(allData.value, displayDates.value, topTokenCount.value)
+})
+
+// 准备图表数据
 const chartData = computed(() => {
-  if (displayDates.value.length === 0 || topTokens.value.length === 0) {
-    return { categories: [], series: [] }
-  }
-
-  // X轴：日期
-  const categories = displayDates.value.map(dateStr =>
-    dayjs(dateStr, 'YYYYMMDD').format('MM-DD'),
-  )
-
-  // Y轴系列：每个代币作为一个series，使用stack模式堆叠
-  const series = topTokens.value.map((token, index) => {
-    const data = displayDates.value.map((dateStr) => {
-      const dayData = allData.value[dateStr] || []
-      const tokenData = dayData.find(item => item && item.ticker === token.ticker)
-      // 将mindshare转换为百分比并保留3位小数，增强数值验证
-      if (tokenData && typeof tokenData.last_24h_mindshare === 'number' && !Number.isNaN(tokenData.last_24h_mindshare)) {
-        return Number((tokenData.last_24h_mindshare * 100).toFixed(3))
-      }
-      return 0
-    })
-
-    return {
-      name: token.ticker,
-      type: 'bar',
-      stack: 'mindshare', // 关键：设置stack名称，相同stack的系列会堆叠
-      emphasis: {
-        focus: 'series',
-      },
-      data,
-      itemStyle: {
-        color: colorPalette[index % colorPalette.length],
-      },
-    }
-  })
-
-  return { categories, series }
+  return prepareChartData(allData.value, displayDates.value, topTokens.value)
 })
 
 // 初始化图表
@@ -259,7 +82,7 @@ function updateChart() {
     ? allTokens.value.length
     : topTokenCount.value
 
-  const option = {
+  const option: echarts.EChartsOption = {
     title: {
       text: 'KAITO 24H Mindshare 历史趋势图',
       subtext: `Stack柱状图 | ${displayTokenCount === allTokens.value.length ? '所有' : `前${displayTokenCount}`}代币 | 最近${selectedDateRange.value}天`,
@@ -276,7 +99,7 @@ function updateChart() {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        type: 'shadow', // 显示阴影指示器
+        type: 'shadow',
       },
       formatter(params: any) {
         let result = `<div style="margin-bottom: 8px;"><strong>${params[0].axisValue}</strong></div>`
@@ -309,6 +132,8 @@ function updateChart() {
       pageButtonPosition: 'end',
       pageFormatter: '{current}/{total}',
       animationDurationUpdate: 800,
+      // 确保图例可交互
+      selected: {},
       selector: [
         {
           type: 'all',
@@ -319,6 +144,12 @@ function updateChart() {
           title: '反选',
         },
       ],
+      // 设置图例的样式
+      textStyle: {
+        fontSize: 12,
+      },
+      itemWidth: 14,
+      itemHeight: 14,
     },
     grid: {
       left: '3%',
@@ -332,7 +163,7 @@ function updateChart() {
       data: categories,
       axisLabel: {
         fontSize: 11,
-        rotate: categories.length > 15 ? 45 : 0, // 日期过多时旋转标签
+        rotate: categories.length > 15 ? 45 : 0,
       },
       axisTick: {
         alignWithLabel: true,
@@ -356,8 +187,8 @@ function updateChart() {
     },
     series,
     animationDuration: 1000,
-    animationEasing: 'cubicOut' as const,
-    // 添加数据缩放组件，允许用户缩放查看
+    animationEasing: 'cubicOut',
+    // 添加数据缩放组件
     dataZoom: [
       {
         type: 'slider',
@@ -365,7 +196,7 @@ function updateChart() {
         xAxisIndex: 0,
         bottom: '2%',
         height: 20,
-        start: Math.max(0, 100 - (20 / categories.length * 100)), // 默认显示最后20个数据点
+        start: Math.max(0, 100 - (20 / categories.length * 100)),
         end: 100,
       },
     ],
@@ -374,20 +205,19 @@ function updateChart() {
   chartInstance.value.setOption(option, true)
 }
 
-// 监听数据变化
-watch([chartData, topTokenCount, selectedDateRange], () => {
+// 监听数据变化，使用深度监听确保响应性
+watch([topTokenCount, selectedDateRange], () => {
   nextTick(() => {
     updateChart()
   })
-}, { immediate: false })
+}, { deep: true })
 
-// 监听allTokens变化，确保下拉框显示正确
-watch(allTokens, () => {
-  // 当所有代币列表更新时，如果当前选择的数量超过总数，重置为显示所有
-  if (topTokenCount.value > allTokens.value.length && topTokenCount.value !== 0) {
-    topTokenCount.value = 0
-  }
-})
+// 监听chartData变化
+watch(chartData, () => {
+  nextTick(() => {
+    updateChart()
+  })
+}, { deep: true })
 
 // 响应式处理
 function handleResize() {
@@ -406,7 +236,7 @@ function showNotification(message: string, type = 'info') {
 
 // 组件挂载
 onMounted(async () => {
-  await loadAll24hData()
+  await loadData()
   await nextTick()
   initChart()
 
@@ -450,7 +280,7 @@ onBeforeUnmount(() => {
             <div class="flex items-center space-x-2">
               <label class="text-sm text-gray-700">显示代币数量:</label>
               <select
-                v-model="topTokenCount"
+                v-model.number="topTokenCount"
                 class="border border-gray-300 rounded bg-white px-2 py-1 text-sm"
               >
                 <option :value="0">
@@ -474,13 +304,16 @@ onBeforeUnmount(() => {
                 <option :value="50">
                   前50个
                 </option>
+                <option :value="100">
+                  前100个
+                </option>
               </select>
             </div>
 
             <div class="flex items-center space-x-2">
               <label class="text-sm text-gray-700">时间范围:</label>
               <select
-                v-model="selectedDateRange"
+                v-model.number="selectedDateRange"
                 class="border border-gray-300 rounded bg-white px-2 py-1 text-sm"
               >
                 <option :value="7">
@@ -497,6 +330,9 @@ onBeforeUnmount(() => {
                 </option>
                 <option :value="90">
                   最近90天
+                </option>
+                <option :value="0">
+                  全部时间 ({{ availableDates.length }}天)
                 </option>
               </select>
             </div>
@@ -544,7 +380,7 @@ onBeforeUnmount(() => {
             代币数量
           </div>
           <div class="text-purple-600">
-            {{ topTokenCount === 0 || topTokenCount >= allTokens.length ? `所有${allTokens.length}` : `前${topTokenCount}` }} 个
+            {{ topTokenCount === 0 || topTokenCount >= allTokens.length ? `所有${topTokens.length}` : `前${topTokens.length}` }} 个
           </div>
         </div>
         <div class="rounded-lg bg-orange-50 p-3">
