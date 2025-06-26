@@ -104,20 +104,52 @@ export async function loadAll24hData(): Promise<{
   const loadPromises = possibleDates.map(async (dateStr) => {
     try {
       const response = await fetch(`/data/kaito_data_${dateStr}_24h.json`)
-      if (response.ok) {
-        const data = await response.json()
-        // 增强数据验证，确保数据结构完整
-        if (data && data.resultWithTicker && Array.isArray(data.resultWithTicker) && data.resultWithTicker.length > 0) {
-          // 验证每个数据项的必需字段
-          const validData = data.resultWithTicker.filter(isValidDataItem)
-          if (validData.length > 0) {
-            loadedData[dateStr] = validData
-            successfulDates.push(dateStr)
-          }
+      
+      // 检查响应状态
+      if (!response.ok) {
+        // 404错误表示文件不存在，这是正常情况，不需要警告
+        if (response.status !== 404) {
+          console.warn(`Failed to load data for ${dateStr}: HTTP ${response.status}`)
         }
+        return
+      }
+
+      // 检查响应内容类型
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        console.warn(`Invalid content type for ${dateStr}: ${contentType}`)
+        return
+      }
+
+      const data = await response.json()
+      
+      // 增强数据验证，确保数据结构完整
+      if (data && data.resultWithTicker && Array.isArray(data.resultWithTicker) && data.resultWithTicker.length > 0) {
+        // 验证每个数据项的必需字段
+        const validData = data.resultWithTicker.filter(isValidDataItem)
+        if (validData.length > 0) {
+          loadedData[dateStr] = validData
+          successfulDates.push(dateStr)
+        } else {
+          console.warn(`No valid data items found for ${dateStr}`)
+        }
+      } else {
+        console.warn(`Invalid data structure for ${dateStr}:`, data)
       }
     }
     catch (error) {
+      // 只对非网络错误进行警告
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        // 网络错误，可能是开发环境中的正常情况
+        return
+      }
+      
+      if (error instanceof SyntaxError && error.message.includes('Unexpected token')) {
+        // JSON解析错误，可能返回了HTML错误页面
+        console.warn(`Received non-JSON response for ${dateStr}, file may not exist`)
+        return
+      }
+      
       console.warn(`Failed to load data for ${dateStr}:`, error)
     }
   })
@@ -137,6 +169,9 @@ export async function loadAll24hData(): Promise<{
     })
   })
   const allTokens = Array.from(tokenSet)
+
+  // 输出加载统计信息
+  console.log(`Successfully loaded ${successfulDates.length} days of data, found ${allTokens.length} unique tokens`)
 
   return {
     allData: loadedData,
@@ -206,29 +241,50 @@ export function prepareChartData(
   displayDates: string[],
   topTokens: TokenStats[],
 ): ChartData {
-  if (displayDates.length === 0 || topTokens.length === 0) {
+  // 增强数据验证
+  if (!allData || !displayDates || !topTokens || displayDates.length === 0 || topTokens.length === 0) {
     return { categories: [], series: [] }
   }
 
   // X轴：日期
-  const categories = displayDates.map(dateStr =>
-    dayjs(dateStr, 'YYYYMMDD').format('MM-DD'),
-  )
+  const categories = displayDates.map(dateStr => {
+    try {
+      return dayjs(dateStr, 'YYYYMMDD').format('MM-DD')
+    } catch (error) {
+      console.warn(`Invalid date format: ${dateStr}`)
+      return dateStr
+    }
+  })
 
   // Y轴系列：每个代币作为一个series，使用stack模式堆叠
   const series = topTokens.map((token, index) => {
+    // 验证token数据
+    if (!token || !token.ticker) {
+      console.warn(`Invalid token data at index ${index}:`, token)
+      return null
+    }
+
     const data = displayDates.map((dateStr) => {
-      const dayData = allData[dateStr] || []
-      const tokenData = dayData.find(item => item && item.ticker === token.ticker)
-      // 将mindshare转换为百分比并保留3位小数，增强数值验证
-      if (tokenData && typeof tokenData.last_24h_mindshare === 'number' && !Number.isNaN(tokenData.last_24h_mindshare)) {
-        return Number((tokenData.last_24h_mindshare * 100).toFixed(3))
+      try {
+        const dayData = allData[dateStr] || []
+        const tokenData = dayData.find(item => item && item.ticker === token.ticker)
+        
+        // 将mindshare转换为百分比并保留3位小数，增强数值验证
+        if (tokenData && 
+            typeof tokenData.last_24h_mindshare === 'number' && 
+            !Number.isNaN(tokenData.last_24h_mindshare) && 
+            tokenData.last_24h_mindshare >= 0) {
+          return Number((tokenData.last_24h_mindshare * 100).toFixed(3))
+        }
+        return 0
+      } catch (error) {
+        console.warn(`Error processing data for ${token.ticker} on ${dateStr}:`, error)
+        return 0
       }
-      return 0
     })
 
     return {
-      name: token.ticker,
+      name: token.ticker || `Token-${index}`,
       type: 'bar' as const,
       stack: 'mindshare', // 关键：设置stack名称，相同stack的系列会堆叠
       emphasis: {
@@ -236,10 +292,10 @@ export function prepareChartData(
       },
       data,
       itemStyle: {
-        color: colorPalette[index % colorPalette.length],
+        color: colorPalette[index % colorPalette.length] || `hsl(${index * 137.5 % 360}, 70%, 50%)`,
       },
     }
-  })
+  }).filter((series): series is NonNullable<typeof series> => series !== null) // 过滤掉null值
 
   return { categories, series }
 }

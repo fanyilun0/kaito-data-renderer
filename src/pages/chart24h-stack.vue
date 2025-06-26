@@ -54,29 +54,48 @@ const displayDates = computed(() => {
 
 // 获取前N个代币
 const topTokens = computed((): TokenStats[] => {
+  if (!allData.value || !displayDates.value.length) {
+    return []
+  }
   return getTopTokens(allData.value, displayDates.value, topTokenCount.value)
 })
 
 // 准备图表数据
 const chartData = computed(() => {
+  if (!allData.value || !displayDates.value.length || !topTokens.value.length) {
+    return { categories: [], series: [] }
+  }
   return prepareChartData(allData.value, displayDates.value, topTokens.value)
 })
 
 // 初始化图表
 function initChart() {
-  if (!chartRef.value)
+  if (!chartRef.value || chartInstance.value) {
     return
+  }
 
-  chartInstance.value = echarts.init(chartRef.value)
-  updateChart()
+  try {
+    chartInstance.value = echarts.init(chartRef.value)
+    updateChart()
+  } catch (error) {
+    console.error('初始化图表失败:', error)
+    showNotification('初始化图表失败', 'error')
+  }
 }
 
 // 更新图表
 function updateChart() {
-  if (!chartInstance.value)
+  if (!chartInstance.value || !chartData.value) {
     return
+  }
 
   const { categories, series } = chartData.value
+
+  // 验证数据有效性
+  if (!categories.length || !series.length) {
+    console.warn('图表数据为空，跳过更新')
+    return
+  }
 
   const displayTokenCount = topTokenCount.value === 0 || topTokenCount.value >= allTokens.value.length
     ? allTokens.value.length
@@ -85,7 +104,7 @@ function updateChart() {
   const option: echarts.EChartsOption = {
     title: {
       text: 'KAITO 24H Mindshare 历史趋势图',
-      subtext: `Stack柱状图 | ${displayTokenCount === allTokens.value.length ? '所有' : `前${displayTokenCount}`}代币 | 最近${selectedDateRange.value}天`,
+      subtext: `Stack柱状图 | ${displayTokenCount === allTokens.value.length ? '所有' : `前${displayTokenCount}`}代币 | ${selectedDateRange.value === 0 ? '全部时间' : `最近${selectedDateRange.value}天`}`,
       left: 'center',
       textStyle: {
         fontSize: 18,
@@ -101,24 +120,53 @@ function updateChart() {
       axisPointer: {
         type: 'shadow',
       },
+      confine: true,
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      borderColor: '#333',
+      borderWidth: 1,
+      textStyle: {
+        color: '#fff',
+        fontSize: 12,
+      },
       formatter(params: any) {
-        let result = `<div style="margin-bottom: 8px;"><strong>${params[0].axisValue}</strong></div>`
+        if (!params || !Array.isArray(params) || params.length === 0) {
+          return ''
+        }
 
-        // 计算总和
+        let result = `<div style="margin-bottom: 8px; font-weight: bold; font-size: 14px;">${params[0].axisValue}</div>`
+
+        // 计算总和并过滤有效数据
+        const validParams = params.filter((param: any) => 
+          param && 
+          typeof param.value === 'number' && 
+          !Number.isNaN(param.value) && 
+          param.value > 0
+        )
+
+        if (validParams.length === 0) {
+          return result + '<div>暂无数据</div>'
+        }
+
         let total = 0
-        params.forEach((param: any) => {
-          total += Number(param.value) || 0
+        validParams.forEach((param: any) => {
+          total += param.value
         })
 
-        result += `<div style="margin-bottom: 4px; font-weight: bold;">总计: ${total.toFixed(3)}%</div>`
-        result += '<div style="border-top: 1px solid #ccc; margin: 4px 0;"></div>'
+        result += `<div style="margin-bottom: 4px; font-weight: bold; color: #ffd700;">总计: ${total.toFixed(3)}%</div>`
+        result += '<div style="border-top: 1px solid #555; margin: 4px 0;"></div>'
 
         // 按值排序显示
-        params.sort((a: any, b: any) => Number(b.value) - Number(a.value))
-        params.forEach((param: any) => {
-          result += `<div style="display: flex; justify-content: space-between; margin: 2px 0;">
-            <span>${param.marker}${param.seriesName}</span>
-            <span style="margin-left: 20px; font-weight: bold;">${param.value}%</span>
+        validParams.sort((a: any, b: any) => b.value - a.value)
+        validParams.forEach((param: any, index: number) => {
+          const percentage = total > 0 ? ((param.value / total) * 100).toFixed(1) : '0.0'
+          result += `<div style="display: flex; justify-content: space-between; align-items: center; margin: 3px 0; padding: 2px 0;">
+            <span style="display: flex; align-items: center;">
+              ${param.marker}
+              <span style="margin-left: 5px;">${param.seriesName}</span>
+            </span>
+            <span style="margin-left: 20px; font-weight: bold; color: #ffd700;">
+              ${param.value.toFixed(3)}% (${percentage}%)
+            </span>
           </div>`
         })
         return result
@@ -185,7 +233,20 @@ function updateChart() {
         },
       },
     },
-    series,
+    series: series.map((s, index) => ({
+      ...s,
+      // 确保series有完整的配置
+      name: s.name || `系列${index + 1}`,
+      type: 'bar',
+      stack: 'mindshare',
+      emphasis: {
+        focus: 'series',
+      },
+      data: s.data || [],
+      itemStyle: {
+        color: s.itemStyle?.color || `hsl(${index * 137.5 % 360}, 70%, 50%)`,
+      },
+    })),
     animationDuration: 1000,
     animationEasing: 'cubicOut',
     // 添加数据缩放组件
@@ -198,31 +259,47 @@ function updateChart() {
         height: 20,
         start: Math.max(0, 100 - (20 / categories.length * 100)),
         end: 100,
+        textStyle: {
+          fontSize: 10,
+        },
       },
     ],
   }
 
-  chartInstance.value.setOption(option, true)
+  try {
+    chartInstance.value.setOption(option, true)
+  } catch (error) {
+    console.error('更新图表失败:', error)
+    showNotification('更新图表失败', 'error')
+  }
 }
 
-// 监听数据变化，使用深度监听确保响应性
+// 监听控制参数变化
 watch([topTokenCount, selectedDateRange], () => {
-  nextTick(() => {
-    updateChart()
-  })
-}, { deep: true })
+  if (chartInstance.value && chartData.value) {
+    nextTick(() => {
+      updateChart()
+    })
+  }
+}, { immediate: false })
 
 // 监听chartData变化
-watch(chartData, () => {
-  nextTick(() => {
-    updateChart()
-  })
-}, { deep: true })
+watch(chartData, (newData) => {
+  if (chartInstance.value && newData && (newData.categories.length > 0 || newData.series.length > 0)) {
+    nextTick(() => {
+      updateChart()
+    })
+  }
+}, { immediate: false, deep: true })
 
 // 响应式处理
 function handleResize() {
   if (chartInstance.value) {
-    chartInstance.value.resize()
+    try {
+      chartInstance.value.resize()
+    } catch (error) {
+      console.error('调整图表大小失败:', error)
+    }
   }
 }
 
@@ -238,7 +315,9 @@ function showNotification(message: string, type = 'info') {
 onMounted(async () => {
   await loadData()
   await nextTick()
-  initChart()
+  if (chartData.value && chartData.value.categories.length > 0) {
+    initChart()
+  }
 
   // 添加窗口大小变化监听
   window.addEventListener('resize', handleResize)
@@ -247,7 +326,12 @@ onMounted(async () => {
 // 组件卸载时清理
 onBeforeUnmount(() => {
   if (chartInstance.value) {
-    chartInstance.value.dispose()
+    try {
+      chartInstance.value.dispose()
+      chartInstance.value = undefined
+    } catch (error) {
+      console.error('销毁图表失败:', error)
+    }
   }
   window.removeEventListener('resize', handleResize)
 })
