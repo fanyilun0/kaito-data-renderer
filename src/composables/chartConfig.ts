@@ -10,63 +10,6 @@ export interface ChartConfigOptions {
   displayDates: string[]
 }
 
-// 简化的tooltip格式化函数
-function createSimpleTooltipFormatter(displayDates: string[]) {
-  return function(params: any) {
-    if (!params || !Array.isArray(params) || params.length === 0) {
-      return ''
-    }
-
-    const fullDate = displayDates[params[0].dataIndex]
-    const formattedDate = dayjs(fullDate, 'YYYYMMDD').format('YYYY-MM-DD')
-
-    // 过滤有效数据并计算总和
-    const validParams = params.filter((param: any) => 
-      param && typeof param.value === 'number' && param.value > 0
-    )
-
-    if (validParams.length === 0) {
-      return `<div style="text-align: center;">
-        <div style="font-weight: bold; margin-bottom: 5px;">${formattedDate}</div>
-        <div style="color: #999;">当日暂无数据</div>
-      </div>`
-    }
-
-    const total = validParams.reduce((sum: number, param: any) => sum + param.value, 0)
-    
-    // 排序并只显示前5个
-    validParams.sort((a: any, b: any) => b.value - a.value)
-    const topParams = validParams.slice(0, 5)
-
-    let html = `<div style="min-width: 200px;">
-      <div style="font-weight: bold; text-align: center; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
-        ${formattedDate}
-      </div>
-      <div style="text-align: center; margin-bottom: 8px; color: #666;">
-        总计: ${total.toFixed(2)}%
-      </div>`
-
-    topParams.forEach((param: any) => {
-      html += `<div style="display: flex; justify-content: space-between; margin: 3px 0;">
-        <span style="display: flex; align-items: center;">
-          ${param.marker}
-          <span style="margin-left: 5px;">${param.seriesName}</span>
-        </span>
-        <span style="font-weight: bold;">${param.value.toFixed(2)}%</span>
-      </div>`
-    })
-
-    if (validParams.length > 5) {
-      html += `<div style="text-align: center; margin-top: 5px; font-size: 12px; color: #999;">
-        还有${validParams.length - 5}个代币...
-      </div>`
-    }
-
-    html += '</div>'
-    return html
-  }
-}
-
 // 生成颜色
 function generateColor(index: number): string {
   return `hsl(${index * 137.5 % 360}, 70%, 50%)`
@@ -94,7 +37,15 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
     },
     emphasis: {
       focus: 'series' as const,
+      itemStyle: {
+        shadowBlur: 10,
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowOffsetX: 2,
+        shadowOffsetY: 2,
+      }
     },
+    // 添加动画延迟
+    animationDelay: (idx: number) => idx * 5,
   }))
 
   return {
@@ -112,37 +63,42 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       },
     },
     tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
       },
-      confine: true,
-      formatter: createSimpleTooltipFormatter(displayDates),
-    },
     legend: {
-      top: '50px',
+      orient: 'vertical',
+      right: '10px',
+      top: '80px',
       type: 'scroll',
       pageButtonPosition: 'end',
       pageFormatter: '{current}/{total}',
-      selector: [
-        {
-          type: 'all',
-          title: '全选',
-        },
-        {
-          type: 'inverse',
-          title: '反选',
-        },
-      ],
       textStyle: {
         fontSize: 12,
       },
+      itemGap: 8,
+      itemWidth: 14,
+      itemHeight: 14,
+      // 增加选择器
+      selector: [
+        {
+          type: 'all',
+          title: '全选'
+        },
+        {
+          type: 'inverse', 
+          title: '反选'
+        }
+      ],
+      selectorPosition: 'start',
     },
     grid: {
       left: '3%',
-      right: '4%',
+      right: '120px',
       bottom: '8%',
-      top: '120px',
+      top: '80px',
       containLabel: true,
     },
     xAxis: {
@@ -151,9 +107,15 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       axisLabel: {
         fontSize: 11,
         rotate: categories.length > 15 ? 45 : 0,
+        margin: 8,
       },
       axisTick: {
         alignWithLabel: true,
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#ddd'
+        }
       },
     },
     yAxis: {
@@ -161,6 +123,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       name: 'Mindshare (%)',
       nameTextStyle: {
         fontSize: 12,
+        padding: [0, 0, 0, 20],
       },
       axisLabel: {
         formatter: '{value}%',
@@ -169,12 +132,21 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       splitLine: {
         lineStyle: {
           type: 'dashed',
+          color: '#f0f0f0',
         },
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#ddd'
+        }
       },
     },
     series: simplifiedSeries,
-    animationDuration: 800,
+    // 优化动画配置
+    animationDuration: 1000,
     animationEasing: 'cubicOut',
+    animationDelayUpdate: (idx: number) => idx * 2,
+    // 数据缩放配置
     dataZoom: categories.length > 20 ? [
       {
         type: 'slider',
@@ -183,11 +155,28 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
         height: 20,
         start: Math.max(0, 100 - (20 / categories.length * 100)),
         end: 100,
+        minSpan: 5, // 最小缩放范围
+        maxSpan: 100, // 最大缩放范围
+        zoomLock: false, // 允许缩放
         textStyle: {
           fontSize: 10,
         },
+        handleStyle: {
+          color: '#5470c6',
+        },
+        dataBackground: {
+          areaStyle: {
+            color: 'rgba(84, 112, 198, 0.2)',
+          },
+          lineStyle: {
+            color: '#5470c6',
+          },
+        },
+        // 确保 dataZoom 有正确的数据范围
+        startValue: 0,
+        endValue: categories.length - 1,
       },
-    ] : undefined,
+    ] : [],
   }
 }
 
@@ -223,11 +212,19 @@ export function updateChartWithState(
     }
 
     // 应用保存的dataZoom状态
-    if (preservedDataZoom && newOption.dataZoom && Array.isArray(newOption.dataZoom)) {
+    if (preservedDataZoom && newOption.dataZoom && Array.isArray(newOption.dataZoom) && newOption.dataZoom.length > 0) {
+      // 确保 preservedDataZoom 的值是有效的
+      const validStart = typeof preservedDataZoom.start === 'number' && !isNaN(preservedDataZoom.start) 
+        ? Math.max(0, Math.min(100, preservedDataZoom.start))
+        : newOption.dataZoom[0].start
+      const validEnd = typeof preservedDataZoom.end === 'number' && !isNaN(preservedDataZoom.end)
+        ? Math.max(0, Math.min(100, preservedDataZoom.end))
+        : newOption.dataZoom[0].end
+      
       newOption.dataZoom[0] = {
         ...newOption.dataZoom[0],
-        start: preservedDataZoom.start,
-        end: preservedDataZoom.end
+        start: validStart,
+        end: validEnd
       }
     }
 

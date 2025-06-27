@@ -76,6 +76,17 @@ function initChart() {
     return
   }
 
+  // 确保容器有尺寸
+  const rect = chartRef.value.getBoundingClientRect()
+  if (rect.width === 0 || rect.height === 0) {
+    console.warn('Chart container has no size, retrying...')
+    // 延迟重试
+    setTimeout(() => {
+      initChart()
+    }, 100)
+    return
+  }
+
   // 清理现有实例
   if (chartInstance.value) {
     try {
@@ -87,8 +98,26 @@ function initChart() {
   }
 
   try {
-    chartInstance.value = echarts.init(chartRef.value)
-    updateChart()
+    // 初始化图表，明确指定渲染器
+    chartInstance.value = echarts.init(chartRef.value, null, {
+      renderer: 'canvas',
+      useDirtyRect: false, // 禁用脏矩形优化以提高兼容性
+      width: chartRef.value.clientWidth || 800,
+      height: chartRef.value.clientHeight || 600,
+    })
+    
+    // 添加错误处理
+    chartInstance.value.on('error', (err: any) => {
+      console.error('ECharts error:', err)
+      showNotification('图表渲染出现错误', 'error')
+    })
+    
+    // 延迟更新图表，确保 ECharts 实例完全初始化
+    setTimeout(() => {
+      updateChart()
+    }, 50)
+    
+    console.log('图表初始化成功')
   } catch (error) {
     console.error('初始化图表失败:', error)
     showNotification('初始化图表失败', 'error')
@@ -107,6 +136,21 @@ function updateChart() {
   // 验证数据有效性
   if (!categories.length || !series.length) {
     console.warn('图表数据为空，跳过更新')
+    // 显示空状态
+    if (chartInstance.value) {
+      chartInstance.value.clear()
+      chartInstance.value.setOption({
+        title: {
+          text: '暂无数据',
+          left: 'center',
+          top: 'center',
+          textStyle: {
+            color: '#999',
+            fontSize: 16,
+          },
+        },
+      })
+    }
     return
   }
 
@@ -150,6 +194,15 @@ function updateChart() {
   console.log(`更新图表: ${validSeries.length} 个系列, ${categories.length} 个时间点`)
 
   try {
+    // 显示加载状态
+    if (chartInstance.value) {
+      chartInstance.value.showLoading('default', {
+        text: '正在渲染图表...',
+        textColor: '#5470c6',
+        maskColor: 'rgba(255, 255, 255, 0.8)',
+      })
+    }
+
     // 使用新的配置创建函数
     const option = createChartConfig({
       categories,
@@ -160,16 +213,36 @@ function updateChart() {
       displayDates: displayDates.value,
     })
 
+    // 验证配置对象
+    if (!option || typeof option !== 'object') {
+      throw new Error('Invalid chart option generated')
+    }
+
     // 使用新的更新函数（保持状态）
     updateChartWithState(chartInstance.value, option)
+    
+    // 隐藏加载状态
+    if (chartInstance.value) {
+      chartInstance.value.hideLoading()
+    }
+    
+    console.log('图表更新成功')
   } catch (error) {
     console.error('更新图表失败:', error)
-    showNotification('更新图表失败', 'error')
+    
+    // 隐藏加载状态
+    if (chartInstance.value) {
+      chartInstance.value.hideLoading()
+    }
+    
+    showNotification(`更新图表失败: ${error instanceof Error ? error.message : '未知错误'}`, 'error')
     
     // 如果更新失败，尝试完全重新初始化
     try {
       console.log('尝试重新初始化图表...')
-      initChart()
+      setTimeout(() => {
+        initChart()
+      }, 500)
     } catch (reinitError) {
       console.error('重新初始化图表也失败:', reinitError)
     }
@@ -187,10 +260,29 @@ watch([topTokenCount, selectedDateRange], async () => {
 // 监听数据加载状态变化，确保图表在数据加载完成后正确初始化
 watch(loading, async (isLoading) => {
   if (!isLoading && availableDates.value.length > 0 && !chartInstance.value) {
+    // 等待DOM更新
     await nextTick()
-    initChart()
+    // 延迟一点确保容器渲染完成
+    setTimeout(() => {
+      initChart()
+    }, 50)
   }
 })
+
+// 监听图表数据变化，确保有数据时图表正确渲染
+watch(chartData, async (newData) => {
+  if (newData && newData.categories.length > 0 && !loading.value) {
+    if (!chartInstance.value) {
+      await nextTick()
+      setTimeout(() => {
+        initChart()
+      }, 50)
+    } else {
+      await nextTick()
+      updateChart()
+    }
+  }
+}, { deep: true })
 
 // 响应式处理
 function handleResize() {
@@ -216,15 +308,33 @@ function resetChart() {
   if (chartInstance.value) {
     resetChartState(chartInstance.value)
     console.log('图表状态已重置')
+    showNotification('图表状态已重置', 'success')
   }
 }
 
 // 组件挂载
 onMounted(async () => {
-  await loadData()
-  await nextTick()
-  if (chartData.value && chartData.value.categories.length > 0) {
-    initChart()
+  console.log('组件开始挂载')
+  
+  try {
+    await loadData()
+    console.log('数据加载完成')
+    
+    // 确保DOM渲染完成
+    await nextTick()
+    
+    // 检查是否有可用数据
+    if (availableDates.value.length > 0) {
+      // 延迟初始化，确保容器完全渲染
+      setTimeout(() => {
+        if (chartData.value && chartData.value.categories.length > 0) {
+          initChart()
+        }
+      }, 100)
+    }
+  } catch (error) {
+    console.error('组件挂载过程中出现错误:', error)
+    showNotification('数据加载失败', 'error')
   }
 
   // 添加窗口大小变化监听
@@ -352,9 +462,18 @@ onBeforeUnmount(() => {
 
     <!-- 图表容器 -->
     <div v-else-if="availableDates.length > 0" class="chart-container">
+      <!-- 调试信息 -->
+      <div v-if="!chartInstance" class="mb-4 p-3 bg-blue-50 rounded-lg text-sm text-blue-700">
+        <div class="flex items-center space-x-2">
+          <div class="h-4 w-4 animate-spin border-b-2 border-t-2 border-blue-500 rounded-full" />
+          <span>正在初始化图表... (数据点: {{ chartData?.categories?.length || 0 }})</span>
+        </div>
+      </div>
+      
       <div
         ref="chartRef"
-        class="h-96 w-full border border-gray-200 rounded-lg shadow-sm md:h-[700px]"
+        class="h-96 w-full border border-gray-200 rounded-lg shadow-sm md:h-[700px] bg-white"
+        :style="{ minHeight: '400px' }"
       />
 
       <!-- 数据统计信息 -->
