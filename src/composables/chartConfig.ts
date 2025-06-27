@@ -1,5 +1,4 @@
 import type { EChartsOption } from 'echarts'
-import dayjs from 'dayjs'
 
 export interface ChartConfigOptions {
   categories: string[]
@@ -17,14 +16,21 @@ function generateColor(index: number): string {
 
 // 创建简化的图表配置
 export function createChartConfig(options: ChartConfigOptions): EChartsOption {
-  const { 
-    categories, 
-    series, 
-    displayTokenCount, 
-    selectedDateRange, 
-    allTokensLength, 
-    displayDates 
+  const {
+    categories,
+    series,
+    displayTokenCount,
+    selectedDateRange,
+    allTokensLength,
   } = options
+
+  // 确保数据的安全性和正确性
+  if (!categories || !Array.isArray(categories) || categories.length === 0) {
+    throw new Error('Invalid categories data')
+  }
+  if (!series || !Array.isArray(series) || series.length === 0) {
+    throw new Error('Invalid series data')
+  }
 
   // 简化series配置
   const simplifiedSeries = series.map((s, index) => ({
@@ -42,7 +48,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
         shadowColor: 'rgba(0, 0, 0, 0.2)',
         shadowOffsetX: 2,
         shadowOffsetY: 2,
-      }
+      },
     },
     // 添加动画延迟
     animationDelay: (idx: number) => idx * 5,
@@ -63,11 +69,11 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       },
     },
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow',
       },
+    },
     legend: {
       orient: 'vertical',
       right: '10px',
@@ -85,18 +91,18 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       selector: [
         {
           type: 'all',
-          title: '全选'
+          title: '全选',
         },
         {
-          type: 'inverse', 
-          title: '反选'
-        }
+          type: 'inverse',
+          title: '反选',
+        },
       ],
       selectorPosition: 'start',
     },
     grid: {
       left: '3%',
-      right: '120px',
+      right: '160px',
       bottom: '8%',
       top: '80px',
       containLabel: true,
@@ -114,8 +120,8 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       },
       axisLine: {
         lineStyle: {
-          color: '#ddd'
-        }
+          color: '#ddd',
+        },
       },
     },
     yAxis: {
@@ -137,55 +143,55 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       },
       axisLine: {
         lineStyle: {
-          color: '#ddd'
-        }
+          color: '#ddd',
+        },
       },
     },
     series: simplifiedSeries,
-    // 优化动画配置
     animationDuration: 1000,
     animationEasing: 'cubicOut',
     animationDelayUpdate: (idx: number) => idx * 2,
-    // 数据缩放配置
-    dataZoom: categories.length > 20 ? [
-      {
-        type: 'slider',
-        xAxisIndex: 0,
-        bottom: '2%',
-        height: 20,
-        start: Math.max(0, 100 - (20 / categories.length * 100)),
-        end: 100,
-        minSpan: 5, // 最小缩放范围
-        maxSpan: 100, // 最大缩放范围
-        zoomLock: false, // 允许缩放
-        textStyle: {
-          fontSize: 10,
-        },
-        handleStyle: {
-          color: '#5470c6',
-        },
-        dataBackground: {
-          areaStyle: {
-            color: 'rgba(84, 112, 198, 0.2)',
+    dataZoom: categories.length > 20
+      ? [
+          {
+            type: 'slider',
+            xAxisIndex: 0,
+            bottom: '2%',
+            height: 20,
+            start: Math.max(0, 100 - (20 / categories.length * 100)),
+            end: 100,
+            minSpan: 5, // 最小缩放范围
+            maxSpan: 100, // 最大缩放范围
+            zoomLock: false, // 允许缩放
+            textStyle: {
+              fontSize: 10,
+            },
+            handleStyle: {
+              color: '#5470c6',
+            },
+            dataBackground: {
+              areaStyle: {
+                color: 'rgba(84, 112, 198, 0.2)',
+              },
+              lineStyle: {
+                color: '#5470c6',
+              },
+            },
+            // 移除可能导致问题的 startValue 和 endValue
+            filterMode: 'none', // 不过滤数据，只缩放视图
           },
-          lineStyle: {
-            color: '#5470c6',
-          },
-        },
-        // 确保 dataZoom 有正确的数据范围
-        startValue: 0,
-        endValue: categories.length - 1,
-      },
-    ] : [],
+        ]
+      : [],
   }
 }
 
 // 更新图表配置（保持状态）
 export function updateChartWithState(
   chartInstance: any,
-  newOption: EChartsOption
+  newOption: EChartsOption,
 ): void {
-  if (!chartInstance) return
+  if (!chartInstance)
+    return
 
   try {
     // 保存当前状态
@@ -199,7 +205,7 @@ export function updateChartWithState(
     if (currentOption?.dataZoom?.[0]) {
       preservedDataZoom = {
         start: currentOption.dataZoom[0].start,
-        end: currentOption.dataZoom[0].end
+        end: currentOption.dataZoom[0].end,
       }
     }
 
@@ -214,23 +220,27 @@ export function updateChartWithState(
     // 应用保存的dataZoom状态
     if (preservedDataZoom && newOption.dataZoom && Array.isArray(newOption.dataZoom) && newOption.dataZoom.length > 0) {
       // 确保 preservedDataZoom 的值是有效的
-      const validStart = typeof preservedDataZoom.start === 'number' && !isNaN(preservedDataZoom.start) 
+      const validStart = typeof preservedDataZoom.start === 'number' && !Number.isNaN(preservedDataZoom.start)
         ? Math.max(0, Math.min(100, preservedDataZoom.start))
-        : newOption.dataZoom[0].start
-      const validEnd = typeof preservedDataZoom.end === 'number' && !isNaN(preservedDataZoom.end)
+        : (newOption.dataZoom[0] as any)?.start || 0
+      const validEnd = typeof preservedDataZoom.end === 'number' && !Number.isNaN(preservedDataZoom.end)
         ? Math.max(0, Math.min(100, preservedDataZoom.end))
-        : newOption.dataZoom[0].end
-      
-      newOption.dataZoom[0] = {
-        ...newOption.dataZoom[0],
-        start: validStart,
-        end: validEnd
+        : (newOption.dataZoom[0] as any)?.end || 100
+
+      // 安全地更新 dataZoom 配置
+      if (newOption.dataZoom[0]) {
+        newOption.dataZoom[0] = {
+          ...newOption.dataZoom[0],
+          start: validStart,
+          end: validEnd,
+        }
       }
     }
 
     // 更新图表，使用notMerge: false来保持legend交互功能
     chartInstance.setOption(newOption, false, true)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('更新图表配置失败:', error)
     throw error
   }
@@ -238,19 +248,21 @@ export function updateChartWithState(
 
 // 重置图表状态
 export function resetChartState(chartInstance: any): void {
-  if (!chartInstance) return
+  if (!chartInstance)
+    return
 
   try {
     chartInstance.dispatchAction({
-      type: 'legendAllSelect'
+      type: 'legendAllSelect',
     })
-    
+
     chartInstance.dispatchAction({
       type: 'dataZoom',
       start: 0,
-      end: 100
+      end: 100,
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('重置图表状态失败:', error)
   }
-} 
+}
