@@ -9,6 +9,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const colorPalette: typeof import('./src/composables/kaitoDataProcessor')['colorPalette']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -17,6 +18,7 @@ declare global {
   const controlledComputed: typeof import('@vueuse/core')['controlledComputed']
   const controlledRef: typeof import('@vueuse/core')['controlledRef']
   const createApp: typeof import('vue')['createApp']
+  const createChartConfig: typeof import('./src/composables/chartConfig')['createChartConfig']
   const createEventHook: typeof import('@vueuse/core')['createEventHook']
   const createGlobalState: typeof import('@vueuse/core')['createGlobalState']
   const createInjectionState: typeof import('@vueuse/core')['createInjectionState']
@@ -35,8 +37,10 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const generateDateRange: typeof import('./src/composables/kaitoDataProcessor')['generateDateRange']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getTopTokens: typeof import('./src/composables/kaitoDataProcessor')['getTopTokens']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -47,6 +51,7 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const loadAll24hData: typeof import('./src/composables/kaitoDataProcessor')['loadAll24hData']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
@@ -72,6 +77,7 @@ declare global {
   const onUpdated: typeof import('vue')['onUpdated']
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
+  const prepareChartData: typeof import('./src/composables/kaitoDataProcessor')['prepareChartData']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
   const reactify: typeof import('@vueuse/core')['reactify']
@@ -87,6 +93,7 @@ declare global {
   const refDefault: typeof import('@vueuse/core')['refDefault']
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
+  const resetChartState: typeof import('./src/composables/chartConfig')['resetChartState']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
@@ -113,6 +120,7 @@ declare global {
   const unref: typeof import('vue')['unref']
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
+  const updateChartWithState: typeof import('./src/composables/chartConfig')['updateChartWithState']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
@@ -302,6 +310,12 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { ChartConfigOptions } from './src/composables/chartConfig'
+  import('./src/composables/chartConfig')
+  // @ts-ignore
+  export type { KaitoDataItem, TokenStats, ChartData } from './src/composables/kaitoDataProcessor'
+  import('./src/composables/kaitoDataProcessor')
 }
 
 // for vue template auto import
@@ -312,6 +326,7 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly colorPalette: UnwrapRef<typeof import('./src/composables/kaitoDataProcessor')['colorPalette']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -320,6 +335,7 @@ declare module 'vue' {
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
+    readonly createChartConfig: UnwrapRef<typeof import('./src/composables/chartConfig')['createChartConfig']>
     readonly createEventHook: UnwrapRef<typeof import('@vueuse/core')['createEventHook']>
     readonly createGlobalState: UnwrapRef<typeof import('@vueuse/core')['createGlobalState']>
     readonly createInjectionState: UnwrapRef<typeof import('@vueuse/core')['createInjectionState']>
@@ -336,8 +352,10 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly generateDateRange: UnwrapRef<typeof import('./src/composables/kaitoDataProcessor')['generateDateRange']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getTopTokens: UnwrapRef<typeof import('./src/composables/kaitoDataProcessor')['getTopTokens']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -348,6 +366,7 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly loadAll24hData: UnwrapRef<typeof import('./src/composables/kaitoDataProcessor')['loadAll24hData']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -373,6 +392,7 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
+    readonly prepareChartData: UnwrapRef<typeof import('./src/composables/kaitoDataProcessor')['prepareChartData']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
@@ -388,6 +408,7 @@ declare module 'vue' {
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
+    readonly resetChartState: UnwrapRef<typeof import('./src/composables/chartConfig')['resetChartState']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
@@ -414,6 +435,7 @@ declare module 'vue' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updateChartWithState: UnwrapRef<typeof import('./src/composables/chartConfig')['updateChartWithState']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>

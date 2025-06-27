@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { getTopTokens, loadAll24hData, prepareChartData } from '../composables/kaitoDataProcessor'
+import { createChartConfig, updateChartWithState, resetChartState } from '../composables/chartConfig'
 
 // 数据状态
 const loading = ref(true)
@@ -12,10 +13,10 @@ const allData = ref<Record<string, KaitoDataItem[]>>({})
 const availableDates = ref<string[]>([])
 const allTokens = ref<string[]>([])
 const notification = ref({ show: false, message: '', type: 'info' })
-const chartInstance = ref<echarts.ECharts>()
+const chartInstance = ref<echarts.ECharts | null>(null)
 
 // 图表配置 - 默认显示前50个代币
-const topTokenCount = ref(50)
+const topTokenCount = ref(10)
 const selectedDateRange = ref(30) // 显示最近N天
 
 // 加载数据
@@ -70,8 +71,19 @@ const chartData = computed(() => {
 
 // 初始化图表
 function initChart() {
-  if (!chartRef.value || chartInstance.value) {
+  if (!chartRef.value) {
+    console.warn('Chart container not found')
     return
+  }
+
+  // 清理现有实例
+  if (chartInstance.value) {
+    try {
+      chartInstance.value.dispose()
+    } catch (error) {
+      console.warn('Error disposing chart:', error)
+    }
+    chartInstance.value = null
   }
 
   try {
@@ -86,6 +98,7 @@ function initChart() {
 // 更新图表
 function updateChart() {
   if (!chartInstance.value || !chartData.value) {
+    console.warn('Chart instance or data not available')
     return
   }
 
@@ -101,196 +114,83 @@ function updateChart() {
     ? allTokens.value.length
     : topTokenCount.value
 
-  const option: echarts.EChartsOption = {
-    title: {
-      text: 'KAITO 24H Mindshare 历史趋势图',
-      subtext: `Stack柱状图 | ${displayTokenCount === allTokens.value.length ? '所有' : `前${displayTokenCount}`}代币 | ${selectedDateRange.value === 0 ? '全部时间' : `最近${selectedDateRange.value}天`}`,
-      left: 'center',
-      textStyle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-      },
-      subtextStyle: {
-        fontSize: 12,
-        color: '#666',
-      },
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-      },
-      confine: true,
-      backgroundColor: 'rgba(0,0,0,0.8)',
-      borderColor: '#333',
-      borderWidth: 1,
-      textStyle: {
-        color: '#fff',
-        fontSize: 12,
-      },
-      formatter(params: any) {
-        if (!params || !Array.isArray(params) || params.length === 0) {
-          return ''
-        }
+  // 验证并清理series数据
+  const validSeries = series.filter(s => {
+    if (!s || typeof s.name !== 'string' || !Array.isArray(s.data)) {
+      console.warn('Invalid series data:', s)
+      return false
+    }
+    // 检查数据数组长度是否与categories匹配
+    if (s.data.length !== categories.length) {
+      console.warn(`Series ${s.name} data length (${s.data.length}) doesn't match categories length (${categories.length})`)
+      return false
+    }
+    return true
+  }).map(s => {
+    // 确保数据的完整性和正确性
+    const cleanData = s.data.map(d => {
+      if (typeof d === 'number' && !isNaN(d) && isFinite(d) && d >= 0) {
+        return d
+      }
+      return 0
+    })
 
-        let result = `<div style="margin-bottom: 8px; font-weight: bold; font-size: 14px;">${params[0].axisValue}</div>`
-
-        // 计算总和并过滤有效数据
-        const validParams = params.filter((param: any) => 
-          param && 
-          typeof param.value === 'number' && 
-          !Number.isNaN(param.value) && 
-          param.value > 0
-        )
-
-        if (validParams.length === 0) {
-          return result + '<div>暂无数据</div>'
-        }
-
-        let total = 0
-        validParams.forEach((param: any) => {
-          total += param.value
-        })
-
-        result += `<div style="margin-bottom: 4px; font-weight: bold; color: #ffd700;">总计: ${total.toFixed(3)}%</div>`
-        result += '<div style="border-top: 1px solid #555; margin: 4px 0;"></div>'
-
-        // 按值排序显示
-        validParams.sort((a: any, b: any) => b.value - a.value)
-        validParams.forEach((param: any, index: number) => {
-          const percentage = total > 0 ? ((param.value / total) * 100).toFixed(1) : '0.0'
-          result += `<div style="display: flex; justify-content: space-between; align-items: center; margin: 3px 0; padding: 2px 0;">
-            <span style="display: flex; align-items: center;">
-              ${param.marker}
-              <span style="margin-left: 5px;">${param.seriesName}</span>
-            </span>
-            <span style="margin-left: 20px; font-weight: bold; color: #ffd700;">
-              ${param.value.toFixed(3)}% (${percentage}%)
-            </span>
-          </div>`
-        })
-        return result
-      },
-    },
-    legend: {
-      top: '50px',
-      type: 'scroll',
-      pageButtonItemGap: 5,
-      pageButtonGap: 20,
-      pageButtonPosition: 'end',
-      pageFormatter: '{current}/{total}',
-      animationDurationUpdate: 800,
-      // 确保图例可交互
-      selected: {},
-      selector: [
-        {
-          type: 'all',
-          title: '全选',
-        },
-        {
-          type: 'inverse',
-          title: '反选',
-        },
-      ],
-      // 设置图例的样式
-      textStyle: {
-        fontSize: 12,
-      },
-      itemWidth: 14,
-      itemHeight: 14,
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '8%',
-      top: '120px',
-      containLabel: true,
-    },
-    xAxis: {
-      type: 'category',
-      data: categories,
-      axisLabel: {
-        fontSize: 11,
-        rotate: categories.length > 15 ? 45 : 0,
-      },
-      axisTick: {
-        alignWithLabel: true,
-      },
-    },
-    yAxis: {
-      type: 'value',
-      name: 'Mindshare (%)',
-      nameTextStyle: {
-        fontSize: 12,
-      },
-      axisLabel: {
-        formatter: '{value}%',
-        fontSize: 11,
-      },
-      splitLine: {
-        lineStyle: {
-          type: 'dashed',
-        },
-      },
-    },
-    series: series.map((s, index) => ({
+    return {
       ...s,
-      // 确保series有完整的配置
-      name: s.name || `系列${index + 1}`,
-      type: 'bar',
-      stack: 'mindshare',
-      emphasis: {
-        focus: 'series',
-      },
-      data: s.data || [],
-      itemStyle: {
-        color: s.itemStyle?.color || `hsl(${index * 137.5 % 360}, 70%, 50%)`,
-      },
-    })),
-    animationDuration: 1000,
-    animationEasing: 'cubicOut',
-    // 添加数据缩放组件
-    dataZoom: [
-      {
-        type: 'slider',
-        show: categories.length > 20,
-        xAxisIndex: 0,
-        bottom: '2%',
-        height: 20,
-        start: Math.max(0, 100 - (20 / categories.length * 100)),
-        end: 100,
-        textStyle: {
-          fontSize: 10,
-        },
-      },
-    ],
+      data: cleanData,
+    }
+  })
+
+  if (validSeries.length === 0) {
+    console.warn('No valid series data available')
+    showNotification('没有有效的数据可以显示', 'error')
+    return
   }
 
+  console.log(`更新图表: ${validSeries.length} 个系列, ${categories.length} 个时间点`)
+
   try {
-    chartInstance.value.setOption(option, true)
+    // 使用新的配置创建函数
+    const option = createChartConfig({
+      categories,
+      series: validSeries,
+      displayTokenCount,
+      selectedDateRange: selectedDateRange.value,
+      allTokensLength: allTokens.value.length,
+      displayDates: displayDates.value,
+    })
+
+    // 使用新的更新函数（保持状态）
+    updateChartWithState(chartInstance.value, option)
   } catch (error) {
     console.error('更新图表失败:', error)
     showNotification('更新图表失败', 'error')
+    
+    // 如果更新失败，尝试完全重新初始化
+    try {
+      console.log('尝试重新初始化图表...')
+      initChart()
+    } catch (reinitError) {
+      console.error('重新初始化图表也失败:', reinitError)
+    }
   }
 }
 
 // 监听控制参数变化
-watch([topTokenCount, selectedDateRange], () => {
-  if (chartInstance.value && chartData.value) {
-    nextTick(() => {
-      updateChart()
-    })
+watch([topTokenCount, selectedDateRange], async () => {
+  if (chartInstance.value && chartData.value && chartData.value.categories.length > 0) {
+    await nextTick()
+    updateChart()
   }
 }, { immediate: false })
 
-// 监听chartData变化
-watch(chartData, (newData) => {
-  if (chartInstance.value && newData && (newData.categories.length > 0 || newData.series.length > 0)) {
-    nextTick(() => {
-      updateChart()
-    })
+// 监听数据加载状态变化，确保图表在数据加载完成后正确初始化
+watch(loading, async (isLoading) => {
+  if (!isLoading && availableDates.value.length > 0 && !chartInstance.value) {
+    await nextTick()
+    initChart()
   }
-}, { immediate: false, deep: true })
+})
 
 // 响应式处理
 function handleResize() {
@@ -311,6 +211,14 @@ function showNotification(message: string, type = 'info') {
   }, 3000)
 }
 
+// 重置图表状态
+function resetChart() {
+  if (chartInstance.value) {
+    resetChartState(chartInstance.value)
+    console.log('图表状态已重置')
+  }
+}
+
 // 组件挂载
 onMounted(async () => {
   await loadData()
@@ -328,10 +236,10 @@ onBeforeUnmount(() => {
   if (chartInstance.value) {
     try {
       chartInstance.value.dispose()
-      chartInstance.value = undefined
     } catch (error) {
       console.error('销毁图表失败:', error)
     }
+    chartInstance.value = null
   }
   window.removeEventListener('resize', handleResize)
 })
@@ -420,6 +328,15 @@ onBeforeUnmount(() => {
                 </option>
               </select>
             </div>
+
+            <button
+              v-if="chartInstance"
+              @click="resetChart"
+              class="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600 transition-colors"
+              title="重置图表状态（清除筛选和缩放）"
+            >
+              重置图表
+            </button>
           </div>
         </div>
       </div>
