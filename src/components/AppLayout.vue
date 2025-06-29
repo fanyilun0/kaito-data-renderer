@@ -1,15 +1,15 @@
 <script setup lang="ts">
 interface Props {
-  maxWidth?: string
+  width?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  maxWidth: '1200px'
+  width: '1200px',
 })
 </script>
 
 <template>
-  <div class="mx-auto px-4 py-4" :style="{ maxWidth: props.maxWidth }">
+  <div class="mx-auto px-4 py-4" :style="{ maxWidth: props.width }">
     <slot />
   </div>
 </template>
@@ -20,4 +20,4 @@ const props = withDefaults(defineProps<Props>(), {
   margin-left: auto;
   margin-right: auto;
 }
-</style> 
+</style>

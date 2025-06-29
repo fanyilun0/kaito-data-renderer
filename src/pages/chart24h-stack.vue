@@ -393,12 +393,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <AppLayout max-width="1400px">
+  <AppLayout>
     <!-- 头部 -->
     <div class="mb-6">
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
-          <AppHeader 
+          <AppHeader
             title="KAITO-PRE-TGE热门代币图表"
             current-route="chart"
           />
@@ -417,7 +417,7 @@ onBeforeUnmount(() => {
                   { value: 20, label: '前20个' },
                   { value: 25, label: '前25个' },
                   { value: 50, label: '前50个' },
-                  { value: 100, label: '前100个' }
+                  { value: 100, label: '前100个' },
                 ]"
               />
             </div>
@@ -432,7 +432,7 @@ onBeforeUnmount(() => {
                   { value: 30, label: '最近30天' },
                   { value: 60, label: '最近60天' },
                   { value: 90, label: '最近90天' },
-                  { value: 0, label: `全部时间 (${availableDates.length}天)` }
+                  { value: 0, label: `全部时间 (${availableDates.length}天)` },
                 ]"
               />
             </div>
@@ -540,11 +540,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-
 .chart-container {
   background: white;
   border-radius: 8px;
-  padding: 16px;
 }
 
 /* 响应式调整 */
