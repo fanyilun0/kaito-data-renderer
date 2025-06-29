@@ -19,9 +19,6 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
   const {
     categories,
     series,
-    displayTokenCount,
-    selectedDateRange,
-    allTokensLength,
   } = options
 
   // 确保数据的安全性和正确性
@@ -57,12 +54,12 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
   return {
     title: {
       text: 'KAITO 24H Mindshare 历史趋势图',
-      subtext: `Stack柱状图 | ${displayTokenCount === allTokensLength ? '所有' : `前${displayTokenCount}`}代币 | ${selectedDateRange === 0 ? '全部时间' : `最近${selectedDateRange}天`}`,
       left: 'center',
       textStyle: {
         fontSize: 18,
         fontWeight: 'bold',
       },
+      top: '16px',
       subtextStyle: {
         fontSize: 12,
         color: '#666',
@@ -72,6 +69,9 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow',
+      },
+      textStyle: {
+        align: 'left',
       },
     },
     legend: {
@@ -102,7 +102,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
     },
     grid: {
       left: '3%',
-      right: '160px',
+      right: '120px',
       bottom: '8%',
       top: '80px',
       containLabel: true,

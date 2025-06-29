@@ -549,22 +549,6 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
-
-      <!-- 说明文字 -->
-      <div class="mt-4 rounded-lg bg-gray-50 p-4">
-        <div class="text-sm text-gray-700">
-          <h3 class="mb-2 font-semibold">
-            📊 图表说明：
-          </h3>
-          <ul class="text-xs space-y-1">
-            <li>• <strong>横轴（X轴）</strong>：时间（日期），从左到右按时间顺序排列</li>
-            <li>• <strong>纵轴（Y轴）</strong>：Mindshare百分比值，表示各代币的关注度占比</li>
-            <li>• <strong>Stack模式</strong>：每个代币的数据堆叠显示，柱子总高度代表当日所有代币的总Mindshare</li>
-            <li>• <strong>颜色区分</strong>：每种颜色代表一个代币，鼠标悬停可查看详细数据</li>
-            <li>• <strong>数据缩放</strong>：当数据点较多时，底部会显示缩放滑块，可拖拽查看不同时间段</li>
-          </ul>
-        </div>
-      </div>
     </div>
 
     <!-- 无数据状态 -->
