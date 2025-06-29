@@ -393,7 +393,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout width="1600px">
     <!-- 头部 -->
     <div class="mb-6">
       <div class="flex flex-col space-y-4">

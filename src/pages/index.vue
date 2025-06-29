@@ -12,7 +12,12 @@ interface DataFile {
   name: string
   label: string
   date: string
-  durations: string[]
+}
+
+// 时间段选项类型
+interface DurationOption {
+  value: string
+  label: string
 }
 
 interface TickerItem {
@@ -21,39 +26,104 @@ interface TickerItem {
   fullname: string
   logo?: string
   rank: number
-  mindshare: number
+  // 各时间段的提及度
+  last_24h_mindshare: number
+  last_48h_mindshare: number
   last_7d_mindshare: number
+  last_30d_mindshare: number
+  last_6m_mindshare: number
+  last_12m_mindshare: number
+  // 各时间段的变化比率
   change_24h_ratio: number
+  change_48h_ratio: number
+  change_7d_ratio: number
+  change_30d_ratio: number
+  change_6m_ratio: number
+  change_12m_ratio: number
 }
+
+// 缓存相关类型
+interface CacheItem {
+  data: TickerItem[]
+  date: string
+  duration: string
+}
+
+const { isNaN } = Number
 
 // 数据加载状态
 const loading = ref(true)
 const dataFiles = ref<DataFile[]>([])
 const selectedDataFile = ref('')
+const selectedDuration = ref('24h') // 新增：当前选择的时间段
 const tickerData = ref<TickerItem[]>([])
 const updateTime = ref(dayjs().format('YYYY-MM-DD'))
 const notification = ref({ show: false, message: '', type: 'info' })
-const selectedDuration = ref('24h')
+
+// 可选的时间段选项
+const durationOptions: DurationOption[] = [
+  { value: '24h', label: '24小时' },
+  { value: '48h', label: '48小时' },
+  { value: '7d', label: '7天' },
+  { value: '30d', label: '30天' },
+  { value: '3m', label: '3个月' },
+  { value: '6m', label: '6个月' },
+  { value: '12m', label: '12个月' },
+]
+
+// 缓存相关函数
+function getCacheKey(dateStr: string, duration: string) {
+  return `kaito_data_${dateStr}_${duration}`
+}
+
+function getDataFromCache(dateStr: string, duration: string): TickerItem[] | null {
+  try {
+    const cacheKey = getCacheKey(dateStr, duration)
+    const cached = localStorage.getItem(cacheKey)
+    if (!cached)
+      return null
+
+    const cacheItem: CacheItem = JSON.parse(cached)
+    debugLog(`从缓存加载数据: ${dateStr}_${duration}`, { count: cacheItem.data.length })
+    return cacheItem.data
+  }
+  catch (error) {
+    debugLog(`缓存读取失败: ${dateStr}_${duration}`, error)
+    return null
+  }
+}
+
+function saveDataToCache(dateStr: string, duration: string, data: TickerItem[]) {
+  try {
+    const cacheKey = getCacheKey(dateStr, duration)
+    const cacheItem: CacheItem = {
+      data,
+      date: dateStr,
+      duration,
+    }
+    localStorage.setItem(cacheKey, JSON.stringify(cacheItem))
+    debugLog(`数据已缓存: ${dateStr}_${duration}`, { count: data.length })
+  }
+  catch (error) {
+    debugLog(`缓存保存失败: ${dateStr}_${duration}`, error)
+  }
+}
 
 // 加载数据文件列表
 async function loadDataFileList() {
   try {
     const dataFileList = []
 
-    // 获取所有可用的数据文件（扫描目录中的所有文件）
-    const allDurations = ['24h', '48h', '7d', '30d', '3m', '6m', '12m']
-
     // 生成日期范围（从2025-04-18到今天）
     const possibleDates = generateDateRange()
 
-    // 不再检查文件是否存在，直接生成所有可能的日期，默认支持所有duration
+    // 生成数据文件列表
     for (const dateStr of possibleDates) {
       const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
       dataFileList.push({
         name: `kaito_data_${dateStr}`,
         label: formattedDate,
         date: dateStr,
-        durations: allDurations, // 默认支持所有duration
       })
     }
 
@@ -93,7 +163,7 @@ function generateDateRange() {
 }
 
 // 添加调试功能
-function debugLog(message, data = null) {
+function debugLog(message: string, data?: any) {
   if (process.env.NODE_ENV !== 'production') {
     if (data) {
       console.warn(`[DEBUG] ${message}`, data)
@@ -104,43 +174,178 @@ function debugLog(message, data = null) {
   }
 }
 
-// 加载特定日期和时间段的数据
-async function loadDataForDateAndDuration(dateStr: string, duration: string) {
-  loading.value = true
-  try {
-    // 尝试加载特定duration的文件 (例如: kaito_data_20250418_24h.json)
-    const specificPath = `./data/kaito_data_${dateStr}_${duration}.json`
-    debugLog(`尝试加载特定时间段文件: ${specificPath}`)
+// 数据处理函数：确保所有数据都是有效的数值
+function processRawTickerData(rawData: any[]): TickerItem[] {
+  return rawData.map((item: any, index: number) => {
+    // 安全的数值转换函数
+    const safeNumber = (value: any, defaultValue: number = 0): number => {
+      if (value === null || value === undefined || value === '') {
+        return defaultValue
+      }
+      const num = Number(value)
+      return isNaN(num) ? defaultValue : num
+    }
 
-    try {
-      const response = await fetch(specificPath)
-      if (response.ok) {
-        debugLog(`获取文件成功: ${specificPath}`)
-        try {
-          const data = await response.json()
-          debugLog(`解析JSON成功`)
-          if (data.resultWithTicker) {
-            tickerData.value = data.resultWithTicker as TickerItem[]
-            const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-            updateTime.value = `${formattedDate} (${duration})`
-            return true
-          }
-          else {
-            debugLog('文件中没有resultWithTicker字段', data)
-          }
+    return {
+      ticker_id: item.ticker_id || item.ticker || '',
+      ticker: item.ticker || '',
+      fullname: item.fullname || item.ticker || '',
+      logo: item.logo || '',
+      rank: safeNumber(item.rank, index + 1),
+      // 各时间段的提及度
+      last_24h_mindshare: safeNumber(item.last_24h_mindshare),
+      last_48h_mindshare: safeNumber(item.last_48h_mindshare),
+      last_7d_mindshare: safeNumber(item.last_7d_mindshare),
+      last_30d_mindshare: safeNumber(item.last_30d_mindshare),
+      last_6m_mindshare: safeNumber(item.last_6m_mindshare),
+      last_12m_mindshare: safeNumber(item.last_12m_mindshare),
+      // 各时间段的变化比率
+      change_24h_ratio: safeNumber(item.change_24h_ratio),
+      change_48h_ratio: safeNumber(item.change_48h_ratio),
+      change_7d_ratio: safeNumber(item.change_7d_ratio),
+      change_30d_ratio: safeNumber(item.change_30d_ratio),
+      change_6m_ratio: safeNumber(item.change_6m_ratio),
+      change_12m_ratio: safeNumber(item.change_12m_ratio),
+    } as TickerItem
+  })
+}
+
+// 设置处理后的数据到组件状态
+function setProcessedData(data: TickerItem[], dateStr: string) {
+  // 再次确保数据的完整性
+  const validatedData = processRawTickerData(data)
+
+  // 调试：检查是否有NaN值
+  const hasNaN = validatedData.some((item) => {
+    const values = [
+      item.rank,
+      item.last_24h_mindshare,
+      item.last_48h_mindshare,
+      item.last_7d_mindshare,
+      item.last_30d_mindshare,
+      item.last_6m_mindshare,
+      item.last_12m_mindshare,
+      item.change_24h_ratio,
+      item.change_48h_ratio,
+      item.change_7d_ratio,
+      item.change_30d_ratio,
+      item.change_6m_ratio,
+      item.change_12m_ratio,
+    ]
+    return values.some(value => isNaN(Number(value)))
+  })
+
+  if (hasNaN) {
+    debugLog('警告：数据中发现NaN值')
+    // 找出包含NaN的项目
+    validatedData.forEach((item, index) => {
+      const nanFields = []
+      if (isNaN(Number(item.rank)))
+        nanFields.push('rank')
+      if (isNaN(Number(item.last_24h_mindshare)))
+        nanFields.push('last_24h_mindshare')
+      if (isNaN(Number(item.last_48h_mindshare)))
+        nanFields.push('last_48h_mindshare')
+      if (isNaN(Number(item.last_7d_mindshare)))
+        nanFields.push('last_7d_mindshare')
+      if (isNaN(Number(item.last_30d_mindshare)))
+        nanFields.push('last_30d_mindshare')
+      if (isNaN(Number(item.last_6m_mindshare)))
+        nanFields.push('last_6m_mindshare')
+      if (isNaN(Number(item.last_12m_mindshare)))
+        nanFields.push('last_12m_mindshare')
+      if (isNaN(Number(item.change_24h_ratio)))
+        nanFields.push('change_24h_ratio')
+      if (isNaN(Number(item.change_48h_ratio)))
+        nanFields.push('change_48h_ratio')
+      if (isNaN(Number(item.change_7d_ratio)))
+        nanFields.push('change_7d_ratio')
+      if (isNaN(Number(item.change_30d_ratio)))
+        nanFields.push('change_30d_ratio')
+      if (isNaN(Number(item.change_6m_ratio)))
+        nanFields.push('change_6m_ratio')
+      if (isNaN(Number(item.change_12m_ratio)))
+        nanFields.push('change_12m_ratio')
+
+      if (nanFields.length > 0) {
+        debugLog(`项目 ${index} (${item.ticker}) 包含NaN字段: ${nanFields.join(', ')}`, item)
+      }
+    })
+  }
+
+  tickerData.value = validatedData
+
+  const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
+  updateTime.value = formattedDate
+
+  debugLog(`设置处理后的数据: ${validatedData.length} 条记录`)
+}
+
+// 从远程服务器加载数据
+async function loadDataFromServer(dateStr: string, duration: string): Promise<TickerItem[] | null> {
+  const filePath = `./data/kaito_data_${dateStr}_${duration}.json`
+
+  debugLog(`尝试加载文件: ${filePath}`)
+
+  try {
+    const response = await fetch(filePath)
+    if (response.ok) {
+      debugLog(`获取文件成功: ${filePath}`)
+      try {
+        const data = await response.json()
+        debugLog(`解析JSON成功`)
+
+        if (data.resultWithTicker && Array.isArray(data.resultWithTicker)) {
+          // 处理原始数据
+          const processedData = processRawTickerData(data.resultWithTicker)
+          debugLog(`成功处理数据: ${processedData.length} 条记录`)
+          return processedData
         }
-        catch (parseError) {
-          debugLog(`解析JSON失败`, parseError)
-          console.error('解析JSON失败:', parseError)
+        else {
+          debugLog('文件中没有有效的resultWithTicker字段', data)
         }
       }
-      else {
-        debugLog(`文件不存在或无法访问: ${response.status} ${response.statusText}`)
+      catch (parseError) {
+        debugLog(`解析JSON失败`, parseError)
+        console.error('解析JSON失败:', parseError)
       }
     }
-    catch (error) {
-      debugLog(`加载文件出错`, error)
-      console.error('加载文件失败:', error)
+    else {
+      debugLog(`文件不存在或无法访问: ${response.status} ${response.statusText}`)
+    }
+  }
+  catch (error) {
+    debugLog(`加载文件出错`, error)
+    console.error('加载文件失败:', error)
+  }
+}
+
+// 加载特定日期和时间段的数据
+async function loadDataForDate(dateStr: string, duration: string = selectedDuration.value): Promise<boolean> {
+  loading.value = true
+  try {
+    // 首先尝试从缓存加载
+    const cachedData = getDataFromCache(dateStr, duration)
+    if (cachedData) {
+      // 对缓存数据也进行处理，确保数据完整性
+      setProcessedData(cachedData, dateStr)
+      const durationLabel = durationOptions.find(opt => opt.value === duration)?.label || duration
+      const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
+      showNotification(`从缓存加载 ${formattedDate} ${durationLabel} 数据`, 'info')
+      return true
+    }
+
+    // 缓存未命中，从服务器加载
+    const processedData = await loadDataFromServer(dateStr, duration)
+
+    if (processedData && processedData.length > 0) {
+      // 设置数据到组件状态
+      setProcessedData(processedData, dateStr)
+
+      // 保存到缓存
+      saveDataToCache(dateStr, duration, processedData)
+
+      return true
     }
 
     return false
@@ -156,20 +361,20 @@ async function loadDataForDateAndDuration(dateStr: string, duration: string) {
 }
 
 // 从本地数据文件加载数据
-async function loadDataFromFile(dateStr: string) {
-  loading.value = true
+async function loadDataFromFile(dateStr: string, duration: string = selectedDuration.value) {
   try {
     if (!dateStr) {
       showNotification('请选择日期', 'error')
       return
     }
 
-    const success = await loadDataForDateAndDuration(dateStr, selectedDuration.value)
+    const success = await loadDataForDate(dateStr, duration)
 
     if (!success) {
       // 不显示错误通知，而是显示信息提示，因为可能只是文件不存在
       const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-      showNotification(`${formattedDate} 的 ${selectedDuration.value} 数据暂未找到，请尝试其他日期或时间段`, 'info')
+      const durationLabel = durationOptions.find(opt => opt.value === duration)?.label || duration
+      showNotification(`${formattedDate} ${durationLabel} 的数据暂未找到，请尝试其他日期或时间段`, 'info')
       tickerData.value = []
     }
   }
@@ -178,52 +383,34 @@ async function loadDataFromFile(dateStr: string) {
     showNotification('加载数据文件失败', 'error')
     tickerData.value = []
   }
-  finally {
-    loading.value = false
-  }
 }
 
 // 切换数据文件
 function changeDataFile(dateStr: string | number) {
   const strDateStr = String(dateStr)
   selectedDataFile.value = strDateStr
-  loadDataFromFile(strDateStr)
+  loadDataFromFile(strDateStr, selectedDuration.value)
 }
 
 // 切换时间段
-function changeDuration(duration: string | number) {
-  selectedDuration.value = String(duration)
-
-  // 如果已经选择了数据文件，则从该文件重新加载对应时间段的数据
+function changeDuration(duration: string) {
+  selectedDuration.value = duration
   if (selectedDataFile.value) {
-    loadDataFromFile(selectedDataFile.value)
+    loadDataFromFile(selectedDataFile.value, duration)
   }
 }
 
 // 监视数据文件的变化
 watch(selectedDataFile, (newValue) => {
   if (newValue) {
-    loadDataFromFile(newValue)
+    loadDataFromFile(newValue, selectedDuration.value)
   }
 })
 
 // 监视时间段的变化
-watch(selectedDuration, () => {
-  if (selectedDataFile.value) {
-    loadDataFromFile(selectedDataFile.value)
-  }
-})
-
-// 获取当前选择日期的可用时间段
-const availableDurations = computed(() => {
-  const selectedDate = dataFiles.value.find(file => file.date === selectedDataFile.value)
-  return selectedDate ? selectedDate.durations : []
-})
-
-// 当选择的时间段不在当前日期的可用时间段中时，自动选择第一个可用的
-watch(availableDurations, (newDurations) => {
-  if (newDurations.length > 0 && !newDurations.includes(selectedDuration.value)) {
-    selectedDuration.value = newDurations[0]
+watch(selectedDuration, (newValue) => {
+  if (selectedDataFile.value && newValue) {
+    loadDataFromFile(selectedDataFile.value, newValue)
   }
 })
 
@@ -239,7 +426,7 @@ function showNotification(message: string, type: 'info' | 'error' = 'info') {
 onMounted(async () => {
   await loadDataFileList()
   if (selectedDataFile.value) {
-    await loadDataFromFile(selectedDataFile.value)
+    await loadDataFromFile(selectedDataFile.value, selectedDuration.value)
   }
 })
 
@@ -247,7 +434,9 @@ onMounted(async () => {
 const searchKeyword = ref('')
 
 // 排序相关
-const sortField = ref<'rank' | 'mindshare' | 'last_7d_mindshare' | 'change_24h_ratio'>('rank')
+type SortField = 'rank' | 'last_24h_mindshare' | 'change_24h_ratio' | 'last_48h_mindshare' | 'change_48h_ratio' | 'last_7d_mindshare' | 'change_7d_ratio' | 'last_30d_mindshare' | 'last_6m_mindshare' | 'last_12m_mindshare'
+
+const sortField = ref<SortField>('rank')
 const sortOrder = ref<'asc' | 'desc'>('asc')
 
 // 排序函数
@@ -255,24 +444,41 @@ function sortTickerData(data: TickerItem[], field: string, order: 'asc' | 'desc'
   return [...data].sort((a, b) => {
     let aValue = (a as any)[field]
     let bValue = (b as any)[field]
-    
+
+    // 安全的数值转换
+    const safeNumber = (value: any, defaultValue: number = 0): number => {
+      if (value === null || value === undefined || value === '') {
+        return defaultValue
+      }
+      const num = Number(value)
+      return isNaN(num) ? defaultValue : num
+    }
+
     // 处理特殊字段
     if (field === 'rank') {
-      aValue = Number(aValue) || 999999
-      bValue = Number(bValue) || 999999
+      aValue = safeNumber(aValue, 999999)
+      bValue = safeNumber(bValue, 999999)
     }
-    
-    if (aValue < bValue) return order === 'asc' ? -1 : 1
-    if (aValue > bValue) return order === 'asc' ? 1 : -1
+    else {
+      // 确保数值比较
+      aValue = safeNumber(aValue)
+      bValue = safeNumber(bValue)
+    }
+
+    if (aValue < bValue)
+      return order === 'asc' ? -1 : 1
+    if (aValue > bValue)
+      return order === 'asc' ? 1 : -1
     return 0
   })
 }
 
 // 切换排序
-function toggleSort(field: 'rank' | 'mindshare' | 'last_7d_mindshare' | 'change_24h_ratio') {
+function toggleSort(field: SortField) {
   if (sortField.value === field) {
     sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
-  } else {
+  }
+  else {
     sortField.value = field
     sortOrder.value = field === 'rank' ? 'asc' : 'desc' // rank默认升序，其他降序
   }
@@ -290,44 +496,64 @@ const filteredTickers = computed(() => {
       return name.includes(searchKeyword.value.toLowerCase())
         || ticker.includes(searchKeyword.value.toLowerCase())
     })
-  
+
   // 然后排序
   return sortTickerData(filtered, sortField.value, sortOrder.value)
 })
 
 // 格式化百分比
-function formatPercentage(value) {
-  return `${(value * 100).toFixed(2)}%`
+function formatPercentage(value: number | undefined | null) {
+  // 安全处理数值，确保不显示NaN
+  if (value === null || value === undefined || isNaN(Number(value))) {
+    return '0.00%'
+  }
+  const numValue = Number(value)
+  return `${(numValue * 100).toFixed(2)}%`
 }
 
 // 格式化变化率
-function formatChangeRatio(value) {
-  const sign = value > 0 ? '+' : ''
-  return `${sign}${(value * 100).toFixed(2)}%`
+function formatChangeRatio(value: number | undefined | null) {
+  // 安全处理数值，确保不显示NaN
+  if (value === null || value === undefined || isNaN(Number(value))) {
+    return '0.00%'
+  }
+  const numValue = Number(value)
+  const sign = numValue > 0 ? '+' : ''
+  return `${sign}${(numValue * 100).toFixed(2)}%`
 }
 
-// 获取时间段的中文标签
-function getDurationLabel(duration) {
-  const durationMap = {
-    '24h': '24小时',
-    '48h': '48小时',
-    '7d': '7天',
-    '30d': '30天',
-    '3m': '3个月',
-    '6m': '6个月',
-    '12m': '12个月',
+// 获取变化率的样式类
+function getChangeRatioClass(value: number | undefined | null) {
+  // 安全处理数值
+  if (value === null || value === undefined || isNaN(Number(value))) {
+    return 'text-gray-500'
   }
-  return durationMap[duration] || duration
+  const numValue = Number(value)
+  if (numValue > 0)
+    return 'text-green-600'
+  if (numValue < 0)
+    return 'text-red-600'
+  return 'text-gray-500'
+}
+
+// 检查列是否为当前选择的时间段
+function isCurrentDurationColumn(columnDuration: string): boolean {
+  return selectedDuration.value === columnDuration
+}
+
+// 获取当前时间段对应的列样式
+function getCurrentDurationColumnClass(columnDuration: string): string {
+  return isCurrentDurationColumn(columnDuration) ? 'bg-blue-50 font-semibold' : ''
 }
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout width="1600px">
     <div class="mb-6">
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
-          <AppHeader 
-            title="KAITO-PRE-TGE热门代币提及度排行"
+          <AppHeader
+            :title="`KAITO-PRE-TGE热门代币提及度排行 (${durationOptions.find(opt => opt.value === selectedDuration)?.label || selectedDuration})`"
             current-route="table"
           />
 
@@ -356,8 +582,8 @@ function getDurationLabel(duration) {
             <!-- 时间段选择 -->
             <AppSelect
               v-model="selectedDuration"
-              :options="availableDurations.map(duration => ({ value: duration, label: getDurationLabel(duration) }))"
-              @update:model-value="changeDuration($event)"
+              :options="durationOptions"
+              @update:model-value="changeDuration(String($event))"
             />
           </div>
         </div>
@@ -378,109 +604,261 @@ function getDurationLabel(duration) {
       <table class="min-w-full bg-white">
         <thead class="bg-gray-50">
           <tr>
-            <th class="sticky top-0 bg-gray-50 px-6 py-3 text-left text-xs text-gray-500 font-medium tracking-wider uppercase">
+            <!-- 代币信息 -->
+            <th class="sticky top-0 min-w-[200px] bg-gray-50 px-4 py-3 text-left text-xs text-gray-500 font-medium tracking-wider uppercase">
               代币
             </th>
-            <th 
-              class="sticky top-0 w-32 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
-              @click="toggleSort('rank')"
+
+            <!-- 24h数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('24h') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('last_24h_mindshare')"
             >
               <div class="flex items-center justify-center space-x-1">
-                <span>排名</span>
+                <span>24h提及度</span>
                 <div class="flex flex-col">
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'rank' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_24h_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 14l5-5 5 5z"/>
+                    <path d="M7 14l5-5 5 5z" />
                   </svg>
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'rank' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_24h_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 10l5 5 5-5z"/>
+                    <path d="M7 10l5 5 5-5z" />
                   </svg>
                 </div>
               </div>
             </th>
-            <th 
-              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
-              @click="toggleSort('mindshare')"
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('24h') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('change_24h_ratio')"
             >
               <div class="flex items-center justify-center space-x-1">
-                <span>{{ selectedDuration }}提及度</span>
+                <span>24h变化</span>
                 <div class="flex flex-col">
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_24h_ratio' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 14l5-5 5 5z"/>
+                    <path d="M7 14l5-5 5 5z" />
                   </svg>
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_24h_ratio' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 10l5 5 5-5z"/>
+                    <path d="M7 10l5 5 5-5z" />
                   </svg>
                 </div>
               </div>
             </th>
-            <th 
-              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
+
+            <!-- 48h数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('48h') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('last_48h_mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>48h提及度</span>
+                <div class="flex flex-col">
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_48h_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z" />
+                  </svg>
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_48h_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
+            </th>
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('48h') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('change_48h_ratio')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>48h变化</span>
+                <div class="flex flex-col">
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_48h_ratio' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z" />
+                  </svg>
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_48h_ratio' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
+            </th>
+
+            <!-- 7天数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('7d') ? 'bg-blue-100' : 'bg-gray-50'"
               @click="toggleSort('last_7d_mindshare')"
             >
               <div class="flex items-center justify-center space-x-1">
                 <span>7天提及度</span>
                 <div class="flex flex-col">
-                  <svg 
-                    class="h-2 w-2" 
+                  <svg
+                    class="h-3 w-3"
                     :class="sortField === 'last_7d_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 14l5-5 5 5z"/>
+                    <path d="M7 14l5-5 5 5z" />
                   </svg>
-                  <svg 
-                    class="h-2 w-2" 
+                  <svg
+                    class="h-3 w-3"
                     :class="sortField === 'last_7d_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 10l5 5 5-5z"/>
+                    <path d="M7 10l5 5 5-5z" />
                   </svg>
                 </div>
               </div>
             </th>
-            <th 
-              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
-              @click="toggleSort('change_24h_ratio')"
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('7d') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('change_7d_ratio')"
             >
               <div class="flex items-center justify-center space-x-1">
-                <span>{{ selectedDuration }}变化</span>
+                <span>7天变化</span>
                 <div class="flex flex-col">
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'change_24h_ratio' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_7d_ratio' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 14l5-5 5 5z"/>
+                    <path d="M7 14l5-5 5 5z" />
                   </svg>
-                  <svg 
-                    class="h-2 w-2" 
-                    :class="sortField === 'change_24h_ratio' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
-                    viewBox="0 0 24 24" 
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'change_7d_ratio' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M7 10l5 5 5-5z"/>
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
+            </th>
+
+            <!-- 30天数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('30d') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('last_30d_mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>30天提及度</span>
+                <div class="flex flex-col">
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_30d_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z" />
+                  </svg>
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_30d_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
+            </th>
+
+            <!-- 6个月数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('6m') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('last_6m_mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>6个月提及度</span>
+                <div class="flex flex-col">
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_6m_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z" />
+                  </svg>
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_6m_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
+                  </svg>
+                </div>
+              </div>
+            </th>
+
+            <!-- 12个月数据 -->
+            <th
+              class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
+              :class="isCurrentDurationColumn('12m') ? 'bg-blue-100' : 'bg-gray-50'"
+              @click="toggleSort('last_12m_mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>12个月提及度</span>
+                <div class="flex flex-col">
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_12m_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z" />
+                  </svg>
+                  <svg
+                    class="h-3 w-3"
+                    :class="sortField === 'last_12m_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z" />
                   </svg>
                 </div>
               </div>
@@ -489,47 +867,76 @@ function getDurationLabel(duration) {
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr
-            v-for="(item, index) in filteredTickers"
+            v-for="(item) in filteredTickers"
             :key="item.ticker_id"
             class="hover:bg-gray-50"
           >
-            <td class="px-6 py-4">
-              <div class="flex items-center space-x-2">
+            <!-- 代币信息 -->
+            <td class="px-4 py-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 text-sm text-gray-600 font-medium">
+                  {{ item.rank }}
+                </div>
                 <img
                   v-if="item.logo"
                   :src="item.logo"
                   :alt="item.ticker"
-                  class="h-8 w-8 rounded-full"
+                  class="h-8 w-8 flex-shrink-0 rounded-full"
                 >
-                <div>
-                  <div class="text-sm text-gray-900 font-medium">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-sm text-gray-900 font-medium">
                     {{ item.ticker }}
                   </div>
-                  <div class="text-xs text-gray-500">
+                  <div class="truncate text-xs text-gray-500">
                     {{ item.fullname }}
                   </div>
                 </div>
               </div>
             </td>
-            <td class="px-6 py-4 text-center">
-              <span
-                class="inline-flex rounded-full bg-gray-100 px-2 text-xs text-gray-800 font-semibold leading-5"
-              >
-                {{ item.rank }}
-              </span>
+
+            <!-- 24h数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('24h')">
+              {{ formatPercentage(item.last_24h_mindshare) }}
             </td>
-            <td class="px-6 py-4 text-center text-sm text-gray-500">
-              {{ formatPercentage(item.mindshare) }}
-            </td>
-            <td class="px-6 py-4 text-center text-sm text-gray-500">
-              {{ formatPercentage(item.last_7d_mindshare) }}
-            </td>
-            <td class="px-6 py-4 text-center text-sm">
-              <span
-                :class="item.change_24h_ratio > 0 ? 'text-green-600' : 'text-red-600'"
-              >
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('24h')">
+              <span :class="getChangeRatioClass(item.change_24h_ratio)">
                 {{ formatChangeRatio(item.change_24h_ratio) }}
               </span>
+            </td>
+
+            <!-- 48h数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('48h')">
+              {{ formatPercentage(item.last_48h_mindshare) }}
+            </td>
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('48h')">
+              <span :class="getChangeRatioClass(item.change_48h_ratio)">
+                {{ formatChangeRatio(item.change_48h_ratio) }}
+              </span>
+            </td>
+
+            <!-- 7天数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('7d')">
+              {{ formatPercentage(item.last_7d_mindshare) }}
+            </td>
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('7d')">
+              <span :class="getChangeRatioClass(item.change_7d_ratio)">
+                {{ formatChangeRatio(item.change_7d_ratio) }}
+              </span>
+            </td>
+
+            <!-- 30天数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('30d')">
+              {{ formatPercentage(item.last_30d_mindshare) }}
+            </td>
+
+            <!-- 6个月数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('6m')">
+              {{ formatPercentage(item.last_6m_mindshare) }}
+            </td>
+
+            <!-- 12个月数据 -->
+            <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('12m')">
+              {{ formatPercentage(item.last_12m_mindshare) }}
             </td>
           </tr>
         </tbody>
@@ -548,7 +955,6 @@ function getDurationLabel(duration) {
 </template>
 
 <style scoped>
-
 .table-container {
   max-height: 70vh;
   overflow-y: auto;
