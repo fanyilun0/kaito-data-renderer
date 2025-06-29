@@ -7,11 +7,30 @@ import 'dayjs/locale/zh-cn'
 dayjs.extend(relativeTime)
 dayjs.locale('zh-cn')
 
+// 类型定义
+interface DataFile {
+  name: string
+  label: string
+  date: string
+  durations: string[]
+}
+
+interface TickerItem {
+  ticker_id: string
+  ticker: string
+  fullname: string
+  logo?: string
+  rank: number
+  mindshare: number
+  last_7d_mindshare: number
+  change_24h_ratio: number
+}
+
 // 数据加载状态
 const loading = ref(true)
-const dataFiles = ref([])
+const dataFiles = ref<DataFile[]>([])
 const selectedDataFile = ref('')
-const tickerData = ref([])
+const tickerData = ref<TickerItem[]>([])
 const updateTime = ref(dayjs().format('YYYY-MM-DD'))
 const notification = ref({ show: false, message: '', type: 'info' })
 const selectedDuration = ref('24h')
@@ -86,7 +105,7 @@ function debugLog(message, data = null) {
 }
 
 // 加载特定日期和时间段的数据
-async function loadDataForDateAndDuration(dateStr, duration) {
+async function loadDataForDateAndDuration(dateStr: string, duration: string) {
   loading.value = true
   try {
     // 尝试加载特定duration的文件 (例如: kaito_data_20250418_24h.json)
@@ -101,7 +120,7 @@ async function loadDataForDateAndDuration(dateStr, duration) {
           const data = await response.json()
           debugLog(`解析JSON成功`)
           if (data.resultWithTicker) {
-            tickerData.value = data.resultWithTicker
+            tickerData.value = data.resultWithTicker as TickerItem[]
             const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
             updateTime.value = `${formattedDate} (${duration})`
             return true
@@ -137,7 +156,7 @@ async function loadDataForDateAndDuration(dateStr, duration) {
 }
 
 // 从本地数据文件加载数据
-async function loadDataFromFile(dateStr) {
+async function loadDataFromFile(dateStr: string) {
   loading.value = true
   try {
     if (!dateStr) {
@@ -165,14 +184,15 @@ async function loadDataFromFile(dateStr) {
 }
 
 // 切换数据文件
-function changeDataFile(dateStr) {
-  selectedDataFile.value = dateStr
-  loadDataFromFile(dateStr)
+function changeDataFile(dateStr: string | number) {
+  const strDateStr = String(dateStr)
+  selectedDataFile.value = strDateStr
+  loadDataFromFile(strDateStr)
 }
 
 // 切换时间段
-function changeDuration(duration) {
-  selectedDuration.value = duration
+function changeDuration(duration: string | number) {
+  selectedDuration.value = String(duration)
 
   // 如果已经选择了数据文件，则从该文件重新加载对应时间段的数据
   if (selectedDataFile.value) {
@@ -208,7 +228,7 @@ watch(availableDurations, (newDurations) => {
 })
 
 // 显示通知
-function showNotification(message, type = 'info') {
+function showNotification(message: string, type: 'info' | 'error' = 'info') {
   notification.value = { show: true, message, type }
   setTimeout(() => {
     notification.value.show = false
@@ -226,9 +246,42 @@ onMounted(async () => {
 // 搜索关键词
 const searchKeyword = ref('')
 
-// 过滤后的代币列表
+// 排序相关
+const sortField = ref<'rank' | 'mindshare' | 'last_7d_mindshare' | 'change_24h_ratio'>('rank')
+const sortOrder = ref<'asc' | 'desc'>('asc')
+
+// 排序函数
+function sortTickerData(data: TickerItem[], field: string, order: 'asc' | 'desc') {
+  return [...data].sort((a, b) => {
+    let aValue = (a as any)[field]
+    let bValue = (b as any)[field]
+    
+    // 处理特殊字段
+    if (field === 'rank') {
+      aValue = Number(aValue) || 999999
+      bValue = Number(bValue) || 999999
+    }
+    
+    if (aValue < bValue) return order === 'asc' ? -1 : 1
+    if (aValue > bValue) return order === 'asc' ? 1 : -1
+    return 0
+  })
+}
+
+// 切换排序
+function toggleSort(field: 'rank' | 'mindshare' | 'last_7d_mindshare' | 'change_24h_ratio') {
+  if (sortField.value === field) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortField.value = field
+    sortOrder.value = field === 'rank' ? 'asc' : 'desc' // rank默认升序，其他降序
+  }
+}
+
+// 过滤和排序后的代币列表
 const filteredTickers = computed(() => {
-  return tickerData.value
+  // 首先过滤
+  const filtered = tickerData.value
     .filter((item) => {
       if (!searchKeyword.value)
         return true
@@ -237,6 +290,9 @@ const filteredTickers = computed(() => {
       return name.includes(searchKeyword.value.toLowerCase())
         || ticker.includes(searchKeyword.value.toLowerCase())
     })
+  
+  // 然后排序
+  return sortTickerData(filtered, sortField.value, sortOrder.value)
 })
 
 // 格式化百分比
@@ -266,41 +322,14 @@ function getDurationLabel(duration) {
 </script>
 
 <template>
-  <div class="mx-auto px-4 py-4 container">
+  <AppLayout>
     <div class="mb-6">
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
-          <div class="flex items-center gap-4">
-            <img
-              src="https://avatars.githubusercontent.com/u/136059942"
-              alt="Author Avatar"
-              class="h-10 w-10 rounded-full"
-            >
-            <div>
-              <h1 class="text-2xl font-bold">
-                KAITO-PRE-TGE热门代币提及度排行
-              </h1>
-              <div class="flex items-center text-xs text-gray-500 space-x-4">
-                <span>fanyilun</span>
-                <span>|</span>
-                <a href="/chart24h" class="text-blue-500 transition-colors hover:text-blue-700">24H历史图表</a>
-                <span>|</span>
-                <a href="/chart24h-stack" class="text-green-500 transition-colors hover:text-green-700">24H Stack图表</a>
-                <div class="flex items-center space-x-2">
-                  <a href="https://github.com/fanyilun0" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900">
-                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.239 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                  </a>
-                  <a href="https://twitter.com/fanyilun0" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900">
-                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <AppHeader 
+            title="KAITO-PRE-TGE热门代币提及度排行"
+            current-route="table"
+          />
 
           <div class="flex items-center space-x-3">
             <div class="relative w-64 md:w-72">
@@ -318,34 +347,18 @@ function getDurationLabel(duration) {
             </div>
 
             <!-- 日期选择 -->
-            <select
+            <AppSelect
               v-model="selectedDataFile"
-              class="border border-gray-300 rounded bg-white px-3 py-2 text-sm transition-colors hover:border-blue-400"
-              @change="changeDataFile($event.target.value)"
-            >
-              <option
-                v-for="file in dataFiles"
-                :key="file.date"
-                :value="file.date"
-              >
-                {{ file.label }}
-              </option>
-            </select>
+              :options="dataFiles.map(file => ({ value: file.date, label: file.label }))"
+              @update:model-value="changeDataFile($event)"
+            />
 
             <!-- 时间段选择 -->
-            <select
+            <AppSelect
               v-model="selectedDuration"
-              class="border border-gray-300 rounded bg-white px-3 py-2 text-sm transition-colors hover:border-blue-400"
-              @change="changeDuration($event.target.value)"
-            >
-              <option
-                v-for="duration in availableDurations"
-                :key="duration"
-                :value="duration"
-              >
-                {{ getDurationLabel(duration) }}
-              </option>
-            </select>
+              :options="availableDurations.map(duration => ({ value: duration, label: getDurationLabel(duration) }))"
+              @update:model-value="changeDuration($event)"
+            />
           </div>
         </div>
       </div>
@@ -368,23 +381,115 @@ function getDurationLabel(duration) {
             <th class="sticky top-0 bg-gray-50 px-6 py-3 text-left text-xs text-gray-500 font-medium tracking-wider uppercase">
               代币
             </th>
-            <th class="sticky top-0 w-32 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase">
-              排名
+            <th 
+              class="sticky top-0 w-32 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
+              @click="toggleSort('rank')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>排名</span>
+                <div class="flex flex-col">
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'rank' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z"/>
+                  </svg>
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'rank' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </div>
+              </div>
             </th>
-            <th class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase">
-              {{ selectedDuration }}提及度
+            <th 
+              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
+              @click="toggleSort('mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>{{ selectedDuration }}提及度</span>
+                <div class="flex flex-col">
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z"/>
+                  </svg>
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </div>
+              </div>
             </th>
-            <th class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase">
-              7天提及度
+            <th 
+              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
+              @click="toggleSort('last_7d_mindshare')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>7天提及度</span>
+                <div class="flex flex-col">
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'last_7d_mindshare' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z"/>
+                  </svg>
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'last_7d_mindshare' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </div>
+              </div>
             </th>
-            <th class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase">
-              {{ selectedDuration }}变化
+            <th 
+              class="sticky top-0 w-40 bg-gray-50 px-6 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase cursor-pointer hover:bg-gray-100 transition-colors"
+              @click="toggleSort('change_24h_ratio')"
+            >
+              <div class="flex items-center justify-center space-x-1">
+                <span>{{ selectedDuration }}变化</span>
+                <div class="flex flex-col">
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'change_24h_ratio' && sortOrder === 'asc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 14l5-5 5 5z"/>
+                  </svg>
+                  <svg 
+                    class="h-2 w-2" 
+                    :class="sortField === 'change_24h_ratio' && sortOrder === 'desc' ? 'text-blue-600' : 'text-gray-400'"
+                    viewBox="0 0 24 24" 
+                    fill="currentColor"
+                  >
+                    <path d="M7 10l5 5 5-5z"/>
+                  </svg>
+                </div>
+              </div>
             </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr
-            v-for="item in filteredTickers"
+            v-for="(item, index) in filteredTickers"
             :key="item.ticker_id"
             class="hover:bg-gray-50"
           >
@@ -439,13 +544,10 @@ function getDurationLabel(duration) {
     >
       {{ notification.message }}
     </div>
-  </div>
+  </AppLayout>
 </template>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-}
 
 .table-container {
   max-height: 70vh;

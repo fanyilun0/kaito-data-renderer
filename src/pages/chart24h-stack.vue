@@ -393,87 +393,48 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="mx-auto px-4 py-4 container">
+  <AppLayout max-width="1400px">
     <!-- 头部 -->
     <div class="mb-6">
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
-          <div class="flex items-center gap-4">
-            <img
-              src="https://avatars.githubusercontent.com/u/136059942"
-              alt="Author Avatar"
-              class="h-10 w-10 rounded-full"
-            >
-            <div>
-              <h1 class="text-2xl font-bold">
-                KAITO 24H Mindshare Stack图表
-              </h1>
-              <div class="flex items-center text-xs text-gray-500 space-x-4">
-                <span>基于历史数据的堆叠柱状图分析 | 横轴：时间 | 纵轴：Mindshare | Stack模式</span>
-              </div>
-            </div>
-          </div>
+          <AppHeader 
+            title="KAITO-PRE-TGE热门代币图表"
+            current-route="chart"
+          />
 
           <!-- 控制面板 -->
           <div class="flex items-center space-x-3">
             <div class="flex items-center space-x-2">
               <label class="text-sm text-gray-700">显示代币数量:</label>
-              <select
-                v-model.number="topTokenCount"
-                class="border border-gray-300 rounded bg-white px-2 py-1 text-sm"
-              >
-                <option :value="0">
-                  所有代币 ({{ allTokens.length }})
-                </option>
-                <option :value="5">
-                  前5个
-                </option>
-                <option :value="10">
-                  前10个
-                </option>
-                <option :value="15">
-                  前15个
-                </option>
-                <option :value="20">
-                  前20个
-                </option>
-                <option :value="25">
-                  前25个
-                </option>
-                <option :value="50">
-                  前50个
-                </option>
-                <option :value="100">
-                  前100个
-                </option>
-              </select>
+              <AppSelect
+                v-model="topTokenCount"
+                :options="[
+                  { value: 0, label: `所有代币 (${allTokens.length})` },
+                  { value: 5, label: '前5个' },
+                  { value: 10, label: '前10个' },
+                  { value: 15, label: '前15个' },
+                  { value: 20, label: '前20个' },
+                  { value: 25, label: '前25个' },
+                  { value: 50, label: '前50个' },
+                  { value: 100, label: '前100个' }
+                ]"
+              />
             </div>
 
             <div class="flex items-center space-x-2">
               <label class="text-sm text-gray-700">时间范围:</label>
-              <select
-                v-model.number="selectedDateRange"
-                class="border border-gray-300 rounded bg-white px-2 py-1 text-sm"
-              >
-                <option :value="7">
-                  最近7天
-                </option>
-                <option :value="14">
-                  最近14天
-                </option>
-                <option :value="30">
-                  最近30天
-                </option>
-                <option :value="60">
-                  最近60天
-                </option>
-                <option :value="90">
-                  最近90天
-                </option>
-                <option :value="0">
-                  全部时间 ({{ availableDates.length }}天)
-                </option>
-              </select>
+              <AppSelect
+                v-model="selectedDateRange"
+                :options="[
+                  { value: 7, label: '最近7天' },
+                  { value: 14, label: '最近14天' },
+                  { value: 30, label: '最近30天' },
+                  { value: 60, label: '最近60天' },
+                  { value: 90, label: '最近90天' },
+                  { value: 0, label: `全部时间 (${availableDates.length}天)` }
+                ]"
+              />
             </div>
 
             <button
@@ -509,8 +470,8 @@ onBeforeUnmount(() => {
 
       <div
         ref="chartRef"
-        class="h-96 w-full border border-gray-200 rounded-lg bg-white shadow-sm md:h-[700px]"
-        :style="{ minHeight: '400px' }"
+        class="h-96 w-full border border-gray-200 rounded-lg bg-white shadow-sm md:h-[800px]"
+        :style="{ minHeight: '800px' }"
       />
 
       <!-- 数据统计信息 -->
@@ -575,13 +536,10 @@ onBeforeUnmount(() => {
     >
       {{ notification.message }}
     </div>
-  </div>
+  </AppLayout>
 </template>
 
 <style scoped>
-.container {
-  max-width: 1400px;
-}
 
 .chart-container {
   background: white;
