@@ -36,7 +36,7 @@ Kaito Data Renderer
 
 ```bash
 # 📥 克隆项目
-git clone https://github.com/your-username/kaito-data-renderer.git
+git clone https://github.com/fanyilun0/kaito-data-renderer.git
 cd kaito-data-renderer
 
 # 📦 安装依赖
