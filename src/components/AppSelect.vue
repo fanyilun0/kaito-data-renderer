@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 interface Props {
   modelValue: string | number
@@ -21,7 +21,7 @@ const selectRef = ref<HTMLDivElement>()
 
 // 获取当前选中项的标签
 const selectedLabel = computed(() => {
-  if (!props.modelValue)
+  if (props.modelValue === null || props.modelValue === undefined || props.modelValue === '')
     return props.placeholder || ''
   const selectedOption = props.options.find(option => option.value === props.modelValue)
   return selectedOption?.label || ''
@@ -71,7 +71,7 @@ onUnmounted(() => {
       ]"
       @click="toggleDropdown"
     >
-      <span :class="{ 'text-gray-500': !modelValue }">
+      <span :class="{ 'text-gray-500': props.modelValue === null || props.modelValue === undefined || props.modelValue === '' }">
         {{ selectedLabel }}
       </span>
       <svg
@@ -93,7 +93,7 @@ onUnmounted(() => {
     >
       <!-- placeholder 选项 -->
       <div
-        v-if="placeholder && !modelValue"
+        v-if="placeholder && (props.modelValue === null || props.modelValue === undefined || props.modelValue === '')"
         class="cursor-default px-3 py-2 text-sm text-gray-500"
       >
         {{ placeholder }}

@@ -25,6 +25,25 @@ const chartInitializing = ref(false)
 const topTokenCount = ref(15)
 const selectedDateRange = ref(30) // 显示最近N天
 
+// 新增：将选项数据提取为计算属性
+const tokenCountOptions = computed(() => [
+  { value: 10, label: '前10个' },
+  { value: 15, label: '前15个' },
+  { value: 20, label: '前20个' },
+  { value: 25, label: '前25个' },
+  { value: 50, label: '前50个' },
+  { value: 0, label: `全部代币` },
+])
+
+const dateRangeOptions = computed(() => [
+  { value: 7, label: '最近7天' },
+  { value: 14, label: '最近14天' },
+  { value: 30, label: '最近30天' },
+  { value: 60, label: '最近60天' },
+  { value: 90, label: '最近90天' },
+  { value: 0, label: `全部时间` },
+])
+
 // 加载数据
 async function loadData() {
   loading.value = true
@@ -405,46 +424,29 @@ onBeforeUnmount(() => {
 
           <!-- 控制面板 -->
 
-          <button
-            v-if="chartInstance"
-            class="rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            title="重置图表状态（清除筛选和缩放）"
-            @click="resetChart"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-
           <div class="flex items-center space-x-3">
             <div class="flex items-center space-x-2">
+              <button
+                v-if="chartInstance"
+                class="rounded-full bg-blue-400 p-2 text-white transition-colors hover:bg-blue-500"
+                title="重置图表状态"
+                @click="resetChart"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
               <AppSelect
                 v-model="topTokenCount"
-                :options="[
-                  { value: 0, label: `所有代币 (${allTokens.length})` },
-                  { value: 5, label: '前5个' },
-                  { value: 10, label: '前10个' },
-                  { value: 15, label: '前15个' },
-                  { value: 20, label: '前20个' },
-                  { value: 25, label: '前25个' },
-                  { value: 50, label: '前50个' },
-                  { value: 100, label: '前100个' },
-                ]"
+                :options="tokenCountOptions"
               />
             </div>
 
             <div class="flex items-center space-x-2">
               <AppSelect
                 v-model="selectedDateRange"
-                :options="[
-                  { value: 7, label: '最近7天' },
-                  { value: 14, label: '最近14天' },
-                  { value: 30, label: '最近30天' },
-                  { value: 60, label: '最近60天' },
-                  { value: 90, label: '最近90天' },
-                  { value: 0, label: `全部时间 (${availableDates.length}天)` },
-                ]"
+                :options="dateRangeOptions"
               />
             </div>
           </div>
