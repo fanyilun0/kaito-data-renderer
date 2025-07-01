@@ -333,9 +333,6 @@ async function loadDataFromFile(dateStr: string, duration: string = selectedDura
   }
 }
 
-// 删除了 changeDataFile 和 changeDuration 函数
-// 因为现在使用 watch 监听器来处理变化，避免重复加载
-
 // 监视数据文件的变化
 watch(selectedDataFile, (newValue) => {
   if (newValue) {
@@ -450,7 +447,7 @@ const filteredTickers = computed(() => {
           />
 
           <div class="flex items-center space-x-3">
-            <div class="relative w-64 md:w-72">
+            <div class="relative w-240px">
               <div class="pointer-events-none absolute inset-y-0 left-3 flex items-center">
                 <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -459,8 +456,8 @@ const filteredTickers = computed(() => {
               <input
                 v-model="searchKeyword"
                 type="text"
-                placeholder="搜索代币名称或代号..."
-                class="w-full border border-gray-300 rounded-md py-2 pl-10 pr-4 transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                placeholder="搜索项目名称或Ticker名称"
+                class="w-full border border-gray-300 rounded bg-white px-3 py-2 pl-10 text-sm transition-all duration-200 focus:border-blue-500 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               >
             </div>
 

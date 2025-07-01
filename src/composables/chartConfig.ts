@@ -72,6 +72,50 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       },
       textStyle: {
         align: 'left',
+        fontSize: 12,
+      },
+      // 优化tooltip布局避免溢出
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      borderColor: '#ddd',
+      borderWidth: 1,
+      padding: [8, 12],
+      extraCssText: 'box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-radius: 6px; max-width: 400px; word-wrap: break-word;',
+      formatter(params: any) {
+        if (!Array.isArray(params))
+          return ''
+
+        const date = params[0]?.name || ''
+        let result = `<div style="font-weight: bold; margin-bottom: 6px; color: #333;">${date}</div>`
+
+        // 按值排序，显示非零值
+        const sortedParams = params
+          .filter((item: any) => item.value > 0)
+          .sort((a: any, b: any) => b.value - a.value)
+          .slice(0, 15) // 最多显示前15个
+
+        if (sortedParams.length === 0) {
+          result += '<div style="color: #999; font-size: 11px;">暂无数据</div>'
+          return result
+        }
+
+        // 使用网格布局优化显示
+        result += '<div style="display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center;">'
+
+        sortedParams.forEach((item: any) => {
+          const color = item.color || '#999'
+          const name = item.seriesName || ''
+          const value = item.value || 0
+
+          result += `
+            <div style="width: 10px; height: 10px; background-color: ${color}; border-radius: 50%;"></div>
+            <div style="font-size: 11px; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${name}</div>
+            <div style="font-weight: 500; color: #333; font-size: 11px; text-align: right;">${value.toFixed(2)}%</div>
+          `
+        })
+
+        result += '</div>'
+
+        return result
       },
     },
     legend: {
@@ -82,11 +126,13 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       pageButtonPosition: 'end',
       pageFormatter: '{current}/{total}',
       textStyle: {
-        fontSize: 12,
+        fontSize: 11,
       },
-      itemGap: 8,
-      itemWidth: 14,
-      itemHeight: 14,
+      itemGap: 6,
+      itemWidth: 12,
+      itemHeight: 12,
+      // 固定legend宽度避免占用series空间
+      width: 160,
       // 增加选择器
       selector: [
         {
@@ -99,10 +145,18 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
         },
       ],
       selectorPosition: 'start',
+      // 优化文本显示
+      formatter(name: string) {
+        // 如果名称过长，进行截取并添加省略号
+        if (name.length > 15) {
+          return `${name.substring(0, 15)}...`
+        }
+        return name
+      },
     },
     grid: {
       left: '3%',
-      right: '120px',
+      right: '190px', // 增加右边距为legend留出固定空间
       bottom: '8%',
       top: '80px',
       containLabel: true,

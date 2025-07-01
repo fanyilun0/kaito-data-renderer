@@ -28,7 +28,7 @@ interface Props {
   selectedDuration: string
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const { isNaN } = Number
 
@@ -63,16 +63,6 @@ function getChangeRatioClass(value: number | undefined | null) {
     return 'text-red-600'
   return 'text-gray-500'
 }
-
-// 检查列是否为当前选择的时间段
-function isCurrentDurationColumn(columnDuration: string): boolean {
-  return props.selectedDuration === columnDuration
-}
-
-// 获取当前时间段对应的列样式
-function getCurrentDurationColumnClass(columnDuration: string): string {
-  return isCurrentDurationColumn(columnDuration) ? 'bg-blue-50 font-semibold' : ''
-}
 </script>
 
 <template>
@@ -101,52 +91,52 @@ function getCurrentDurationColumnClass(columnDuration: string): string {
     </td>
 
     <!-- 24h数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('24h')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_24h_mindshare) }}
     </td>
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('24h')">
+    <td class="px-3 py-4 text-center text-xs">
       <span :class="getChangeRatioClass(item.change_24h_ratio)">
         {{ formatChangeRatio(item.change_24h_ratio) }}
       </span>
     </td>
 
     <!-- 48h数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('48h')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_48h_mindshare) }}
     </td>
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('48h')">
+    <td class="px-3 py-4 text-center text-xs">
       <span :class="getChangeRatioClass(item.change_48h_ratio)">
         {{ formatChangeRatio(item.change_48h_ratio) }}
       </span>
     </td>
 
     <!-- 7天数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('7d')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_7d_mindshare) }}
     </td>
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('7d')">
+    <td class="px-3 py-4 text-center text-xs">
       <span :class="getChangeRatioClass(item.change_7d_ratio)">
         {{ formatChangeRatio(item.change_7d_ratio) }}
       </span>
     </td>
 
     <!-- 30天数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('30d')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_30d_mindshare) }}
     </td>
 
     <!-- 3个月数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('3m')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_3m_mindshare) }}
     </td>
 
     <!-- 6个月数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('6m')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_6m_mindshare) }}
     </td>
 
     <!-- 12个月数据 -->
-    <td class="px-3 py-4 text-center text-xs" :class="getCurrentDurationColumnClass('12m')">
+    <td class="px-3 py-4 text-center text-xs">
       {{ formatPercentage(item.last_12m_mindshare) }}
     </td>
   </tr>

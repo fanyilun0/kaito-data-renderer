@@ -43,6 +43,7 @@ defineProps<Props>()
         >
           Stack图表
         </RouterLink>
+        <span>|</span>
         <div class="flex items-center space-x-2">
           <a
             href="https://github.com/fanyilun0"

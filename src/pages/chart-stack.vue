@@ -21,8 +21,8 @@ const chartInstance = shallowRef<echarts.ECharts | null>(null)
 const chartInitialized = ref(false)
 const chartInitializing = ref(false)
 
-// 图表配置 - 默认显示前50个代币
-const topTokenCount = ref(10)
+// 图表配置 - 默认显示前15个代币
+const topTokenCount = ref(15)
 const selectedDateRange = ref(30) // 显示最近N天
 
 // 加载数据
@@ -404,9 +404,21 @@ onBeforeUnmount(() => {
           />
 
           <!-- 控制面板 -->
+
+          <button
+            v-if="chartInstance"
+            class="rounded-full bg-blue-500 p-2 text-white transition-colors hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            title="重置图表状态（清除筛选和缩放）"
+            @click="resetChart"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
           <div class="flex items-center space-x-3">
             <div class="flex items-center space-x-2">
-              <label class="text-sm text-gray-700">显示代币数量:</label>
               <AppSelect
                 v-model="topTokenCount"
                 :options="[
@@ -423,7 +435,6 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="flex items-center space-x-2">
-              <label class="text-sm text-gray-700">时间范围:</label>
               <AppSelect
                 v-model="selectedDateRange"
                 :options="[
@@ -436,15 +447,6 @@ onBeforeUnmount(() => {
                 ]"
               />
             </div>
-
-            <button
-              v-if="chartInstance"
-              class="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
-              title="重置图表状态（清除筛选和缩放）"
-              @click="resetChart"
-            >
-              重置图表
-            </button>
           </div>
         </div>
       </div>

@@ -12,13 +12,8 @@ interface Emits {
   (e: 'sort', field: SortField): void
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 const emit = defineEmits<Emits>()
-
-// 检查列是否为当前选择的时间段
-function isCurrentDurationColumn(columnDuration: string): boolean {
-  return props.selectedDuration === columnDuration
-}
 
 // 处理排序点击
 function handleSort(field: SortField) {
@@ -36,8 +31,7 @@ function handleSort(field: SortField) {
 
       <!-- 24h数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('24h') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_24h_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -63,8 +57,7 @@ function handleSort(field: SortField) {
         </div>
       </th>
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('24h') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('change_24h_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -92,8 +85,7 @@ function handleSort(field: SortField) {
 
       <!-- 48h数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('48h') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_48h_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -119,8 +111,7 @@ function handleSort(field: SortField) {
         </div>
       </th>
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('48h') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('change_48h_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -148,8 +139,7 @@ function handleSort(field: SortField) {
 
       <!-- 7天数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('7d') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_7d_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -175,8 +165,7 @@ function handleSort(field: SortField) {
         </div>
       </th>
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('7d') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('change_7d_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -204,8 +193,7 @@ function handleSort(field: SortField) {
 
       <!-- 30天数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('30d') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_30d_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -233,8 +221,7 @@ function handleSort(field: SortField) {
 
       <!-- 3个月数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('3m') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_3m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -262,8 +249,7 @@ function handleSort(field: SortField) {
 
       <!-- 6个月数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('6m') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_6m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
@@ -291,8 +277,7 @@ function handleSort(field: SortField) {
 
       <!-- 12个月数据 -->
       <th
-        class="sticky top-0 min-w-[100px] cursor-pointer px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
-        :class="isCurrentDurationColumn('12m') ? 'bg-blue-100' : 'bg-gray-50'"
+        class="sticky top-0 min-w-[100px] cursor-pointer bg-gray-50 px-3 py-3 text-center text-xs text-gray-500 font-medium tracking-wider uppercase transition-colors hover:bg-gray-100"
         @click="handleSort('last_12m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
