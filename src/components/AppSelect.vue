@@ -89,7 +89,7 @@ onUnmounted(() => {
     <!-- 下拉选项列表 -->
     <div
       v-if="isOpen"
-      class="absolute left-0 right-0 top-full z-50 mt-1 max-h-[240px] overflow-y-auto border border-gray-300 rounded bg-white shadow-lg"
+      class="absolute left-0 right-0 top-full z-50 mt-1 max-h-[260px] overflow-y-auto border border-gray-300 rounded bg-white shadow-lg"
     >
       <!-- placeholder 选项 -->
       <div
