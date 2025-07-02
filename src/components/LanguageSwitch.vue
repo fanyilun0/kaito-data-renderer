@@ -16,23 +16,40 @@ function switchLanguage(locale: string) {
 
 <template>
   <div class="relative">
-    <select
-      :value="currentLocale"
-      class="appearance-none border border-gray-300 rounded bg-white px-3 py-2 pr-8 text-sm transition-all duration-200 focus:border-blue-500 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-      @change="switchLanguage(($event.target as HTMLSelectElement).value)"
-    >
-      <option
-        v-for="lang in languages"
-        :key="lang.code"
-        :value="lang.code"
-      >
-        {{ lang.name }}
-      </option>
-    </select>
-    <div class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-      <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
+    <!-- 当前语言显示 -->
+    <div class="group relative cursor-pointer text-xs text-blue-600 font-medium transition-colors duration-200 hover:text-blue-700">
+      {{ languages.find(lang => lang.code === currentLocale)?.name }}
+
+      <!-- 激活状态指示器 -->
+      <div class="absolute left-0 h-0.5 w-full rounded-full bg-blue-600 -bottom-1" />
+
+      <!-- 下拉菜单 -->
+      <div class="invisible absolute left-0 top-full z-50 mt-1 min-w-20 border border-gray-200 rounded-md bg-white opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
+        <div
+          v-for="lang in languages"
+          :key="lang.code"
+          class="cursor-pointer px-3 py-2 text-xs transition-colors duration-150"
+          :class="[
+            lang.code === currentLocale
+              ? 'bg-blue-50 text-blue-700 font-medium'
+              : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900',
+          ]"
+          @click="switchLanguage(lang.code)"
+        >
+          <div class="flex items-center justify-between">
+            <span>{{ lang.name }}</span>
+            <!-- 当前选中语言的勾选标记 -->
+            <svg
+              v-if="lang.code === currentLocale"
+              class="h-3 w-3 text-blue-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
