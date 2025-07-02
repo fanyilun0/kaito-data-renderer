@@ -2,10 +2,18 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { computed, onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+// 根据当前语言设置 dayjs 的 locale
+import { getCurrentLocale } from '../i18n'
+
 import 'dayjs/locale/zh-cn'
 
 dayjs.extend(relativeTime)
-dayjs.locale('zh-cn')
+
+const { t } = useI18n()
+watch(() => getCurrentLocale(), (locale) => {
+  dayjs.locale(locale === 'zh' ? 'zh-cn' : 'en')
+}, { immediate: true })
 
 // 类型定义
 interface DataFile {
@@ -14,11 +22,7 @@ interface DataFile {
   date: string
 }
 
-// 时间段选项类型
-interface DurationOption {
-  value: string
-  label: string
-}
+// 时间段选项类型（已移动到计算属性中）
 
 interface TickerItem {
   ticker_id: string
@@ -63,15 +67,15 @@ const updateTime = ref(dayjs().format('YYYY-MM-DD'))
 const notification = ref({ show: false, message: '', type: 'info' })
 
 // 可选的时间段选项
-const durationOptions: DurationOption[] = [
-  { value: '24h', label: '24小时' },
-  { value: '48h', label: '48小时' },
-  { value: '7d', label: '7天' },
-  { value: '30d', label: '30天' },
-  { value: '3m', label: '3个月' },
-  { value: '6m', label: '6个月' },
-  { value: '12m', label: '12个月' },
-]
+const durationOptions = computed(() => [
+  { value: '24h', label: t('duration.24h') },
+  { value: '48h', label: t('duration.48h') },
+  { value: '7d', label: t('duration.7d') },
+  { value: '30d', label: t('duration.30d') },
+  { value: '3m', label: t('duration.3m') },
+  { value: '6m', label: t('duration.6m') },
+  { value: '12m', label: t('duration.12m') },
+])
 
 // 缓存相关函数
 function getCacheKey(dateStr: string, duration: string) {
@@ -140,12 +144,12 @@ async function loadDataFileList() {
       updateTime.value = dataFileList[0].label
     }
     else {
-      showNotification('未找到可用的数据文件', 'error')
+      showNotification(t('notification.noDataFiles'), 'error')
     }
   }
   catch (error) {
     console.error('加载数据文件列表失败:', error)
-    showNotification('加载数据文件列表失败', 'error')
+    showNotification(t('notification.loadFailed'), 'error')
   }
 }
 
@@ -277,9 +281,9 @@ async function loadDataForDate(dateStr: string, duration: string = selectedDurat
     if (cachedData) {
       // 对缓存数据也进行处理，确保数据完整性
       setProcessedData(cachedData, dateStr)
-      const durationLabel = durationOptions.find(opt => opt.value === duration)?.label || duration
+      const durationLabel = durationOptions.value.find(opt => opt.value === duration)?.label || duration
       const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-      showNotification(`从缓存加载 ${formattedDate} ${durationLabel} 数据`, 'info')
+      showNotification(t('notification.loadedFromCache', { date: formattedDate, duration: durationLabel }), 'info')
       return true
     }
 
@@ -312,7 +316,7 @@ async function loadDataForDate(dateStr: string, duration: string = selectedDurat
 async function loadDataFromFile(dateStr: string, duration: string = selectedDuration.value) {
   try {
     if (!dateStr) {
-      showNotification('请选择日期', 'error')
+      showNotification(t('notification.pleaseSelectDate'), 'error')
       return
     }
 
@@ -321,14 +325,14 @@ async function loadDataFromFile(dateStr: string, duration: string = selectedDura
     if (!success) {
       // 不显示错误通知，而是显示信息提示，因为可能只是文件不存在
       const formattedDate = dayjs(dateStr, 'YYYYMMDD').format('YYYY-MM-DD')
-      const durationLabel = durationOptions.find(opt => opt.value === duration)?.label || duration
-      showNotification(`${formattedDate} ${durationLabel} 的数据暂未找到，请尝试其他日期或时间段`, 'info')
+      const durationLabel = durationOptions.value.find(opt => opt.value === duration)?.label || duration
+      showNotification(t('notification.dataNotFound', { date: formattedDate, duration: durationLabel }), 'info')
       tickerData.value = []
     }
   }
   catch (error) {
     console.error('加载数据文件失败:', error)
-    showNotification('加载数据文件失败', 'error')
+    showNotification(t('notification.loadFailed'), 'error')
     tickerData.value = []
   }
 }
@@ -442,7 +446,7 @@ const filteredTickers = computed(() => {
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
           <AppHeader
-            title="KAITO-PRE-TGE热门代币提及度排行"
+            :title="t('table.title')"
             current-route="table"
           />
 
@@ -456,7 +460,7 @@ const filteredTickers = computed(() => {
               <input
                 v-model="searchKeyword"
                 type="text"
-                placeholder="搜索项目名称或Ticker名称"
+                :placeholder="t('table.searchPlaceholder')"
                 class="w-full border border-gray-300 rounded bg-white px-3 py-2 pl-10 text-sm transition-all duration-200 focus:border-blue-500 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               >
             </div>
@@ -483,7 +487,7 @@ const filteredTickers = computed(() => {
 
     <div v-else-if="tickerData.length === 0" class="flex items-center justify-center py-12">
       <div class="text-gray-500">
-        没有找到数据，请选择其他日期或时间段
+        {{ t('table.noDataFound') }}
       </div>
     </div>
 

@@ -10,6 +10,7 @@ declare module 'vue' {
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     AppLayout: typeof import('./src/components/AppLayout.vue')['default']
     AppSelect: typeof import('./src/components/AppSelect.vue')['default']
+    LanguageSwitch: typeof import('./src/components/LanguageSwitch.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TickerTableHeader: typeof import('./src/components/TickerTableHeader.vue')['default']

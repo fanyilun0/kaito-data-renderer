@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "noData": "No data found",
+    "search": "Search",
+    "date": "Date",
+    "duration": "Duration",
+    "reset": "Reset"
+  },
+  "header": {
+    "table": "Table",
+    "chart": "Stack Chart"
+  },
+  "table": {
+    "title": "KAITO-PRE-TGE Hot Token Mention Ranking",
+    "searchPlaceholder": "Search project name or ticker",
+    "noDataFound": "No data found, please select another date or duration",
+    "rank": "Rank",
+    "token": "Token",
+    "mindshare": "Mindshare",
+    "change": "Change",
+    "24hMindshare": "24h Mindshare",
+    "24hChange": "24h Change",
+    "48hMindshare": "48h Mindshare",
+    "48hChange": "48h Change",
+    "7dMindshare": "7d Mindshare",
+    "7dChange": "7d Change",
+    "30dMindshare": "30d Mindshare",
+    "3mMindshare": "3m Mindshare",
+    "6mMindshare": "6m Mindshare",
+    "12mMindshare": "12m Mindshare"
+  },
+  "chart": {
+    "title": "KAITO-PRE-TGE Hot Token Chart",
+    "resetState": "Reset chart state",
+    "loadingData": "Loading historical data...",
+    "initializingChart": "Initializing chart... (Data points: {count})",
+    "dataRange": "Data Range",
+    "displayDays": "Display Days",
+    "tokenCount": "Token Count",
+    "totalData": "Total Data",
+    "noData": "No 24H data available",
+    "checkFiles": "Please check if data files exist",
+    "days": "days",
+    "daysAvailable": "days available",
+    "all": "All {count}",
+    "top": "Top {count}"
+  },
+  "duration": {
+    "24h": "24 Hours",
+    "48h": "48 Hours",
+    "7d": "7 Days",
+    "30d": "30 Days",
+    "3m": "3 Months",
+    "6m": "6 Months",
+    "12m": "12 Months"
+  },
+  "dateRange": {
+    "recent7": "Recent 7 Days",
+    "recent14": "Recent 14 Days",
+    "recent30": "Recent 30 Days",
+    "recent60": "Recent 60 Days",
+    "recent90": "Recent 90 Days",
+    "allTime": "All Time"
+  },
+  "tokenCount": {
+    "top10": "Top 10",
+    "top15": "Top 15",
+    "top20": "Top 20",
+    "top25": "Top 25",
+    "top50": "Top 50",
+    "allTokens": "All Tokens"
+  },
+  "notification": {
+    "loadedFromCache": "Loaded {date} {duration} data from cache",
+    "dataNotFound": "{date} {duration} data not found, please try other dates or durations",
+    "loadFailed": "Failed to load data",
+    "noDataFiles": "No data files found",
+    "loadSuccess": "Successfully loaded {count} days of data",
+    "chartStateReset": "Chart state has been reset",
+    "chartRenderError": "Chart rendering error",
+    "chartInitFailed": "Failed to initialize chart",
+    "chartUpdateFailed": "Failed to update chart: {message}",
+    "pleaseSelectDate": "Please select a date"
+  }
+}

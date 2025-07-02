@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 // 排序字段类型
 type SortField = 'rank' | 'last_24h_mindshare' | 'change_24h_ratio' | 'last_48h_mindshare' | 'change_48h_ratio' | 'last_7d_mindshare' | 'change_7d_ratio' | 'last_30d_mindshare' | 'last_3m_mindshare' | 'last_6m_mindshare' | 'last_12m_mindshare'
 
@@ -14,6 +16,7 @@ interface Emits {
 
 defineProps<Props>()
 const emit = defineEmits<Emits>()
+const { t } = useI18n()
 
 // 处理排序点击
 function handleSort(field: SortField) {
@@ -26,7 +29,7 @@ function handleSort(field: SortField) {
     <tr>
       <!-- 代币信息 -->
       <th class="sticky top-0 min-w-[200px] bg-gray-50 px-4 py-3 text-left text-xs text-gray-500 font-medium tracking-wider uppercase">
-        代币
+        {{ t('table.token') }}
       </th>
 
       <!-- 24h数据 -->
@@ -35,7 +38,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_24h_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>24h提及度</span>
+          <span>{{ t('table.24hMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -61,7 +64,7 @@ function handleSort(field: SortField) {
         @click="handleSort('change_24h_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>24h变化</span>
+          <span>{{ t('table.24hChange') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -89,7 +92,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_48h_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>48h提及度</span>
+          <span>{{ t('table.48hMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -115,7 +118,7 @@ function handleSort(field: SortField) {
         @click="handleSort('change_48h_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>48h变化</span>
+          <span>{{ t('table.48hChange') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -143,7 +146,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_7d_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>7天提及度</span>
+          <span>{{ t('table.7dMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -169,7 +172,7 @@ function handleSort(field: SortField) {
         @click="handleSort('change_7d_ratio')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>7天变化</span>
+          <span>{{ t('table.7dChange') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -197,7 +200,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_30d_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>30天提及度</span>
+          <span>{{ t('table.30dMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -225,7 +228,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_3m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>3个月提及度</span>
+          <span>{{ t('table.3mMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -253,7 +256,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_6m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>6个月提及度</span>
+          <span>{{ t('table.6mMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"
@@ -281,7 +284,7 @@ function handleSort(field: SortField) {
         @click="handleSort('last_12m_mindshare')"
       >
         <div class="flex items-center justify-center space-x-1">
-          <span>12个月提及度</span>
+          <span>{{ t('table.12mMindshare') }}</span>
           <div class="flex flex-col">
             <svg
               class="h-3 w-3"

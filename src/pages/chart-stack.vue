@@ -3,8 +3,11 @@ import type { KaitoDataItem, TokenStats } from '../composables/kaitoDataProcesso
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { createChartConfig, resetChartState, updateChartWithState } from '../composables/chartConfig'
 import { getTopTokens, loadAll24hData, prepareChartData } from '../composables/kaitoDataProcessor'
+
+const { t } = useI18n()
 
 // 数据状态
 const loading = ref(true)
@@ -27,21 +30,21 @@ const selectedDateRange = ref(30) // 显示最近N天
 
 // 新增：将选项数据提取为计算属性
 const tokenCountOptions = computed(() => [
-  { value: 10, label: '前10个' },
-  { value: 15, label: '前15个' },
-  { value: 20, label: '前20个' },
-  { value: 25, label: '前25个' },
-  { value: 50, label: '前50个' },
-  { value: 0, label: `全部代币` },
+  { value: 10, label: t('tokenCount.top10') },
+  { value: 15, label: t('tokenCount.top15') },
+  { value: 20, label: t('tokenCount.top20') },
+  { value: 25, label: t('tokenCount.top25') },
+  { value: 50, label: t('tokenCount.top50') },
+  { value: 0, label: t('tokenCount.allTokens') },
 ])
 
 const dateRangeOptions = computed(() => [
-  { value: 7, label: '最近7天' },
-  { value: 14, label: '最近14天' },
-  { value: 30, label: '最近30天' },
-  { value: 60, label: '最近60天' },
-  { value: 90, label: '最近90天' },
-  { value: 0, label: `全部时间` },
+  { value: 7, label: t('dateRange.recent7') },
+  { value: 14, label: t('dateRange.recent14') },
+  { value: 30, label: t('dateRange.recent30') },
+  { value: 60, label: t('dateRange.recent60') },
+  { value: 90, label: t('dateRange.recent90') },
+  { value: 0, label: t('dateRange.allTime') },
 ])
 
 // 加载数据
@@ -54,15 +57,15 @@ async function loadData() {
     allTokens.value = result.allTokens
 
     if (result.availableDates.length === 0) {
-      showNotification('未找到任何24H数据文件', 'error')
+      showNotification(t('chart.noData'), 'error')
     }
     else {
-      showNotification(`成功加载 ${result.availableDates.length} 天的数据`, 'success')
+      showNotification(t('notification.loadSuccess', { count: result.availableDates.length }), 'success')
     }
   }
   catch (error) {
     console.error('加载数据失败:', error)
-    showNotification('加载数据失败', 'error')
+    showNotification(t('notification.loadFailed'), 'error')
   }
   finally {
     loading.value = false
@@ -147,7 +150,7 @@ async function initChart() {
     // 添加错误处理
     chartInstance.value.on('error', (err: any) => {
       console.error('ECharts error:', err)
-      showNotification('图表渲染出现错误', 'error')
+      showNotification(t('notification.chartRenderError'), 'error')
     })
 
     chartInitialized.value = true
@@ -161,7 +164,7 @@ async function initChart() {
   }
   catch (error) {
     console.error('初始化图表失败:', error)
-    showNotification('初始化图表失败', 'error')
+    showNotification(t('notification.chartInitFailed'), 'error')
     chartInitialized.value = false
   }
   finally {
@@ -233,7 +236,7 @@ function updateChart() {
 
   if (validSeries.length === 0) {
     console.warn('No valid series data available')
-    showNotification('没有有效的数据可以显示', 'error')
+    showNotification(t('common.noData'), 'error')
     return
   }
 
@@ -285,7 +288,7 @@ function updateChart() {
       chartInstance.value.hideLoading()
     }
 
-    showNotification(`更新图表失败: ${error instanceof Error ? error.message : '未知错误'}`, 'error')
+    showNotification(t('notification.chartUpdateFailed', { message: error instanceof Error ? error.message : '未知错误' }), 'error')
 
     // 如果更新失败，尝试完全重新初始化
     try {
@@ -370,7 +373,7 @@ function resetChart() {
   if (chartInstance.value && chartInitialized.value) {
     resetChartState(chartInstance.value)
     console.warn('图表状态已重置')
-    showNotification('图表状态已重置', 'success')
+    showNotification(t('notification.chartStateReset'), 'success')
   }
 }
 
@@ -387,7 +390,7 @@ onMounted(async () => {
   }
   catch (error) {
     console.error('组件挂载过程中出现错误:', error)
-    showNotification('数据加载失败', 'error')
+    showNotification(t('notification.loadFailed'), 'error')
   }
 
   // 添加窗口大小变化监听
@@ -418,7 +421,7 @@ onBeforeUnmount(() => {
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-3 md:space-y-0">
           <AppHeader
-            title="KAITO-PRE-TGE热门代币图表"
+            :title="t('chart.title')"
             current-route="chart"
           />
 
@@ -429,7 +432,7 @@ onBeforeUnmount(() => {
               <button
                 v-if="chartInstance"
                 class="rounded-full bg-blue-400 p-2 text-white transition-colors hover:bg-blue-500"
-                title="重置图表状态"
+                :title="t('chart.resetState')"
                 @click="resetChart"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -458,7 +461,7 @@ onBeforeUnmount(() => {
     <div v-if="loading" class="flex items-center justify-center py-12">
       <div class="flex items-center space-x-3">
         <div class="h-8 w-8 animate-spin border-b-2 border-t-2 border-blue-500 rounded-full" />
-        <span class="text-gray-600">正在加载历史数据...</span>
+        <span class="text-gray-600">{{ t('chart.loadingData') }}</span>
       </div>
     </div>
 
@@ -468,7 +471,7 @@ onBeforeUnmount(() => {
       <div v-if="!chartInstance" class="mb-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-700">
         <div class="flex items-center space-x-2">
           <div class="h-4 w-4 animate-spin border-b-2 border-t-2 border-blue-500 rounded-full" />
-          <span>正在初始化图表... (数据点: {{ chartData?.categories?.length || 0 }})</span>
+          <span>{{ t('chart.initializingChart', { count: chartData?.categories?.length || 0 }) }}</span>
         </div>
       </div>
 
@@ -482,7 +485,7 @@ onBeforeUnmount(() => {
       <div class="grid grid-cols-1 mt-4 gap-4 text-sm md:grid-cols-4">
         <div class="rounded-lg bg-blue-50 p-3">
           <div class="text-blue-800 font-semibold">
-            数据范围
+            {{ t('chart.dataRange') }}
           </div>
           <div class="text-blue-600">
             {{ dayjs(displayDates[0], 'YYYYMMDD').format('YYYY-MM-DD') }} 至
@@ -491,26 +494,26 @@ onBeforeUnmount(() => {
         </div>
         <div class="rounded-lg bg-green-50 p-3">
           <div class="text-green-800 font-semibold">
-            显示天数
+            {{ t('chart.displayDays') }}
           </div>
           <div class="text-green-600">
-            {{ displayDates.length }} 天
+            {{ displayDates.length }} {{ t('chart.days') }}
           </div>
         </div>
         <div class="rounded-lg bg-purple-50 p-3">
           <div class="text-purple-800 font-semibold">
-            代币数量
+            {{ t('chart.tokenCount') }}
           </div>
           <div class="text-purple-600">
-            {{ topTokenCount === 0 || topTokenCount >= allTokens.length ? `所有${topTokens.length}` : `前${topTokens.length}` }} 个
+            {{ topTokenCount === 0 || topTokenCount >= allTokens.length ? t('chart.all', { count: topTokens.length }) : t('chart.top', { count: topTokens.length }) }} 个
           </div>
         </div>
         <div class="rounded-lg bg-orange-50 p-3">
           <div class="text-orange-800 font-semibold">
-            总数据量
+            {{ t('chart.totalData') }}
           </div>
           <div class="text-orange-600">
-            {{ availableDates.length }} 天可用
+            {{ availableDates.length }} {{ t('chart.daysAvailable') }}
           </div>
         </div>
       </div>
@@ -520,10 +523,10 @@ onBeforeUnmount(() => {
     <div v-else class="flex items-center justify-center py-12">
       <div class="text-center">
         <div class="mb-2 text-lg text-gray-500">
-          暂无可用的24H数据
+          {{ t('chart.noData') }}
         </div>
         <div class="text-sm text-gray-400">
-          请检查数据文件是否存在
+          {{ t('chart.checkFiles') }}
         </div>
       </div>
     </div>

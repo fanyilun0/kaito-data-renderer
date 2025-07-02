@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import LanguageSwitch from './LanguageSwitch.vue'
+
 interface Props {
   title: string
   subtitle?: string
@@ -6,6 +9,7 @@ interface Props {
 }
 
 defineProps<Props>()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -30,7 +34,7 @@ defineProps<Props>()
               : 'text-blue-500 hover:text-blue-700',
           ]"
         >
-          表格
+          {{ t('header.table') }}
         </RouterLink>
         <span>|</span>
         <RouterLink
@@ -41,8 +45,10 @@ defineProps<Props>()
               : 'text-green-500 hover:text-green-700',
           ]"
         >
-          Stack图表
+          {{ t('header.chart') }}
         </RouterLink>
+        <span>|</span>
+        <LanguageSwitch />
         <span>|</span>
         <div class="flex items-center space-x-2">
           <a

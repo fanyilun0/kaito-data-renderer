@@ -1,0 +1,86 @@
+{
+  "common": {
+    "loading": "正在加载...",
+    "noData": "没有找到数据",
+    "search": "搜索",
+    "date": "日期",
+    "duration": "时间段",
+    "reset": "重置"
+  },
+  "header": {
+    "table": "表格",
+    "chart": "Stack图表"
+  },
+  "table": {
+    "title": "KAITO-PRE-TGE热门代币提及度排行",
+    "searchPlaceholder": "搜索项目名称或Ticker名称",
+    "noDataFound": "没有找到数据，请选择其他日期或时间段",
+    "rank": "排名",
+    "token": "代币",
+    "mindshare": "提及度",
+    "change": "变化",
+    "24hMindshare": "24h提及度",
+    "24hChange": "24h变化",
+    "48hMindshare": "48h提及度",
+    "48hChange": "48h变化",
+    "7dMindshare": "7天提及度",
+    "7dChange": "7天变化",
+    "30dMindshare": "30天提及度",
+    "3mMindshare": "3个月提及度",
+    "6mMindshare": "6个月提及度",
+    "12mMindshare": "12个月提及度"
+  },
+  "chart": {
+    "title": "KAITO-PRE-TGE热门代币图表",
+    "resetState": "重置图表状态",
+    "loadingData": "正在加载历史数据...",
+    "initializingChart": "正在初始化图表... (数据点: {count})",
+    "dataRange": "数据范围",
+    "displayDays": "显示天数",
+    "tokenCount": "代币数量",
+    "totalData": "总数据量",
+    "noData": "暂无可用的24H数据",
+    "checkFiles": "请检查数据文件是否存在",
+    "days": "天",
+    "daysAvailable": "天可用",
+    "all": "所有{count}",
+    "top": "前{count}"
+  },
+  "duration": {
+    "24h": "24小时",
+    "48h": "48小时",
+    "7d": "7天",
+    "30d": "30天",
+    "3m": "3个月",
+    "6m": "6个月",
+    "12m": "12个月"
+  },
+  "dateRange": {
+    "recent7": "最近7天",
+    "recent14": "最近14天",
+    "recent30": "最近30天",
+    "recent60": "最近60天",
+    "recent90": "最近90天",
+    "allTime": "全部时间"
+  },
+  "tokenCount": {
+    "top10": "前10个",
+    "top15": "前15个",
+    "top20": "前20个",
+    "top25": "前25个",
+    "top50": "前50个",
+    "allTokens": "全部代币"
+  },
+  "notification": {
+    "loadedFromCache": "从缓存加载 {date} {duration} 数据",
+    "dataNotFound": "{date} {duration} 的数据暂未找到，请尝试其他日期或时间段",
+    "loadFailed": "加载数据文件失败",
+    "noDataFiles": "未找到可用的数据文件",
+    "loadSuccess": "成功加载 {count} 天的数据",
+    "chartStateReset": "图表状态已重置",
+    "chartRenderError": "图表渲染出现错误",
+    "chartInitFailed": "初始化图表失败",
+    "chartUpdateFailed": "更新图表失败: {message}",
+    "pleaseSelectDate": "请选择日期"
+  }
+}
