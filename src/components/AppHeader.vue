@@ -4,7 +4,6 @@ import LanguageSwitch from './LanguageSwitch.vue'
 
 interface Props {
   title: string
-  subtitle?: string
   currentRoute: 'table' | 'chart'
 }
 
@@ -48,11 +47,9 @@ const { t } = useI18n()
           {{ t('header.chart') }}
         </RouterLink>
         <span>|</span>
-        <LanguageSwitch />
-        <span>|</span>
         <div class="flex items-center space-x-2">
           <a
-            href="https://github.com/fanyilun0"
+            href="https://github.com/fanyilun0/kaito-data-renderer"
             target="_blank"
             rel="noopener noreferrer"
             class="text-gray-600 transition-colors hover:text-gray-900"
@@ -72,9 +69,8 @@ const { t } = useI18n()
             </svg>
           </a>
         </div>
-        <div v-if="subtitle" class="text-xs text-gray-400">
-          {{ subtitle }}
-        </div>
+        <span>|</span>
+        <LanguageSwitch />
       </div>
     </div>
   </div>
