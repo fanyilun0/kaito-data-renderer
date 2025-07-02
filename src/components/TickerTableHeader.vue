@@ -29,7 +29,7 @@ function handleSort(field: SortField) {
     <tr>
       <!-- 代币信息 -->
       <th class="sticky top-0 min-w-[200px] bg-gray-50 px-4 py-3 text-left text-xs text-gray-500 font-medium tracking-wider uppercase">
-        {{ t('table.token') }}
+        {{ t('table.rank') }}
       </th>
 
       <!-- 24h数据 -->
