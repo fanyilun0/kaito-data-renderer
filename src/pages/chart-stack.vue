@@ -6,6 +6,7 @@ import { computed, markRaw, nextTick, onBeforeUnmount, onMounted, ref, shallowRe
 import { useI18n } from 'vue-i18n'
 import { createChartConfig, resetChartState, updateChartWithState } from '../composables/chartConfig'
 import { getTopTokens, loadAll24hData, prepareChartData } from '../composables/kaitoDataProcessor'
+import { getCurrentLocale } from '../i18n'
 
 const { t } = useI18n()
 
@@ -189,7 +190,7 @@ function updateChart() {
       chartInstance.value.clear()
       chartInstance.value.setOption({
         title: {
-          text: '暂无数据',
+          text: t('common.noData'),
           left: 'center',
           top: 'center',
           textStyle: {
@@ -246,7 +247,7 @@ function updateChart() {
     // 显示加载状态
     if (chartInstance.value) {
       chartInstance.value.showLoading('default', {
-        text: '正在渲染图表...',
+        text: t('chart.loading.rendering'),
         textColor: '#5470c6',
         maskColor: 'rgba(255, 255, 255, 0.8)',
       })
@@ -260,6 +261,7 @@ function updateChart() {
       selectedDateRange: selectedDateRange.value,
       allTokensLength: allTokens.value.length,
       displayDates: [...displayDates.value], // 创建纯数组副本
+      t, // 传递i18n翻译函数
     })
 
     // 验证配置对象
@@ -306,6 +308,14 @@ function updateChart() {
 
 // 合并所有相关的监听器，避免重复触发
 watch([topTokenCount, selectedDateRange], async () => {
+  if (chartInstance.value && chartInitialized.value && chartData.value && chartData.value.categories.length > 0) {
+    await nextTick()
+    updateChart()
+  }
+}, { immediate: false })
+
+// 监听语言变化，重新渲染图表
+watch(() => getCurrentLocale(), async () => {
   if (chartInstance.value && chartInitialized.value && chartData.value && chartData.value.categories.length > 0) {
     await nextTick()
     updateChart()

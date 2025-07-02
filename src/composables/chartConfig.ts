@@ -7,6 +7,7 @@ export interface ChartConfigOptions {
   selectedDateRange: number
   allTokensLength: number
   displayDates: string[]
+  t: (key: string) => string
 }
 
 // 生成颜色
@@ -19,6 +20,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
   const {
     categories,
     series,
+    t,
   } = options
 
   // 确保数据的安全性和正确性
@@ -53,7 +55,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
 
   return {
     title: {
-      text: 'KAITO 24H Mindshare 历史趋势图',
+      text: t('chart.chartTitle'),
       left: 'center',
       textStyle: {
         fontSize: 18,
@@ -94,7 +96,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
           .slice(0, 15) // 最多显示前15个
 
         if (sortedParams.length === 0) {
-          result += '<div style="color: #999; font-size: 11px;">暂无数据</div>'
+          result += `<div style="color: #999; font-size: 11px;">${t('chart.tooltip.noData')}</div>`
           return result
         }
 
@@ -137,11 +139,11 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
       selector: [
         {
           type: 'all',
-          title: '全选',
+          title: t('chart.legend.selectAll'),
         },
         {
           type: 'inverse',
-          title: '反选',
+          title: t('chart.legend.inverse'),
         },
       ],
       selectorPosition: 'start',
@@ -180,7 +182,7 @@ export function createChartConfig(options: ChartConfigOptions): EChartsOption {
     },
     yAxis: {
       type: 'value',
-      name: 'Mindshare (%)',
+      name: t('chart.yAxisName'),
       nameTextStyle: {
         fontSize: 12,
         padding: [0, 0, 0, 20],

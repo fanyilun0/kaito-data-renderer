@@ -32,6 +32,8 @@
   },
   "chart": {
     "title": "KAITO-PRE-TGE热门代币图表",
+    "chartTitle": "KAITO 24H Mindshare 历史趋势图",
+    "yAxisName": "Mindshare (%)",
     "resetState": "重置图表状态",
     "loadingData": "正在加载历史数据...",
     "initializingChart": "正在初始化图表... (数据点: {count})",
@@ -44,7 +46,17 @@
     "days": "天",
     "daysAvailable": "天可用",
     "all": "所有{count}",
-    "top": "前{count}"
+    "top": "前{count}",
+    "legend": {
+      "selectAll": "全选",
+      "inverse": "反选"
+    },
+    "tooltip": {
+      "noData": "暂无数据"
+    },
+    "loading": {
+      "rendering": "正在渲染图表..."
+    }
   },
   "duration": {
     "24h": "24小时",

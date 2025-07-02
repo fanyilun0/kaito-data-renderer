@@ -59,10 +59,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="selectRef" class="relative inline-block min-w-[120px]">
+  <div ref="selectRef" class="relative inline-block min-w-[120px] w-auto">
     <!-- 选择框主体 -->
     <div
-      class="w-140px flex cursor-pointer items-center justify-between border rounded bg-white px-3 py-2 text-sm transition-all duration-200" :class="[
+      class="w-auto flex cursor-pointer items-center justify-between border rounded bg-white px-3 py-2 text-sm transition-all duration-200" :class="[
         {
           'border-gray-300 hover:border-gray-400': !disabled && !isFocused,
           'border-blue-500 ring-2 ring-blue-500/20': isFocused || isOpen,

@@ -32,6 +32,8 @@
   },
   "chart": {
     "title": "KAITO-PRE-TGE Hot Token Chart",
+    "chartTitle": "KAITO 24H Mindshare Historical Trend Chart",
+    "yAxisName": "Mindshare (%)",
     "resetState": "Reset chart state",
     "loadingData": "Loading historical data...",
     "initializingChart": "Initializing chart... (Data points: {count})",
@@ -44,7 +46,17 @@
     "days": "days",
     "daysAvailable": "days available",
     "all": "All {count}",
-    "top": "Top {count}"
+    "top": "Top {count}",
+    "legend": {
+      "selectAll": "Select All",
+      "inverse": "Inverse"
+    },
+    "tooltip": {
+      "noData": "No data"
+    },
+    "loading": {
+      "rendering": "Rendering chart..."
+    }
   },
   "duration": {
     "24h": "24 Hours",
