@@ -3,140 +3,155 @@ Kaito Data Renderer
 </h1>
 
 <h3 align='center'>
-<a href="https://kaito-data-renderer.vercel.app/">Kaito Pre-TGE 代币数据可视化平台</a>
+<a href="https://kaito-data-renderer.vercel.app/">Kaito Pre-TGE Token Data Visualization Platform</a>
 </h3>
 
 <p align='center'>
+  <b>
+    <a href="README.md">🇺🇸 English</a> •
+    <a href="README-ZH.md">🇨🇳 中文</a>
+  </b>
+</p>
+
+<p align='center'>
   <a href="https://kaito-data-renderer.vercel.app/">
-    <img src="https://img.shields.io/badge/🌐_在线体验-Live_Demo-blue?style=for-the-badge" alt="Live Demo">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-Online_Experience-blue?style=for-the-badge" alt="Live Demo">
   </a>
   <img src="https://img.shields.io/badge/⚡_Powered_by-Vue_3_+_TypeScript-4FC08D?style=for-the-badge&logo=vue.js" alt="Vue 3">
   <img src="https://img.shields.io/badge/📊_Charts-ECharts-FF6B6B?style=for-the-badge" alt="ECharts">
   <img src="https://img.shields.io/badge/🚀_Deploy-Vercel-000000?style=for-the-badge&logo=vercel" alt="Vercel">
 </p>
 
-## ✨ 项目简介
+## ✨ Project Overview
 
-📈 **Kaito Data Renderer** 是一个专门用于展示 Kaito Pre-TGE 热门代币提及度排行的数据可视化平台。平台通过现代化的 Web 技术栈，提供直观的表格和图表形式，实时展示不同时间段内各代币的社交媒体提及度、排名变化趋势，帮助用户快速了解市场热点和代币热度动态。
+📈 **Kaito Data Renderer** is a specialized data visualization platform for displaying Kaito Pre-TGE hot token mention rankings. Using modern web technology stack, the platform provides intuitive tables and charts to real-time display token social media mentions and ranking trend changes across different time periods, helping users quickly understand market hotspots and token popularity dynamics.
 
-## 🎯 核心功能
+## 🎯 Core Features
 
-### 📊 数据展示
+### 📊 Data Display
 
-#### 📋 表格视图 (index.vue)
+#### 📋 Table View (index.vue)
 
-- 🏆 **实时排行榜** - 显示代币在不同时间段的提及度排名
-- 📅 **多时间维度** - 支持 24小时、48小时、7天、30天、3个月、6个月、12个月的数据查看
-- 🔍 **智能搜索** - 支持按代币名称或代号快速搜索，实时过滤结果
-- 📈 **趋势分析** - 显示代币提及度的变化趋势和百分比
-- 📱 **响应式设计** - 完美适配桌面和移动设备
-- 🎨 **交互排序** - 点击表头可按不同字段进行排序
+- 🏆 **Real-time Leaderboard** - Display token mention rankings across different time periods
+- 📅 **Multi-temporal Dimensions** - Support data viewing for 24h, 48h, 7d, 30d, 3m, 6m, 12m
+- 🔍 **Smart Search** - Support quick search by token name or symbol with real-time filtering
+- 📈 **Trend Analysis** - Display token mention trends and percentage changes
+- 📱 **Responsive Design** - Perfect adaptation for desktop and mobile devices
+- 🎨 **Interactive Sorting** - Click table headers to sort by different fields
 
-#### 📈 图表视图 (chart-stack.vue)
+#### 📈 Chart View (chart-stack.vue)
 
-- 📊 **堆叠面积图** - 使用 ECharts 展示代币提及度的时间序列变化
-- 🎯 **可配置展示** - 支持显示前 10/15/20/25/50 个代币或全部代币
-- 📅 **时间范围选择** - 支持最近 7/14/30/60/90 天或全部时间的数据展示
-- 🎨 **交互式图表** - 支持缩放、平移、图例交互等功能
-- 🔄 **状态重置** - 一键重置图表视图状态
-- 📊 **数据统计** - 显示数据范围、天数、代币数量等统计信息
+- 📊 **Stacked Area Chart** - Use ECharts to display time-series changes of token mentions
+- 🎯 **Configurable Display** - Support showing top 10/15/20/25/50 tokens or all tokens
+- 📅 **Time Range Selection** - Support data display for recent 7/14/30/60/90 days or all time
+- 🎨 **Interactive Charts** - Support zoom, pan, legend interaction and other functions
+- 🔄 **State Reset** - One-click reset chart view state
+- 📊 **Data Statistics** - Display data range, days, token count and other statistics
 
-### 📡 数据处理
+### 📡 Data Processing
 
-- 📊 **JSON 数据源** - 结构化的代币提及度数据，支持历史数据回溯
-- 🔄 **智能缓存** - 浏览器本地缓存，提升数据加载速度
-- 💾 **动态加载** - 按需加载不同时间段的数据，减少带宽消耗
-- 🔍 **实时过滤** - 客户端数据过滤和搜索，响应速度快
-- 🛡️ **数据验证** - 完整的数据类型检查和异常处理
+- 📊 **JSON Data Source** - Structured token mention data with historical data backtracking
+- 🔄 **Smart Caching** - Browser local cache to improve data loading speed
+- 💾 **Dynamic Loading** - Load data on demand for different time periods, reducing bandwidth consumption
+- 🔍 **Real-time Filtering** - Client-side data filtering and search with fast response
+- 🛡️ **Data Validation** - Complete data type checking and exception handling
 
-### 🎨 用户体验
+### 🎨 User Experience
 
-- 🌙 **深色模式** - 支持明暗主题切换
-- 📱 **移动优先** - 响应式设计，完美支持移动设备
-- ⚡ **性能优化** - 虚拟滚动、懒加载等性能优化
-- 🔔 **智能通知** - 友好的操作反馈和状态提示
-- 🎯 **无障碍访问** - 遵循 WCAG 无障碍设计标准
+- 🌙 **Dark Mode** - Support light/dark theme switching
+- 📱 **Mobile First** - Responsive design with perfect mobile device support
+- ⚡ **Performance Optimization** - Virtual scrolling, lazy loading and other performance optimizations
+- 🔔 **Smart Notifications** - Friendly operation feedback and status prompts
+- 🎯 **Accessibility** - Follow WCAG accessibility design standards
 
-## 🚀 快速开始
+### 🌍 Internationalization
 
-### 📋 环境要求
+- 🌐 **Bilingual Support** - Complete Chinese and English internationalization
+- 🔄 **Smart Language Detection** - Auto-detect browser language and save user preference to localStorage
+- ⚡ **Seamless Switching** - Dynamic language switching without page refresh
+- 📊 **Full Coverage** - All interface texts including tables, charts, notifications are internationalized
+- 📅 **Date Localization** - Automatic date format adjustment based on language
 
-- 💻 Node.js 18+ (推荐 20+)
-- 📦 pnpm 8+ (推荐) 或 npm/yarn
+## 🚀 Quick Start
 
-### ⚡ 本地开发
+### 📋 Requirements
+
+- 💻 Node.js 18+ (recommended 20+)
+- 📦 pnpm 8+ (recommended) or npm/yarn
+
+### ⚡ Local Development
 
 ```bash
-# 📥 克隆项目
+# 📥 Clone project
 git clone https://github.com/fanyilun0/kaito-data-renderer.git
 cd kaito-data-renderer
 
-# 📦 安装依赖
+# 📦 Install dependencies
 pnpm install
 
-# 🚀 启动开发服务器 (http://localhost:3333)
+# 🚀 Start development server (http://localhost:3333)
 pnpm dev
 
-# 🌐 在浏览器中访问
+# 🌐 Open in browser
 open http://localhost:3333
 ```
 
-### 🏗️ 构建部署
+### 🏗️ Build & Deploy
 
 ```bash
-# 🏗️ 构建生产版本
+# 🏗️ Build for production
 pnpm build
 
-# 👀 预览构建结果
+# 👀 Preview build
 pnpm preview
 
-# 🚀 部署到 Vercel (需要 Vercel CLI)
+# 🚀 Deploy to Vercel (requires Vercel CLI)
 vercel deploy
 ```
 
-### 🧪 测试和质量检查
+### 🧪 Testing & Quality Check
 
 ```bash
-# 🧪 运行单元测试
+# 🧪 Run unit tests
 pnpm test
 
-# 🔍 代码检查
+# 🔍 Code linting
 pnpm lint
 
-# 🔧 TypeScript 类型检查
+# 🔧 TypeScript type check
 pnpm typecheck
 
-# 📦 依赖更新检查
+# 📦 Dependency update check
 pnpm up
 ```
 
-## 📊 数据结构
+## 📊 Data Structure
 
-### 📁 数据文件格式
+### 📁 Data File Format
 
 ```
 public/data/
-├── kaito_data_20250418_24h.json   # 24小时数据
-├── kaito_data_20250418_48h.json   # 48小时数据
-├── kaito_data_20250418_7d.json    # 7天数据
-├── kaito_data_20250418_30d.json   # 30天数据
-├── kaito_data_20250418_3m.json    # 3个月数据
-├── kaito_data_20250418_6m.json    # 6个月数据
-├── kaito_data_20250418_12m.json   # 12个月数据
-└── ...                            # 其他日期的数据
+├── kaito_data_20250418_24h.json   # 24h data
+├── kaito_data_20250418_48h.json   # 48h data
+├── kaito_data_20250418_7d.json    # 7d data
+├── kaito_data_20250418_30d.json   # 30d data
+├── kaito_data_20250418_3m.json    # 3m data
+├── kaito_data_20250418_6m.json    # 6m data
+├── kaito_data_20250418_12m.json   # 12m data
+└── ...                            # Other date data
 ```
 
-### 🏷️ 数据字段说明
+### 🏷️ Data Field Description
 
 ```typescript
 interface TickerItem {
-  ticker_id: string // 唯一标识符
-  ticker: string // 代币代号 (如 "BTC", "ETH")
-  fullname: string // 代币全名 (如 "Bitcoin", "Ethereum")
-  logo?: string // 代币图标链接
-  rank: number // 当前排名
+  ticker_id: string // Unique identifier
+  ticker: string // Token symbol (e.g., "BTC", "ETH")
+  fullname: string // Token full name (e.g., "Bitcoin", "Ethereum")
+  logo?: string // Token icon URL
+  rank: number // Current ranking
 
-  // 各时间段的提及度 (百分比)
+  // Mention percentages for different time periods
   last_24h_mindshare: number
   last_48h_mindshare: number
   last_7d_mindshare: number
@@ -145,7 +160,7 @@ interface TickerItem {
   last_6m_mindshare: number
   last_12m_mindshare: number
 
-  // 各时间段的变化比率
+  // Change ratios for different time periods
   change_24h_ratio: number
   change_48h_ratio: number
   change_7d_ratio: number
@@ -156,7 +171,7 @@ interface TickerItem {
 }
 ```
 
-### 📋 数据文件结构
+### 📋 Data File Structure
 
 ```json
 {
@@ -169,190 +184,243 @@ interface TickerItem {
       "rank": 1,
       "last_24h_mindshare": 25.5,
       "change_24h_ratio": 1.2
-      // ... 其他字段
+      // ... other fields
     }
-    // ... 更多代币数据
+    // ... more token data
   ]
 }
 ```
 
-## 📱 界面功能详解
+## 📱 Interface Features
 
-### 🏠 主页面 - 表格视图 (`/`)
+### 🏠 Main Page - Table View (`/`)
 
-#### 🔍 搜索和筛选功能
+#### 🔍 Search and Filter Features
 
-- **智能搜索框** - 实时搜索代币名称和代号
-- **日期选择器** - 选择特定日期的数据
-- **时间段切换** - 动态切换不同时间维度的数据
+- **Smart Search Box** - Real-time search for token names and symbols
+- **Date Selector** - Select data for specific dates
+- **Time Period Switch** - Dynamically switch between different time dimensions
 
-#### 📊 数据表格
+#### 📊 Data Table
 
-- **排名显示** - 清晰的数字排名标识
-- **代币信息** - 代号、全名和图标展示
-- **提及度数据** - 当前时间段的提及度百分比
-- **趋势指标** - 彩色编码的涨跌变化率
-- **交互排序** - 点击表头按不同字段排序
+- **Ranking Display** - Clear numerical ranking identification
+- **Token Information** - Symbol, full name and icon display
+- **Mention Data** - Current time period mention percentage
+- **Trend Indicators** - Color-coded rise/fall change rates
+- **Interactive Sorting** - Click table headers to sort by different fields
 
-#### 🎨 界面特性
+#### 🎨 Interface Features
 
-- **响应式布局** - 自适应桌面和移动设备
-- **加载动画** - 优雅的数据加载状态
-- **错误处理** - 友好的错误信息提示
-- **性能优化** - 虚拟滚动处理大量数据
+- **Responsive Layout** - Adaptive to desktop and mobile devices
+- **Loading Animation** - Elegant data loading states
+- **Error Handling** - Friendly error message prompts
+- **Performance Optimization** - Virtual scrolling for large data sets
 
-### 📈 图表页面 - 可视化视图 (`/chart-stack`)
+### 📈 Chart Page - Visualization View (`/chart-stack`)
 
-#### 📊 图表配置
+#### 📊 Chart Configuration
 
-- **代币数量选择** - 前 10/15/20/25/50 个或全部代币
-- **时间范围选择** - 最近 7/14/30/60/90 天或全部时间
-- **图表类型** - 堆叠面积图，清晰展示趋势变化
+- **Token Count Selection** - Top 10/15/20/25/50 or all tokens
+- **Time Range Selection** - Recent 7/14/30/60/90 days or all time
+- **Chart Type** - Stacked area chart clearly showing trend changes
 
-#### 🎮 交互功能
+#### 🎮 Interactive Features
 
-- **缩放平移** - 鼠标或触摸操作进行图表交互
-- **图例控制** - 点击图例显示/隐藏特定代币
-- **状态重置** - 一键重置图表到初始状态
-- **响应式图表** - 自适应不同屏幕尺寸
+- **Zoom & Pan** - Mouse or touch operations for chart interaction
+- **Legend Control** - Click legend to show/hide specific tokens
+- **State Reset** - One-click reset chart to initial state
+- **Responsive Chart** - Adaptive to different screen sizes
 
-#### 📈 数据统计
+#### 📈 Data Statistics
 
-- **数据范围显示** - 当前显示的日期范围
-- **天数统计** - 实际包含的数据天数
-- **代币数量** - 当前显示的代币数量
-- **总数据量** - 可用的历史数据总量
+- **Data Range Display** - Current displayed date range
+- **Day Count** - Actual included data days
+- **Token Count** - Currently displayed token count
+- **Total Data** - Available historical data total
 
-### 🎨 通用 UI 组件
+### 🎨 Common UI Components
 
-#### 🧩 复用组件
+#### 🧩 Reusable Components
 
-- **AppLayout** - 统一的页面布局容器
-- **AppHeader** - 页面标题和导航
-- **AppSelect** - 统一样式的选择器
-- **TickerTableHeader** - 表格头部组件
-- **TickerTableRow** - 表格行组件
+- **AppLayout** - Unified page layout container
+- **AppHeader** - Page title and navigation
+- **AppSelect** - Unified style selector
+- **TickerTableHeader** - Table header component
+- **TickerTableRow** - Table row component
+- **LanguageSwitch** - Language switching component
 
-## 🚀 部署和托管
+## 🌍 Internationalization (i18n)
 
-### 🌐 Vercel 部署 (推荐)
+### ✨ Features
 
-1. **连接仓库**
+- ✅ Support Chinese (zh) and English (en) languages
+- ✅ Language preference auto-saved to localStorage
+- ✅ Auto-detect browser language for default language
+- ✅ Dynamic language switching without page refresh
+- ✅ Full interface text internationalization
+- ✅ Date format adjustment based on language
+
+### 📁 File Structure
+
+```
+src/i18n/
+├── index.ts              # i18n configuration and utility functions
+├── locales/
+│   ├── en.json          # English translations
+│   └── zh.json          # Chinese translations
+```
+
+### 🔄 Language Switching
+
+Click the language selector in the page header navigation to switch languages:
+
+- 中文 (Chinese)
+- English
+
+### 📝 Adding New Translations
+
+1. Add English translation in `locales/en.json`
+2. Add corresponding Chinese translation in `locales/zh.json`
+3. Use `t('key')` function in components
+
+Example:
+
+```vue
+<script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+</script>
+
+<template>
+  <div>{{ t('table.title') }}</div>
+  <div>{{ t('notification.loadSuccess', { count: 5 }) }}</div>
+</template>
+```
+
+## 🚀 Deployment & Hosting
+
+### 🌐 Vercel Deployment (Recommended)
+
+1. **Connect Repository**
 
    ```bash
-   # 连接 GitHub 仓库到 Vercel
+   # Connect GitHub repository to Vercel
    vercel --prod
    ```
 
-2. **自动部署**
+2. **Automatic Deployment**
 
-   - 推送到 `main` 分支自动触发部署
-   - 支持预览部署和生产部署
-   - 内置 CDN 和边缘函数优化
+   - Push to `main` branch triggers automatic deployment
+   - Support preview deployments and production deployments
+   - Built-in CDN and edge function optimization
 
-3. **Analytics 配置**
-   - 在 Vercel 控制台启用 Web Analytics
-   - 应用已集成 `@vercel/analytics/vue` 组件
-   - 自动收集访问统计和性能数据
+3. **Analytics Configuration**
+   - Enable Web Analytics in Vercel console
+   - App integrated with `@vercel/analytics/vue` component
+   - Automatically collect visit statistics and performance data
 
-### 🔧 其他部署平台
+### 🔧 Other Deployment Platforms
 
 ```bash
-# Netlify 部署
+# Netlify deployment
 npm run build
-# 上传 dist 文件夹到 Netlify
+# Upload dist folder to Netlify
 
-# GitHub Pages 部署
+# GitHub Pages deployment
 npm run build
-# 配置 GitHub Actions 自动部署
+# Configure GitHub Actions for automatic deployment
 
-# 自托管服务器
+# Self-hosted server
 npm run build
-# 将 dist 文件夹部署到 Web 服务器
+# Deploy dist folder to web server
 ```
 
-## 📈 数据更新流程
+## 📈 Data Update Process
 
-### 📅 自动化数据处理
+### 📅 Automated Data Processing
 
 ```python
-# Python 数据处理脚本
+# Python data processing script
 python src/data_process.py
 
-# 生成的文件格式
+# Generated file format
 kaito_data_{YYYYMMDD}_{duration}.json
 ```
 
-### 🔄 更新频率
+### 🔄 Update Frequency
 
-- **每日更新** - 每天生成新的数据文件
-- **多时段覆盖** - 涵盖从24小时到年度的各个时间维度
-- **历史数据保留** - 完整保存历史数据用于趋势分析
+- **Daily Updates** - Generate new data files daily
+- **Multi-period Coverage** - Cover all time dimensions from 24 hours to annual
+- **Historical Data Retention** - Complete preservation of historical data for trend analysis
 
-## 🔧 开发指南
+## 🔧 Development Guide
 
-### 📁 项目结构
+### 📁 Project Structure
 
 ```
 kaito-data-renderer/
 ├── public/
-│   ├── data/                   # 静态数据文件
-│   │   └── favicon.svg            # 网站图标
-│   ├── src/
-│   │   ├── components/            # 可复用组件
-│   │   │   ├── AppHeader.vue     # 页面头部
-│   │   │   ├── AppLayout.vue     # 布局容器
-│   │   │   ├── AppSelect.vue     # 选择器组件
-│   │   │   ├── TickerTableHeader.vue  # 表格头部
-│   │   │   └── TickerTableRow.vue     # 表格行
-│   │   ├── composables/          # 组合式函数
-│   │   │   ├── chartConfig.ts    # 图表配置
-│   │   │   ├── dark.ts          # 深色模式
-│   │   │   ├── index.ts         # 统一导出
-│   │   │   └── kaitoDataProcessor.ts  # 数据处理
-│   │   ├── pages/               # 页面组件
-│   │   │   ├── index.vue        # 表格视图
-│   │   │   └── chart-stack.vue  # 图表视图
-│   │   ├── styles/
-│   │   │   └── main.css         # 全局样式
-│   │   ├── App.vue              # 根组件
-│   │   └── main.ts              # 应用入口
-│   ├── test/                    # 测试文件
-│   └── README.md               # 项目文档
-└── package.json           # 项目配置
+│   ├── data/                   # Static data files
+│   │   └── favicon.svg             # Website icon
+├── src/
+│   ├── components/             # Reusable components
+│   │   ├── AppHeader.vue      # Page header
+│   │   ├── AppLayout.vue      # Layout container
+│   │   ├── AppSelect.vue      # Selector component
+│   │   ├── LanguageSwitch.vue # Language switcher
+│   │   ├── TickerTableHeader.vue # Table header
+│   │   └── TickerTableRow.vue    # Table row
+│   ├── composables/           # Composable functions
+│   │   ├── chartConfig.ts     # Chart configuration
+│   │   ├── dark.ts           # Dark mode
+│   │   ├── index.ts          # Unified export
+│   │   └── kaitoDataProcessor.ts # Data processing
+│   ├── i18n/                 # Internationalization
+│   │   ├── index.ts          # i18n configuration
+│   │   └── locales/          # Translation files
+│   │       ├── en.json       # English translations
+│   │       └── zh.json       # Chinese translations
+│   ├── pages/                # Page components
+│   │   ├── index.vue         # Table view
+│   │   └── chart-stack.vue   # Chart view
+│   ├── styles/
+│   │   └── main.css          # Global styles
+│   ├── App.vue               # Root component
+│   └── main.ts               # Application entry
+├── test/                     # Test files
+└── README.md                # Project documentation
 ```
 
-## 📄 许可证
+## 📄 License
 
-📜 本项目采用 [MIT License](LICENSE) 许可证
+📜 This project is licensed under the [MIT License](LICENSE)
 
-## 🤝 贡献指南
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Welcome to submit Issues and Pull Requests!
 
-1. **Fork 项目**
-2. **创建功能分支** (`git checkout -b feature/AmazingFeature`)
-3. **提交更改** (`git commit -m 'Add some AmazingFeature'`)
-4. **推送到分支** (`git push origin feature/AmazingFeature`)
-5. **创建 Pull Request**
+1. **Fork the project**
+2. **Create feature branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to branch** (`git push origin feature/AmazingFeature`)
+5. **Create Pull Request**
 
-### 📋 开发规范
+### 📋 Development Standards
 
-- 使用 TypeScript 进行类型安全开发
-- 遵循 ESLint 代码规范
-- 编写单元测试覆盖新功能
-- 更新相关文档
+- Use TypeScript for type-safe development
+- Follow ESLint code standards
+- Write unit tests to cover new features
+- Update relevant documentation
 
-## 🙏 致谢
+## 🙏 Acknowledgments
 
-- 🌟 感谢 [Anthony Fu](https://github.com/antfu) 提供的 [Vitesse](https://github.com/antfu/vitesse) 模板
-- 📊 感谢 Kaito 提供的数据支持
+- 🌟 Thanks to [Anthony Fu](https://github.com/antfu) for providing the [Vitesse](https://github.com/antfu/vitesse) template
+- 📊 Thanks to Kaito for data support
 
 ---
 
 <p align='center'>
-⭐ 如果这个项目对你有帮助，请给它一个 star！<br>
-🌟 Star this project if it helps you!
+⭐ If this project helps you, please give it a star!<br>
 </p>
 
 <p align='center'>
