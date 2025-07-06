@@ -9,7 +9,8 @@
   },
   "header": {
     "table": "表格",
-    "chart": "Stack图表"
+    "chart": "Stack图表",
+    "reward": "奖励站"
   },
   "table": {
     "title": "KAITO-PRE-TGE热门代币提及度排行",
@@ -94,5 +95,36 @@
     "chartInitFailed": "初始化图表失败",
     "chartUpdateFailed": "更新图表失败: {message}",
     "pleaseSelectDate": "请选择日期"
+  },
+  "reward": {
+    "title": "KAITO 奖励站",
+    "project": "项目",
+    "description": "描述",
+    "pool": "奖池",
+    "status": "状态",
+    "categories": "分类",
+    "activePeriod": "活跃期",
+    "claimPeriod": "认领期",
+    "tokenIssued": "代币发行",
+    "url": "链接",
+    "viewDetails": "查看详情",
+    "noLink": "无链接",
+    "notIssued": "未发行",
+    "searchPlaceholder": "搜索项目名称、代币或描述",
+    "noDataFound": "没有找到数据",
+    "loadSuccess": "成功加载 {count} 个奖励项目",
+    "loadFailed": "加载奖励站数据失败",
+    "allStatus": "全部状态",
+    "allCategories": "全部分类",
+    "allTokenStatus": "全部代币状态",
+    "statusValues": {
+      "current": "进行中",
+      "past": "已结束",
+      "upcoming": "即将开始"
+    },
+    "tokenStatusValues": {
+      "issued": "已发行",
+      "notIssued": "未发行"
+    }
   }
 }

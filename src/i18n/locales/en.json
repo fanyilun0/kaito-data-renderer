@@ -9,7 +9,8 @@
   },
   "header": {
     "table": "Table",
-    "chart": "Stack Chart"
+    "chart": "Stack Chart",
+    "reward": "Reward Station"
   },
   "table": {
     "title": "KAITO-PRE-TGE Hot Token Mention Ranking",
@@ -94,5 +95,36 @@
     "chartInitFailed": "Failed to initialize chart",
     "chartUpdateFailed": "Failed to update chart: {message}",
     "pleaseSelectDate": "Please select a date"
+  },
+  "reward": {
+    "title": "KAITO Reward Station",
+    "project": "Project",
+    "description": "Description",
+    "pool": "Pool",
+    "status": "Status",
+    "categories": "Categories",
+    "activePeriod": "Active Period",
+    "claimPeriod": "Claim Period",
+    "tokenIssued": "Token Issued",
+    "url": "URL",
+    "viewDetails": "View Details",
+    "noLink": "No Link",
+    "notIssued": "Not Issued",
+    "searchPlaceholder": "Search project name, ticker, or description",
+    "noDataFound": "No data found",
+    "loadSuccess": "Successfully loaded {count} reward projects",
+    "loadFailed": "Failed to load reward station data",
+    "allStatus": "All Status",
+    "allCategories": "All Categories",
+    "allTokenStatus": "All Token Status",
+    "statusValues": {
+      "current": "Current",
+      "past": "Past",
+      "upcoming": "Upcoming"
+    },
+    "tokenStatusValues": {
+      "issued": "Issued",
+      "notIssued": "Not Issued"
+    }
   }
 }

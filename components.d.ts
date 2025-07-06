@@ -11,6 +11,8 @@ declare module 'vue' {
     AppLayout: typeof import('./src/components/AppLayout.vue')['default']
     AppSelect: typeof import('./src/components/AppSelect.vue')['default']
     LanguageSwitch: typeof import('./src/components/LanguageSwitch.vue')['default']
+    RewardTableHeader: typeof import('./src/components/RewardTableHeader.vue')['default']
+    RewardTableRow: typeof import('./src/components/RewardTableRow.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TickerTableHeader: typeof import('./src/components/TickerTableHeader.vue')['default']

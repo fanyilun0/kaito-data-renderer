@@ -4,7 +4,7 @@ import LanguageSwitch from './LanguageSwitch.vue'
 
 interface Props {
   title: string
-  currentRoute: 'table' | 'chart'
+  currentRoute: 'table' | 'chart' | 'reward'
 }
 
 defineProps<Props>()
@@ -45,6 +45,17 @@ const { t } = useI18n()
           ]"
         >
           {{ t('header.chart') }}
+        </RouterLink>
+        <span>|</span>
+        <RouterLink
+          to="/reward-station"
+          class="transition-colors" :class="[
+            currentRoute === 'reward'
+              ? 'text-purple-600 font-medium'
+              : 'text-purple-500 hover:text-purple-700',
+          ]"
+        >
+          {{ t('header.reward') }}
         </RouterLink>
         <span>|</span>
         <div class="flex items-center space-x-2">

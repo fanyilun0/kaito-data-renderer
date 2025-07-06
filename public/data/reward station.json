@@ -1,0 +1,1493 @@
+[
+  {
+    "reward_station_project_name": "Infinex",
+    "reward_station_ticker": "INFINEX",
+    "reward_station_description": "1B µPatrons (1% of total Patron supply) to Yaprun - a new attention scheme designed by Infinex & Kaito\n",
+    "reward_station_pool": "1B µPatrons (~$6M)",
+    "reward_station_url": "https://infinex.xyz/yaprun",
+    "reward_station_twitter_handle": "infinex",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1681540721684389888.jpg",
+    "reward_station_active_period": [
+      1747267200000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 1,
+    "reward_station_categories": [
+      "Eco",
+      "Yap"
+    ],
+    "created": "2025-05-16T13:46:50.757Z",
+    "modified": "2025-07-01T11:06:25.600Z",
+    "twitter_id": "1681540721684389888.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Lumiterra",
+    "reward_station_ticker": "LUMITERRA",
+    "reward_station_description": "1% of LUMITERRA to their top yappers and the Kaito Ecosystem",
+    "reward_station_pool": "1% of LUMITERRA Supply",
+    "reward_station_url": "https://x.com/LumiterraGame/status/1937845437224095782",
+    "reward_station_twitter_handle": "LumiterraGame",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1574342039172358144.jpg",
+    "reward_station_active_period": [
+      1750809600000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-25T11:02:47.396Z",
+    "modified": "2025-06-30T02:28:28.641Z",
+    "twitter_id": "1574342039172358144.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Pyth",
+    "reward_station_ticker": "PYTH",
+    "reward_station_description": "$10K PYTH to top Pyth Yappers monthly",
+    "reward_station_pool": "$10K PYTH /Month",
+    "reward_station_url": "https://x.com/PythNetwork/status/1920117085650464968",
+    "reward_station_twitter_handle": "PythNetwork",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1376553581508059144.jpg",
+    "reward_station_active_period": [
+      1746576000000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-18T17:18:11.996Z",
+    "modified": "2025-06-18T17:19:00.462Z",
+    "twitter_id": "1376553581508059144.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Peaq",
+    "reward_station_ticker": "PEAQ",
+    "reward_station_description": "0.55% of PEAQ supply to peaq Yappers and the broader Kaito Ecosystem over 11 months",
+    "reward_station_pool": "0.55% of PEAQ Supply",
+    "reward_station_url": "https://x.com/peaq/status/1935339474897998161",
+    "reward_station_twitter_handle": "peaq",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/916698460308627456.jpg",
+    "reward_station_active_period": [
+      1750204800000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-18T14:06:05.568Z",
+    "modified": "2025-06-18T16:24:44.966Z",
+    "twitter_id": "916698460308627456.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Warden Protocol",
+    "reward_station_ticker": "WARP",
+    "reward_station_description": "2.5% of $WARD supply to Warden Protocol Yappers, Warden App users and broader Kaito Ecosystem",
+    "reward_station_pool": "2.5% of WARD supply ",
+    "reward_station_url": "https://x.com/wardenprotocol/status/1935309081922912391",
+    "reward_station_twitter_handle": "wardenprotocol",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1748006726010310657.jpg",
+    "reward_station_active_period": [
+      1750204800000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Use",
+      "Eco"
+    ],
+    "created": "2025-06-18T12:04:32.954Z",
+    "modified": "2025-06-18T12:13:58.567Z",
+    "twitter_id": "1748006726010310657.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Hana Network",
+    "reward_station_ticker": "HANAHANA",
+    "reward_station_description": "1.5% of upcoming token supply to Hana Yappers and Kaito Ecosystem",
+    "reward_station_pool": "1.5% of Token Supply",
+    "reward_station_url": "https://x.com/HanaNetwork/status/1934933242303672731",
+    "reward_station_twitter_handle": "HanaNetwork",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1570874605736435712.jpg",
+    "reward_station_active_period": [
+      1750118400000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-17T11:03:23.369Z",
+    "modified": "2025-06-17T11:58:48.839Z",
+    "twitter_id": "1570874605736435712.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Goat Network",
+    "reward_station_ticker": "GOATNETWORK",
+    "reward_station_description": "1% of upcoming token supply to GOAT Network Yappers and Kaito Ecosystem",
+    "reward_station_pool": "1% of Token Supply",
+    "reward_station_url": "https://www.goat.network/blog/goat-network-launches-kaito-yaps-campaign",
+    "reward_station_twitter_handle": "GOATRollup",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1795121702617186304.jpg",
+    "reward_station_active_period": [
+      1750118400000,
+      1765929600000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-17T14:08:47.174Z",
+    "modified": "2025-06-17T14:12:00.442Z",
+    "twitter_id": "1795121702617186304.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Noya.ai",
+    "reward_station_ticker": "NOYA",
+    "reward_station_description": "5% of NOYA Supply to high-quality Yappers, depositors, LPs, referrers, and the Kaito Ecosystem",
+    "reward_station_pool": "5% of NOYA Supply",
+    "reward_station_url": "https://x.com/NetworkNoya/status/1932090363193221432",
+    "reward_station_twitter_handle": "NetworkNoya",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1575050599628001280.jpg",
+    "reward_station_active_period": [
+      1749427261000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco",
+      "Use"
+    ],
+    "created": "2025-06-09T15:20:09.630Z",
+    "modified": "2025-06-09T15:22:31.061Z",
+    "twitter_id": "1575050599628001280.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Initia",
+    "reward_station_ticker": "INITIA",
+    "reward_station_description": "Airdropping to the top 4,000 Yappers on the Kaito 12M leaderboard. 30-day claim starts at Initia's Mainnet launch",
+    "reward_station_pool": "INIT Airdrop",
+    "reward_station_url": "https://x.com/initia/status/1906666193379058101",
+    "reward_station_twitter_handle": "initia",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1604741451404873729.jpg",
+    "reward_station_active_period": [
+      1704067200000,
+      1743206399000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-31T23:52:55.082Z",
+    "modified": "2025-05-15T10:47:07.043Z",
+    "twitter_id": "1604741451404873729.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Mira",
+    "reward_station_ticker": "MIRA",
+    "reward_station_description": "0.5% of token supply to Mira Yappers and the Kaito Ecosystem across 2 seasons",
+    "reward_station_pool": "0.5% of Token Supply",
+    "reward_station_url": "https://x.com/Mira_Network/status/1932771937278964015",
+    "reward_station_twitter_handle": "Mira_Network",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1763125712066945025.jpg",
+    "reward_station_active_period": [
+      1749600000000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-11T10:35:49.056Z",
+    "modified": "2025-06-11T12:49:57.715Z",
+    "twitter_id": "1763125712066945025.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Corn",
+    "reward_station_ticker": "CORN",
+    "reward_station_description": "Corn is airdropping CORN to the Kaito ecosystem (top Corn & BTCFi yappers, Kaito Genesis NFT holders, 2x multiplier for KAITO Hodler badges)",
+    "reward_station_pool": "CORN Airdrop ",
+    "reward_station_url": "https://x.com/use_corn/status/1905261595682652301",
+    "reward_station_twitter_handle": "use_corn",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1775901004438843392.jpg",
+    "reward_station_active_period": [
+      1743033600000,
+      1744675199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T09:51:55.423Z",
+    "modified": "2025-05-15T11:00:17.253Z",
+    "twitter_id": "1775901004438843392.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "ZED Champions",
+    "reward_station_ticker": "ZED",
+    "reward_station_description": "Rewarding top ZED Champions yappers and top sKAITO stakers, with consideration for Pendle YT and Kaito Genesis NFT holders",
+    "reward_station_pool": "500 Badges (~2% of Total $ZED Supply) ",
+    "reward_station_url": "https://x.com/zed_champions/status/1914358291745956133",
+    "reward_station_twitter_handle": "zed_champions",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1082469258385227777.jpg",
+    "reward_station_active_period": [
+      1744329600000,
+      1745452799000
+    ],
+    "reward_station_claim_period": [
+      1745452800000,
+      1745539199000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-04-21T16:34:36.362Z",
+    "modified": "2025-05-15T11:00:23.232Z",
+    "twitter_id": "1082469258385227777.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Kaia",
+    "reward_station_ticker": "KAIA",
+    "reward_station_description": "$100K campaign over 3 phases, with phase 1 now at $40K in KAIA rewards",
+    "reward_station_pool": "$100K KAIA across 3 Phases",
+    "reward_station_url": "https://x.com/KaiaChain/status/1909577666707210259",
+    "reward_station_twitter_handle": "KaiaChain",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1016987310221455360.jpg",
+    "reward_station_active_period": [
+      1744070400000,
+      1746651599000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-04-08T12:20:26.458Z",
+    "modified": "2025-05-15T11:00:30.827Z",
+    "twitter_id": "1016987310221455360.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Wayfinder",
+    "reward_station_ticker": "WAYFINDER",
+    "reward_station_description": "Wayfinder is allocating 0.50% PROMPT supply from their social mission, targeting Emerging Yappers",
+    "reward_station_pool": "0.50% PROMPT Supply",
+    "reward_station_url": "https://x.com/aiwayfinder/status/1910179183570854073",
+    "reward_station_twitter_handle": "AIWayfinder",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1754781105050259457.jpg",
+    "reward_station_active_period": [
+      1742688000000,
+      1744156798000
+    ],
+    "reward_station_claim_period": [
+      1744243200000,
+      1746921599000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Use",
+      "Yap"
+    ],
+    "created": "2025-03-28T10:17:58.188Z",
+    "modified": "2025-05-21T11:14:41.876Z",
+    "twitter_id": "1754781105050259457.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Quai",
+    "reward_station_ticker": "QUAI",
+    "reward_station_description": "Quai is distributing 5.5M QUAI for all participants in the general Kaito Leaderboard and 500K QUAI exclusively for Quai-specific Leaderboard",
+    "reward_station_pool": "6M QUAI",
+    "reward_station_url": "https://x.com/QuaiNetwork/status/1916926007551930826",
+    "reward_station_twitter_handle": "QuaiNetwork",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1306071657174441985.jpg",
+    "reward_station_active_period": [
+      1737072000000,
+      1744934399000
+    ],
+    "reward_station_claim_period": [
+      1745884800000,
+      1747094399000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:12:19.317Z",
+    "modified": "2025-05-15T11:01:03.901Z",
+    "twitter_id": "1306071657174441985.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Multipli",
+    "reward_station_ticker": "MULTIPLI",
+    "reward_station_description": "10K USDC per month to top 50 Yappers on their leaderboard",
+    "reward_station_pool": "10K USDC/Month",
+    "reward_station_url": "https://x.com/multiplifi/status/1917091924135096668?s=46&t=LqIcMdczO08ymmuHpbTRCA",
+    "reward_station_twitter_handle": "multiplifi",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1724451131420717056.jpg",
+    "reward_station_active_period": [
+      1745366400000,
+      1747958162000
+    ],
+    "reward_station_claim_period": [
+      1747958400000,
+      1748390178000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:01:48.450Z",
+    "modified": "2025-05-28T00:00:08.399Z",
+    "twitter_id": "1724451131420717056.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Espresso",
+    "reward_station_ticker": "ESPRESSO",
+    "reward_station_description": "Check eligibility to mint during allowlist phases if you have voted for Espresso in Yapper Launchpad",
+    "reward_station_pool": "NFT Allowlist ",
+    "reward_station_url": "https://x.com/EspressoSys/status/1927468356971446314",
+    "reward_station_twitter_handle": "EspressoSys",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1491564545931984902.jpg",
+    "reward_station_active_period": [
+      1741824119000,
+      1742947319000
+    ],
+    "reward_station_claim_period": [
+      1748563201000,
+      1748646061000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Eco"
+    ],
+    "reward_station_open_code": "",
+    "created": "2025-05-28T09:48:23.435Z",
+    "modified": "2025-06-04T14:20:27.703Z",
+    "twitter_id": "1491564545931984902.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Boop",
+    "reward_station_ticker": "BOOP",
+    "reward_station_description": "7.5% of BOOP to top Solana & memecoin Yappers, KAITO stakers with >500 sKAITO and Genesis NFT holders",
+    "reward_station_pool": "7.5% of BOOP Supply",
+    "reward_station_url": "https://x.com/KaitoAI/status/1917970765179236498",
+    "reward_station_twitter_handle": "boopdotfun",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1878847321641029632.jpg",
+    "reward_station_active_period": [
+      1744416000000,
+      1744416000000
+    ],
+    "reward_station_claim_period": [
+      1746057600000,
+      1748649600000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-15T10:39:14.422Z",
+    "modified": "2025-05-31T00:04:01.490Z",
+    "twitter_id": "1878847321641029632.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Somnia",
+    "reward_station_ticker": "SOMNIA",
+    "reward_station_description": "$35K USDC to the top 100 30D Yappers",
+    "reward_station_pool": "$35K USDC",
+    "reward_station_url": "https://x.com/Somnia_Network/status/1921936647328833572",
+    "reward_station_twitter_handle": "Somnia_Network",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1757553204747972608.jpg",
+    "reward_station_active_period": [
+      1746018000000,
+      1748610000000
+    ],
+    "reward_station_claim_period": [
+      1748610000000,
+      1749819600000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-26T03:26:35.338Z",
+    "modified": "2025-06-13T13:00:49.306Z",
+    "twitter_id": "1757553204747972608.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Openledger",
+    "reward_station_ticker": "OPENLEDGER",
+    "reward_station_description": "$50K USDT to the top 50 Yappers on their Yapper Leaderboard, Chinese Region, and Other Languages combined, respectively",
+    "reward_station_pool": "$50K USDT ",
+    "reward_station_url": "https://x.com/OpenledgerHQ/status/1923407548616781961",
+    "reward_station_twitter_handle": "OpenledgerHQ",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1755624156731768833.jpg",
+    "reward_station_active_period": [
+      1747353600000,
+      1750118399000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-22T08:08:24.874Z",
+    "modified": "2025-06-17T00:01:17.428Z",
+    "twitter_id": "1755624156731768833.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Sei",
+    "reward_station_ticker": "SEI",
+    "reward_station_description": "26.25K USDC per month to the top 50 Yappers in the 30D Leaderboard over 3 months",
+    "reward_station_pool": "26.25K USDC/Month",
+    "reward_station_url": "https://x.com/SeiNetwork/status/1902747019053322389",
+    "reward_station_twitter_handle": "SeiNetwork",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1515104342906327045.jpg",
+    "reward_station_active_period": [
+      1742428800000,
+      1750463999000
+    ],
+    "reward_station_claim_period": [
+      1745107200000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:18:20.001Z",
+    "modified": "2025-06-21T00:00:38.317Z",
+    "twitter_id": "1515104342906327045.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Sophon ",
+    "reward_station_ticker": "SOPHON",
+    "reward_station_description": "150K USDC prize pool across 3 months to the top 50 Yappers",
+    "reward_station_pool": "150K USDC ",
+    "reward_station_url": "https://x.com/sophon/status/1903099027610304646",
+    "reward_station_twitter_handle": "sophon",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1745068432851193856.jpg",
+    "reward_station_active_period": [
+      1742515200000,
+      1750550399000
+    ],
+    "reward_station_claim_period": [
+      1745193600000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T09:56:08.768Z",
+    "modified": "2025-06-22T00:04:37.331Z",
+    "twitter_id": "1745068432851193856.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Boop",
+    "reward_station_ticker": "BOOPBOOPFUN",
+    "reward_station_description": "1M BOOP/Month to top Boop Yappers and the Kaito Ecosystem",
+    "reward_station_pool": "1M BOOP/Month",
+    "reward_station_url": "https://x.com/boopdotfun/status/1925216715421721091",
+    "reward_station_twitter_handle": "boopdotfun",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1878847321641029632.jpg",
+    "reward_station_active_period": [
+      1747785600000,
+      1750550399000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-22T16:32:15.565Z",
+    "modified": "2025-06-22T00:00:06.610Z",
+    "twitter_id": "1878847321641029632.4",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Soon",
+    "reward_station_ticker": "SOON",
+    "reward_station_description": "450K SOON to the top 100 3M Yappers",
+    "reward_station_pool": "450K SOON",
+    "reward_station_url": "https://x.com/soon_svm/status/1924379566531096632?s=46",
+    "reward_station_twitter_handle": "soon_svm",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1799089203483193344.jpg",
+    "reward_station_active_period": [
+      1739923200000,
+      1747699198000
+    ],
+    "reward_station_claim_period": [
+      1747976401000,
+      1750636806000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-21T04:46:14.196Z",
+    "modified": "2025-07-01T11:09:31.414Z",
+    "twitter_id": "1799089203483193344.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Huma Finance",
+    "reward_station_ticker": "HUMAFINANCE",
+    "reward_station_description": "0.5% of their upcoming token supply, going to Huma Yappers and the Kaito Ecosystem. Split across 3 seasons, with season 1 live now.",
+    "reward_station_pool": "0.5% of Token Supply",
+    "reward_station_url": "https://fixupx.com/KaitoAI/status/1926990577284895178",
+    "reward_station_twitter_handle": "humafinance",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1504853869397905408.jpg",
+    "reward_station_active_period": [
+      1747612801000
+    ],
+    "reward_station_claim_period": [
+      1748260800000,
+      1750982399000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Eco",
+      "Yap"
+    ],
+    "reward_station_open_code": "",
+    "created": "2025-05-19T13:33:40.104Z",
+    "modified": "2025-06-27T00:02:16.338Z",
+    "twitter_id": "1504853869397905408.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Multipli",
+    "reward_station_ticker": "MULTIPLI",
+    "reward_station_description": "10K USDC per month to top 50 Yappers on their leaderboard\n",
+    "reward_station_pool": "10K USDC/Month",
+    "reward_station_url": "https://x.com/multiplifi/status/1928064710714261721",
+    "reward_station_twitter_handle": "multiplifi",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1724451131420717056.jpg",
+    "reward_station_active_period": [
+      1747958400000,
+      1750550400000
+    ],
+    "reward_station_claim_period": [
+      1750636800000,
+      1750982400000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-02T09:38:14.600Z",
+    "modified": "2025-06-27T00:00:42.369Z",
+    "twitter_id": "1724451131420717056.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Sunrise",
+    "reward_station_ticker": "SUNRISE",
+    "reward_station_description": "1.5% of RISE supply to the top 100 Sunrise Yappers and sKAITO stakers",
+    "reward_station_pool": "1.5% of RISE supply",
+    "reward_station_url": "https://x.com/SunriseLayer/status/1924744798508089761",
+    "reward_station_twitter_handle": "SunriseLayer",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1753240376536682496.jpg",
+    "reward_station_active_period": [
+      1747699200000,
+      1753055999000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-20T08:33:27.407Z",
+    "modified": "2025-05-21T03:42:04.744Z",
+    "twitter_id": "1753240376536682496.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Skate",
+    "reward_station_ticker": "SKATE",
+    "reward_station_description": "Up to 1% of SKATE to early Skate Yappers, Kaito Ecosystem, and top 20K Yappers who trade & contribute to Skate's AMM Volume Milestones",
+    "reward_station_pool": "Up to 1% SKATE Supply",
+    "reward_station_url": "https://x.com/skate_chain/status/1924915858159370486",
+    "reward_station_twitter_handle": "skate_chain",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1770990442827706368.jpg",
+    "reward_station_active_period": [
+      1747612800000,
+      1751327999000
+    ],
+    "reward_station_claim_period": [
+      1749427200000,
+      1754006399000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap",
+      "Eco",
+      "Use",
+      "Trade"
+    ],
+    "reward_station_open_code": "",
+    "created": "2025-03-28T09:28:11.512Z",
+    "modified": "2025-05-21T09:01:53.793Z",
+    "twitter_id": "1770990442827706368.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "dYdX",
+    "reward_station_ticker": "DYDX",
+    "reward_station_description": "150K DYDX to the top 100 30D Yappers, split equally over 3 months (May-Aug)",
+    "reward_station_pool": "$150K DYDX ($50K/Month)",
+    "reward_station_url": "https://www.dydx.xyz/blog/dydx-yapper-leaderboard?utm_source=dYdXTwitter&utm_medium=GlobalSocial&utm_campaign=GlobalSocial",
+    "reward_station_twitter_handle": "dYdX",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/909929047626354688.jpg",
+    "reward_station_active_period": [
+      1747008000000,
+      1755043199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-13T09:24:03.206Z",
+    "modified": "2025-05-15T08:51:49.826Z",
+    "twitter_id": "909929047626354688.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Maplestory Universe",
+    "reward_station_ticker": "MAPLESTORYUNIVERSE",
+    "reward_station_description": "Maplestory Universe is rewarding both the top 2,000 on their yapper leaderboard and their top 500 voters on Kaito Connect",
+    "reward_station_pool": "NXPC Airdrop",
+    "reward_station_url": "https://x.com/MaplestoryU/status/1922895237585781056",
+    "reward_station_twitter_handle": "MaplestoryU",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1526446355731738624.jpg",
+    "reward_station_active_period": [
+      1714521600000,
+      1746057599000
+    ],
+    "reward_station_claim_period": [
+      1747267200000,
+      1755302399000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-21T03:40:27.475Z",
+    "modified": "2025-05-21T03:42:18.267Z",
+    "twitter_id": "1526446355731738624.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Camp Network",
+    "reward_station_ticker": "CAMP",
+    "reward_station_description": "0.25% of CAMP to their top 50 yappers and Kaito Ecosystem.\n\nAdditionally, $40K/Month till TGE to their top 20 Yappers, distributed weekly",
+    "reward_station_pool": "0.25% Camp Supply & $40K/Month",
+    "reward_station_url": "https://x.com/campnetworkxyz/status/1927349078444122559",
+    "reward_station_twitter_handle": "campnetworkxyz",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1582415049007800322.jpg",
+    "reward_station_active_period": [
+      1748304000000,
+      1756339199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-27T12:38:13.351Z",
+    "modified": "2025-05-27T13:11:23.614Z",
+    "twitter_id": "1582415049007800322.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Arbitrum",
+    "reward_station_ticker": "ARB",
+    "reward_station_description": "400K ARB over 3 months to their top 50 Yappers and non-english Regional Yappers",
+    "reward_station_pool": "400K ARB",
+    "reward_station_url": "https://blog.arbitrum.io/start-yapping-on-arbitrum-everywhere/",
+    "reward_station_twitter_handle": "arbitrum",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1332033418088099843.jpg",
+    "reward_station_active_period": [
+      1748304000000,
+      1756684799000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-05-27T13:18:57.230Z",
+    "modified": "2025-05-27T14:28:55.682Z",
+    "twitter_id": "1332033418088099843.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Polkadot",
+    "reward_station_ticker": "DOT",
+    "reward_station_description": "$600K DOT split equaly over 6 months to their top Yappers",
+    "reward_station_pool": "$600K DOT ($100K/Month) ",
+    "reward_station_url": "https://x.com/Polkadot/status/1890022639911247954",
+    "reward_station_twitter_handle": "Polkadot",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1595615893.jpg",
+    "reward_station_active_period": [
+      1740787200000,
+      1759363198000
+    ],
+    "reward_station_claim_period": [
+      1743379200000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T09:06:09.834Z",
+    "modified": "2025-05-15T08:52:55.760Z",
+    "twitter_id": "1595615893.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Openledger",
+    "reward_station_ticker": "OPENLEDGER",
+    "reward_station_description": "2M OPEN to the top 200 Yappers at the end of 6 months",
+    "reward_station_pool": "2M OPEN",
+    "reward_station_url": "https://x.com/openledgerhq/status/1897329494249365960?s=52&t=bSrrBNJy5AmQbtUAex9kWw",
+    "reward_station_twitter_handle": "OpenledgerHQ",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1755624156731768833.jpg",
+    "reward_station_active_period": [
+      1740787200000,
+      1759363199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:23:22.543Z",
+    "modified": "2025-05-21T03:42:34.407Z",
+    "twitter_id": "1755624156731768833.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Lombard",
+    "reward_station_ticker": "LOMBARD",
+    "reward_station_description": "Minimum $1,000,000 to reward their Yappers until December 2025",
+    "reward_station_pool": " $1-5M",
+    "reward_station_url": "https://x.com/Lombard_Finance/status/1890449594930327950",
+    "reward_station_twitter_handle": "Lombard_Finance",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1787773163209732096.jpg",
+    "reward_station_active_period": [
+      1733011200000,
+      1764633599000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-04-02T03:25:07.690Z",
+    "modified": "2025-05-15T08:53:16.540Z",
+    "twitter_id": "1787773163209732096.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Defi App",
+    "reward_station_ticker": "DEFIAPP",
+    "reward_station_description": "10% of Season 1 Degen Arena Points to top Yappers",
+    "reward_station_pool": "10% of Season 1 Degen Arena Points",
+    "reward_station_url": "https://x.com/defidotapp/status/1882517238797697296",
+    "reward_station_twitter_handle": "defidotapp",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1762571672207372289.jpg",
+    "reward_station_active_period": [
+      1739318400000,
+      1747008000000
+    ],
+    "reward_station_claim_period": [
+      1749513600000,
+      1752105600000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T09:58:07.759Z",
+    "modified": "2025-06-11T10:41:27.616Z",
+    "twitter_id": "1762571672207372289.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Fomo",
+    "reward_station_ticker": "FOMOFAMILY",
+    "reward_station_description": "10% fee discount, exclusive trading prize pool and additional referral prize pool to users who join with code \"KaitoAI”",
+    "reward_station_pool": "Sign up using \"KaitoAI\" for a share of referral fees",
+    "reward_station_url": "https://fomo.family/r/KaitoAI",
+    "reward_station_twitter_handle": "tryfomo",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1867712496531877888.jpg",
+    "reward_station_active_period": [
+      1747008000000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Trade",
+      "Eco",
+      "Refer"
+    ],
+    "reward_station_open_code": "KaitoAI",
+    "created": "2025-05-12T15:02:35.974Z",
+    "modified": "2025-05-19T09:08:11.144Z",
+    "twitter_id": "1867712496531877888.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Humanity Protocol",
+    "reward_station_ticker": "HUMANITY",
+    "reward_station_description": "0.2% of H supply to Humanity Yappers and KAITO stakers",
+    "reward_station_pool": "0.2% of H Supply to Yappers and Eco (code: \"kaitoeco\")",
+    "reward_station_url": "https://x.com/Humanityprot/status/1927749254472212765",
+    "reward_station_twitter_handle": "Humanityprot",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1636504677834530817.jpg",
+    "reward_station_active_period": [
+      1748390400000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-28T14:23:16.542Z",
+    "modified": "2025-06-05T13:55:55.727Z",
+    "twitter_id": "1636504677834530817.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Humanity Protocol",
+    "reward_station_ticker": "HUMANITY",
+    "reward_station_description": "100,000 USDT to top 50 yapper on Humanity Protocol",
+    "reward_station_pool": "100,000 USDT",
+    "reward_station_url": "https://x.com/Humanityprot/status/1935353421877399912",
+    "reward_station_twitter_handle": "Humanityprot",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1636504677834530817.jpg",
+    "reward_station_active_period": [
+      1750204800000,
+      1754006399000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-18T14:45:46.757Z",
+    "modified": "2025-06-18T16:27:56.982Z",
+    "twitter_id": "1636504677834530817.3",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Injective",
+    "reward_station_ticker": "INJ",
+    "reward_station_description": "2K INJ per month to the top 100 Yappers in the 30D Leaderboard over 3 months",
+    "reward_station_pool": "2K INJ/Month",
+    "reward_station_url": "https://x.com/injective/status/1930286519073309154",
+    "reward_station_twitter_handle": "injective",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1062118922147659776.jpg",
+    "reward_station_active_period": [
+      1748908859000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-03T12:19:17.784Z",
+    "modified": "2025-06-05T14:26:21.992Z",
+    "twitter_id": "1062118922147659776.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Mantle ",
+    "reward_station_ticker": "MNT",
+    "reward_station_description": "150K MNT split across 3 phases for the top 50 Yappers on their 30D leaderboard",
+    "reward_station_pool": "150K MNT across 3 Phases",
+    "reward_station_url": "https://x.com/Mantle_Official/status/1901993255333671084",
+    "reward_station_twitter_handle": "Mantle_Official",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1592468786489212928.jpg",
+    "reward_station_active_period": [
+      1742256000000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:13:38.791Z",
+    "modified": "2025-05-15T08:53:41.077Z",
+    "twitter_id": "1592468786489212928.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Mitosis",
+    "reward_station_ticker": "MITOSIS",
+    "reward_station_description": "Mitosis has set aside a portion of its airdrop to the top 1000 Yappers on their 6M Leaderboard proportionally upon their airdrop",
+    "reward_station_pool": "Mitosis Airdrop to Yappers",
+    "reward_station_twitter_handle": "MitosisOrg",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1538836819571527680.jpg",
+    "reward_station_active_period": [],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Upcoming",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-04-15T16:41:01.077Z",
+    "modified": "2025-05-15T08:53:51.869Z",
+    "twitter_id": "1538836819571527680.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Satlayer",
+    "reward_station_ticker": "SATLAYER",
+    "reward_station_description": "0.75% of upcoming token supply to their Yappers and the wider Kaito community",
+    "reward_station_pool": "0.75% of Token Supply",
+    "reward_station_url": "https://x.com/satlayer/status/1920841556661334297",
+    "reward_station_twitter_handle": "satlayer",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1780530218404401152.jpg",
+    "reward_station_active_period": [
+      1746748801000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-20T05:51:21.034Z",
+    "modified": "2025-05-20T05:52:41.218Z",
+    "twitter_id": "1780530218404401152.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Newton",
+    "reward_station_ticker": "NEWTON",
+    "reward_station_description": "Up to 0.75% of NEWT supply to their Yappers and the wider Kaito community",
+    "reward_station_pool": "Up to 0.75% NEWT Supply",
+    "reward_station_url": "https://x.com/MagicNewton/status/1920129852914479485",
+    "reward_station_twitter_handle": "MagicNewton",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1629692601317330945.jpg",
+    "reward_station_active_period": [
+      1746576000000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco",
+      "Use"
+    ],
+    "reward_station_open_code": "",
+    "created": "2025-05-15T10:32:08.199Z",
+    "modified": "2025-05-21T09:24:19.060Z",
+    "twitter_id": "1629692601317330945.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Newton",
+    "reward_station_ticker": "NEWTON",
+    "reward_station_description": "0.15% of NEWT supply to Korean Yappers, Chinese Yappers and thought leaders (across agentic AI, crypto UX, etc)",
+    "reward_station_pool": "0.15% NEWT Supply",
+    "reward_station_url": "https://x.com/MagicNewton/status/1933126137514721720",
+    "reward_station_twitter_handle": "MagicNewton",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1629692601317330945.jpg",
+    "reward_station_active_period": [
+      1749686400000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-12T11:46:32.105Z",
+    "modified": "2025-06-12T11:47:13.818Z",
+    "twitter_id": "1629692601317330945.3",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Novastro",
+    "reward_station_ticker": "NOVAS",
+    "reward_station_description": "Novastro is allocating 0.75% of NOVAS to Yappers and KAITO stakers",
+    "reward_station_pool": "0.75% of NOVAS Supply",
+    "reward_station_url": "https://x.com/Novastro_xyz/status/1922260538614284801",
+    "reward_station_twitter_handle": "Novastro_xyz",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1539539742622044160.jpg",
+    "reward_station_active_period": [
+      1747094400000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-15T10:22:51.858Z",
+    "modified": "2025-05-16T13:39:09.149Z",
+    "twitter_id": "1539539742622044160.2",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Somnia",
+    "reward_station_ticker": "SOMNIA",
+    "reward_station_description": "Rewarding high-quality posts about Somnia - top 20 split 5K USDC every week, top 100 split 100K Somnia points",
+    "reward_station_pool": "5K USDC Weekly + 100K Somnia Points",
+    "reward_station_url": "https://x.com/1757553204747972608/status/1903067890959446144",
+    "reward_station_twitter_handle": "Somnia_Network",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1757553204747972608.jpg",
+    "reward_station_active_period": [
+      1742515200000
+    ],
+    "reward_station_claim_period": [
+      1743120000000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-03-28T10:03:40.210Z",
+    "modified": "2025-05-15T08:54:12.249Z",
+    "twitter_id": "1757553204747972608.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Soul",
+    "reward_station_ticker": "SO",
+    "reward_station_description": "Soul is allocating up to 1.5% of SO Supply to Yappers & the wider Kaito Ecosystem, along with $5K USDC weekly to top 25 Soul Yappers.",
+    "reward_station_pool": "Earn up to 1.5% of SO Supply by signing up through \"KAITO\"",
+    "reward_station_url": "https://app.soul.io/?referredBy=KAITO",
+    "reward_station_twitter_handle": "0xSoulProtocol",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1698755813731446784.jpg",
+    "reward_station_active_period": [
+      1747180800000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Use",
+      "Eco",
+      "Refer"
+    ],
+    "reward_station_open_code": "KAITO",
+    "created": "2025-05-14T12:59:39.799Z",
+    "modified": "2025-05-19T09:08:33.793Z",
+    "twitter_id": "1698755813731446784.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Theoriq",
+    "reward_station_ticker": "THEORIQ",
+    "reward_station_description": "6M tokens to Theoriq Yappers, Ambassadors and Kaito Ecosystem",
+    "reward_station_pool": "6M Tokens",
+    "reward_station_url": "https://x.com/TheoriqAI/status/1930643083508465903",
+    "reward_station_twitter_handle": "TheoriqAI",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1549505015655440384.jpg",
+    "reward_station_active_period": [
+      1749081601000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-05T14:15:34.077Z",
+    "modified": "2025-06-05T15:22:13.019Z",
+    "twitter_id": "1549505015655440384.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Virtuals",
+    "reward_station_ticker": "VIRTUAL",
+    "reward_station_description": "Virtuals is distributing Virgen points to top Yappers and KAITO stakers with >5,000 sKAITO",
+    "reward_station_pool": ">500k Virgen points daily",
+    "reward_station_url": "https://x.com/KaitoAI/status/1922292931303538908",
+    "reward_station_twitter_handle": "virtuals_io",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1438365197505232902.jpg",
+    "reward_station_active_period": [
+      1747224000000
+    ],
+    "reward_station_claim_period": [
+      1747224000000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-05-15T03:36:32.308Z",
+    "modified": "2025-05-16T13:23:12.761Z",
+    "twitter_id": "1438365197505232902.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "UXLINK",
+    "reward_station_ticker": "UXLINK",
+    "reward_station_description": "500k UXLINK to top yappers and KAITO stakers",
+    "reward_station_pool": "500k UXLINK ",
+    "reward_station_url": "https://x.com/UXLINKofficial/status/1933136075859632281?t=hgfMvBArK0zgVAZPHiOzUA&s=09",
+    "reward_station_twitter_handle": "UXLINKofficial",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1635098916818669568.jpg",
+    "reward_station_active_period": [
+      1749686400000,
+      1752883199000
+    ],
+    "reward_station_claim_period": [
+      1753056000000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-13T12:46:29.318Z",
+    "modified": "2025-06-13T12:48:00.350Z",
+    "twitter_id": "1635098916818669568.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Overtake",
+    "reward_station_ticker": "OVERTAKE",
+    "reward_station_description": "0.5% of TAKE supply to Overtake Yappers and the Kaito Ecosystem",
+    "reward_station_pool": "0.5% of TAKE Supply",
+    "reward_station_url": "https://x.com/overtake_world/status/1936047825697358037",
+    "reward_station_twitter_handle": "overtake_world",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1552565302503694336.jpg",
+    "reward_station_active_period": [
+      1750377600000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-20T08:03:34.800Z",
+    "modified": "2025-06-20T13:06:58.099Z",
+    "twitter_id": "1552565302503694336.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Bless",
+    "reward_station_ticker": "BLS",
+    "reward_station_description": "5% of TIME supply (exchangeable for BLESS upon TGE) going to their top 500 Yappers and the Kaito Ecosystem over 2 months",
+    "reward_station_pool": "5% of TIME Supply",
+    "reward_station_url": "https://x.com/KaitoAI/status/1936036016491495871",
+    "reward_station_twitter_handle": "theblessnetwork",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1507110129627537417.jpg",
+    "reward_station_active_period": [
+      1750377600000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-20T12:39:26.543Z",
+    "modified": "2025-06-20T12:40:08.553Z",
+    "twitter_id": "1507110129627537417.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "NEAR",
+    "reward_station_ticker": "NEAR",
+    "reward_station_description": "$100K NEAR to the top 100 30D Yappers, split equally over 3 months (Jun-Sept)",
+    "reward_station_pool": "$100K NEAR ($33.3K/Month)",
+    "reward_station_url": "https://x.com/NEARProtocol/status/1937513557823737934",
+    "reward_station_twitter_handle": "NEARProtocol",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1031949518609121280.jpg",
+    "reward_station_active_period": [
+      1750723200000,
+      1758758399000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-25T10:00:13.639Z",
+    "modified": "2025-06-25T10:07:04.517Z",
+    "twitter_id": "1031949518609121280.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Anoma",
+    "reward_station_ticker": "ANOMA",
+    "reward_station_description": "1% of ANOMA in rewards - 0.7 to top yappers (0.2 of which to CN & KR) and 0.3 to the Kaito Eco",
+    "reward_station_pool": "1% of ANOMA Supply",
+    "reward_station_url": "https://x.com/anoma/status/1938296403786183167",
+    "reward_station_twitter_handle": "anoma",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1320014406621843457.jpg",
+    "reward_station_active_period": [
+      1750809600000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap",
+      "Eco"
+    ],
+    "created": "2025-06-25T11:04:52.520Z",
+    "modified": "2025-06-30T10:51:33.669Z",
+    "twitter_id": "1320014406621843457.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "MemeX",
+    "reward_station_ticker": "MEMEX",
+    "reward_station_description": "$700K M to their top 500 Yappers ",
+    "reward_station_pool": "$700K M",
+    "reward_station_url": "https://x.com/MemeX_MRC20/status/1938457290300182740",
+    "reward_station_twitter_handle": "MemeX_MRC20",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1887759577455992837.jpg",
+    "reward_station_active_period": [
+      1750982400000,
+      1753401599000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-27T04:42:02.213Z",
+    "modified": "2025-06-27T04:48:08.267Z",
+    "twitter_id": "1887759577455992837.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Portal To Bitcoin",
+    "reward_station_ticker": "PORTALPORTAL",
+    "reward_station_description": "0.5% of PORTAL supply to their top Yappers and non-english Regional Yappers (Chinese & Korean)",
+    "reward_station_pool": "0.5% of PORTAL Supply",
+    "reward_station_url": "https://x.com/PortaltoBitcoin/status/1935381504928240037",
+    "reward_station_twitter_handle": "PortaltoBitcoin",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1082726135941586949.jpg",
+    "reward_station_active_period": [
+      1748476800000,
+      1756771199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-29T05:17:00.779Z",
+    "modified": "2025-06-29T13:25:50.408Z",
+    "twitter_id": "1082726135941586949.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Novastro",
+    "reward_station_ticker": "NYT",
+    "reward_station_description": "5K USDC for top 20 Yappers and 2.5K USDC for top 10 CN Yappers weekly ",
+    "reward_station_pool": "7.5K USDC /Week",
+    "reward_station_url": "https://x.com/Novastro_xyz/status/1926512827717521849",
+    "reward_station_twitter_handle": "Novastro_xyz",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1539539742622044160.jpg",
+    "reward_station_active_period": [
+      1747612800000,
+      1749945600000
+    ],
+    "reward_station_claim_period": [
+      1747612800000,
+      1749945600000
+    ],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Past",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-06-21T07:13:25.437Z",
+    "modified": "2025-06-21T12:26:02.607Z",
+    "twitter_id": "1539539742622044160.4",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "INFINIT",
+    "reward_station_ticker": "INFINIT",
+    "reward_station_description": "0.5% of IN in rewards total - 0.2% to top yappers for Season 1 (July 2nd - Aug 7th)",
+    "reward_station_pool": "0.5% of IN Supply",
+    "reward_station_url": "https://x.com/Infinit_Labs/status/1940381233395208250",
+    "reward_station_twitter_handle": "Infinit_Labs",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1815660590008025088.jpg",
+    "reward_station_active_period": [
+      1751414400000,
+      1754611199000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-07-02T11:47:24.152Z",
+    "modified": "2025-07-02T12:46:59.701Z",
+    "twitter_id": "1815660590008025088.1",
+    "eligible_item": null
+  },
+  {
+    "reward_station_project_name": "Surf",
+    "reward_station_ticker": "SURF",
+    "reward_station_description": "100K CYBER to top 100 Yappers, split equally over 5 months ",
+    "reward_station_pool": "100K CYBER",
+    "reward_station_url": "https://x.com/Surf_Copilot/status/1940032975833637163 ",
+    "reward_station_twitter_handle": "Surf_Copilot",
+    "reward_station_twitter_img": "https://kaito-public-assets.s3.us-west-2.amazonaws.com/twitter-user-profile-img-large/1916868318671052800.jpg",
+    "reward_station_active_period": [
+      1751328000000,
+      1764460800000
+    ],
+    "reward_station_claim_period": [],
+    "reward_station_action_status": "Onboard",
+    "reward_station_list_status": "Current",
+    "reward_station_order": 0,
+    "reward_station_categories": [
+      "Yap"
+    ],
+    "created": "2025-07-01T11:06:06.704Z",
+    "modified": "2025-07-01T13:04:09.406Z",
+    "twitter_id": "1916868318671052800.1",
+    "eligible_item": null
+  }
+]
