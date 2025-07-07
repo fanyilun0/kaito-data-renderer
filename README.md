@@ -9,7 +9,7 @@ Kaito Data Renderer
 <p align='center'>
   <b>
     <a href="README.md">🇺🇸 English</a> •
-    <a href="README-ZH.md">🇨🇳 中文</a>
+    <a href="README.zh-CN.md">🇨🇳 中文</a>
   </b>
 </p>
 
