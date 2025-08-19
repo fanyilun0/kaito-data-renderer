@@ -12,6 +12,7 @@ from pathlib import Path
 import gzip
 import shutil
 from typing import Optional, List, Dict
+from pow_solver import POWSolver
 
 class KaitoCrawler:
     def __init__(self):
@@ -29,6 +30,9 @@ class KaitoCrawler:
         # 创建必需的目录
         self.data_dir.mkdir(exist_ok=True, parents=True)
         self.log_dir.mkdir(exist_ok=True)
+
+        # 初始化POW求解器
+        self.pow_solver = POWSolver()
 
         # 设置日志
         self.setup_logging()
@@ -68,9 +72,23 @@ class KaitoCrawler:
                 "pre_tge": "true"
             }
 
+            # 基础请求头
             headers = {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             }
+
+            # 获取POW验证头部
+            self.logger.info("正在获取POW验证头部...")
+            pow_headers = self.pow_solver.get_pow_headers()
+            if not pow_headers:
+                self.logger.error("无法获取POW验证头部")
+                return None
+
+            # 合并POW头部到请求头
+            headers.update(pow_headers)
+            self.logger.info(f"已添加POW验证头部: {pow_headers}")
 
             # 使用 GET 请求
             response = requests.get(
